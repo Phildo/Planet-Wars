@@ -13,12 +13,14 @@ Model::Model()
 {
     if(Model::selfPtr)
         throw (new std::string("DO NOT CALL CONSTRUCTOR DIRECTLY. USE Model::getSelf()"));
-    
-    this->numPlayers = DEFAULT_NUM_PLAYERS;
-    this->numNodes = DEFAULT_NUM_NODES;
+
     
     this->width = WIDTH;
     this->height = HEIGHT;
+    
+    this->numPlayers = DEFAULT_NUM_PLAYERS;
+    this->numNodes = DEFAULT_NUM_NODES;
+    this->state = DEFAULT_STATE;
     
     this->nullNode = NULL;
     this->nullPlayer = NULL;

@@ -49,6 +49,10 @@ void initGame(int numPlayers, int numNodes)
     menu = model->setMenu();
 }
 
+/////////
+//GAME STATES
+/////////
+
 void pregame(){
 	//Main Viewport
     glMatrixMode(GL_PROJECTION);
@@ -58,7 +62,7 @@ void pregame(){
     
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(model->camCenterX+model->mouseX*10, model->zoom, model->camCenterY+model->mouseY*-10, 
+	gluLookAt(model->camCenterX+model->mouseX*-10, model->zoom, model->camCenterY+model->mouseY*10, 
               model->camCenterX, 0, model->camCenterY, 
               0, 0, 1); 
     
@@ -78,13 +82,17 @@ void gameplay(){
     
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(model->camCenterX+model->mouseX*10, model->zoom, model->camCenterY+model->mouseY*-10, model->camCenterX, 0, model->camCenterY, 0, 0, -1); 
+	gluLookAt(model->camCenterX+model->mouseX*-10, model->zoom, model->camCenterY+model->mouseY*10,
+              model->camCenterX, 0, model->camCenterY,
+              0, 0, -1); 
     
 	// Draw different aspects of the game during gameplay:
 	map->draw();
 }
 
 void minigame() { 
+    
+    game->update();
     
 	//Main Viewport
     glMatrixMode(GL_PROJECTION);
@@ -94,12 +102,10 @@ void minigame() {
     
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-    
-	//note Y is up
 	gluLookAt(0.0, 50.0, -10.0, 0.0, 0.0, 20.0, 0.0, 1.0, 0.0);
     
 	game->drawGame();
-	game->update();
+	
 }
 
 
@@ -119,22 +125,6 @@ void DisplayFunc()
 	//Clear screen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    
-    glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
-	glViewport(0 , 0 , model->width, model->height);
-    
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt(model->camCenterX+model->mouseX*10, model->zoom, model->camCenterY+model->mouseY*-10, 
-              model->camCenterX, 0, model->camCenterY, 
-              0, 0, 1); 
-
-    
-    map->draw();
-    
-    /*
 	// The following set the different modes of the game.
 	switch(model->state){
         case TITLE:
@@ -147,7 +137,6 @@ void DisplayFunc()
             minigame();
             break;
 	}
-    */
     
 	//DoubleBuffering
 	glutSwapBuffers();
@@ -179,44 +168,38 @@ void KeyboardFunc(unsigned char key, int x, int y)
             model->state = MINIGAME;
             break;
             
-            /*
         case '[': //left arrow
-            if(lane < 5)
-                lane++;
-            game->setLane(lane);
+            if(game->laneSelect < 5)
+                game->setLane(game->laneSelect+1);
             break;
             
         case ']': //right arrow
-            if(lane > 1)
-                lane--;
-            game->setLane(lane);
+            if(game->laneSelect > 1)
+                game->setLane(game->laneSelect-1);
             break;
             
         case 'q':
-            teamSelect = 1;
-            game->setTeamSelect(teamSelect);
+            game->setTeamSelect(1);
             break;
             
         case 'a':
-            teamSelect = 0;
-            game->setTeamSelect(teamSelect);
+            game->setTeamSelect(0);
             break;
         case 'z':
-            game->addUnit(1, lane, teamSelect);
+            game->addUnit(1, game->laneSelect, game->teamSelect);
             break;
             
         case 'x':
-            game->addUnit(2, lane, teamSelect);
+            game->addUnit(2, game->laneSelect, game->teamSelect);
             break;
             
         case 'c':
-            game->addUnit(3, lane, teamSelect);
+            game->addUnit(3, game->laneSelect, game->teamSelect);
             break;
             
         case 'v':
-            game->addUnit(4, lane, teamSelect);
+            game->addUnit(4, game->laneSelect, game->teamSelect);
             break;
-            */
     }
 }
 

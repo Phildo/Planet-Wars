@@ -13,13 +13,17 @@ MiniGame::MiniGame(void)
 	//addUnit(4,4,0);
 	laneSelect = 5;
 	teamSelect = 0;
-
-
+    
+    lanes = new Lane*[NUM_LANES];
+    for(int i = 0; i < NUM_LANES; i++)
+    {
+        lanes[i] = new Lane(i);
+    }
+    
+    setColor(0.1, 0.2, 0.8, 0.0, 0.5, 1.0, 1.0);
 }
 
 void MiniGame::checkAttacks() {
-
-
 	for(int i = 0; i < MiniGame::numUnits; i++) {
 		Unit *unit1 = MiniGame::units[i];
 
@@ -38,25 +42,19 @@ void MiniGame::checkAttacks() {
 
 
 void MiniGame::attackUnit(Unit *attacker, Unit *attackee) {
-
 	attackee->takeDamage(attacker->attackDamage);
 	attacker->hasAttacked();
-
 }
 
 
 double MiniGame::distance(Unit *unit1, Unit *unit2) {
-
 	double* pos1 = unit1->getPosition();
 	double* pos2 = unit2->getPosition();
-
 	return sqrt( pow(pos1[0] - pos2[0], 2.0) + pow(pos1[1] - pos2[1], 2.0) + pow(pos1[2] - pos2[2], 2.0) );
-
 }
 
 
 void MiniGame::addUnit(int uType, int uLane, int uTeam) {
-
 	Unit *newUnit = new Unit(uType, uLane, uTeam);
 	MiniGame::units.push_back(newUnit);
 	numUnits++;
@@ -65,235 +63,76 @@ void MiniGame::addUnit(int uType, int uLane, int uTeam) {
 
 //only remove units at the end of an update for iteration purposes
 void MiniGame::removeUnit(int index) {
-
 	MiniGame::units.erase(units.begin() + index);
 	numUnits--;
-
 }
 
 
 void MiniGame::update() {
-
 	//int index = 0;
-
 	for(int i = 0; i < units.size(); i++) {
-
 		units[i]->update();
 	}
-
 	//for(std::vector<Unit*>::iterator it = units.begin(); it != units.end(); ++it, index++) {
 	//	if(units[index]->isDead()) {
 	//		removeUnit(index);
 	//	}
 	//	
 	//}
-
-
-
 }
 
 
 void MiniGame::drawGame() {
-
-	glPushMatrix();
-	
+    setColor(0.1, 0.2, 0.8, 0.0, 0.5, 1.0, 1.0);
+    
+    //Draw Units
 	for(int i = 0; i < units.size(); i++) {
-
 		units[i]->draw();
-
 	}
 
-	
-	
+    //Draw Lanes
+    for(int i = 0; i < NUM_LANES; i++)
+    {
+        if(laneSelect == i+1)
+            setGLColor();
+        else
+            lanes[i]->setGLColor();
+        lanes[i]->draw();
+    }
 
-	//lane 1
-	glPushMatrix();
-
-	if(laneSelect == 1) {
-
-		DrawableGeometry::setColor(0.1, 0.2, 0.8, 0.0, 0.5, 1.0, 1.0);
-		setGLColor();
-
-	}
-	else {
-		DrawableGeometry::setColor(0.9, 0.5, 0.3, 0.0, 0.5, 1.0, 1.0);
-		setGLColor();
-	}
-
-
-	glBegin(GL_QUADS);	
-    
-    glVertex3f(0, -1, 0);
-	glVertex3f(4, -1, 0);
-	glVertex3f(4, -1, 50);
-	glVertex3f(0, -1, 50);
-
-	glEnd();
-
-	glPopMatrix();
-
-
-	//lane 2
-	glPushMatrix();
-
-	if(laneSelect == 2) {
-
-		DrawableGeometry::setColor(0.1, 0.2, 0.8, 0.0, 0.5, 1.0, 1.0);
-		setGLColor();
-
-	}
-	else {
-		DrawableGeometry::setColor(0.9, 0.5, 0.3, 0.0, 0.5, 1.0, 1.0);
-		setGLColor();
-	}
-
-	glBegin(GL_QUADS);
-    
-    glVertex3f(4, -1, 0);
-	glVertex3f(8, -1, 0);
-	glVertex3f(8, -1, 50);
-	glVertex3f(4, -1, 50);
-
-	glEnd();
-	
-	glPopMatrix();
-
-	
-
-	//lane 3
-	glPushMatrix();
-
-	if(laneSelect == 3) {
-		DrawableGeometry::setColor(0.1, 0.2, 0.8, 0.0, 0.5, 1.0, 1.0);
-		setGLColor();
-	}
-	else {
-		DrawableGeometry::setColor(0.9, 0.5, 0.3, 0.0, 0.5, 1.0, 1.0);
-		setGLColor();
-	}
-
-
-
-	glBegin(GL_QUADS);
-    
-    glVertex3f(8, -1, 0);
-	glVertex3f(12, -1, 0);
-	glVertex3f(12, -1, 50);
-	glVertex3f(8, -1, 50);
-
-	glEnd();
-	
-	glPopMatrix();
-
-
-
-	//lane 4
-	glPushMatrix();
-
-	if(laneSelect == 4) {
-		DrawableGeometry::setColor(0.1, 0.2, 0.8, 0.0, 0.5, 1.0, 1.0);
-		setGLColor();
-	}
-	else {
-		DrawableGeometry::setColor(0.9, 0.5, 0.3, 0.0, 0.5, 1.0, 1.0);
-		setGLColor();
-	}
-
-	glBegin(GL_QUADS);
-    
-    glVertex3f(12, -1, 0);
-	glVertex3f(16, -1, 0);
-	glVertex3f(16, -1, 50);
-	glVertex3f(12, -1, 50);
-
-	glEnd();
-
-	glPopMatrix();
-
-	
-	//lane 5
-	glPushMatrix();
-
-	if(laneSelect == 5) {
-		DrawableGeometry::setColor(0.1, 0.2, 0.8, 0.0, 0.5, 1.0, 1.0);
-		setGLColor();
-	}
-	else {
-		DrawableGeometry::setColor(0.9, 0.5, 0.3, 0.0, 0.5, 1.0, 1.0);
-		setGLColor();
-	}
-
-	glBegin(GL_QUADS);
-    
-    glVertex3f(16, -1, 0);
-	glVertex3f(20, -1, 0);
-	glVertex3f(20, -1, 50);
-	glVertex3f(16, -1, 50);
-
-	glEnd();
-
-	glPopMatrix();
 
 	//draw team 0
-	glPushMatrix();
 
-	if(teamSelect == 0) {
-		DrawableGeometry::setColor(0.1, 0.2, 0.8, 0.0, 0.5, 1.0, 1.0);
-		setGLColor();
-	}
-	else {
-		DrawableGeometry::setColor(0.9, 0.5, 0.3, 0.0, 0.5, 1.0, 1.0);
-		setGLColor();
-	}
+	if(teamSelect != 0)
+		setColor(0.9, 0.5, 0.3, 0.0, 0.5, 1.0, 1.0);
+    setGLColor();
 
 	glBegin(GL_QUADS);
-    
     glVertex3f(0, -1, 0);
 	glVertex3f(20, -1, 0);
 	glVertex3f(20, -1, -10);
 	glVertex3f(0, -1, -10);
-
 	glEnd();
 
-	glPopMatrix();
 
-	//draw team 1
-	glPushMatrix();
-
-	if(teamSelect == 1) {
-		DrawableGeometry::setColor(0.1, 0.2, 0.8, 0.0, 0.5, 1.0, 1.0);
-		setGLColor();
-	}
-	else {
-		DrawableGeometry::setColor(0.9, 0.5, 0.3, 0.0, 0.5, 1.0, 1.0);
-		setGLColor();
-	}
-
-	glBegin(GL_QUADS);
+    setColor(0.1, 0.2, 0.8, 0.0, 0.5, 1.0, 1.0);
     
+	//draw team 1
+    if(teamSelect != 1)
+		setColor(0.9, 0.5, 0.3, 0.0, 0.5, 1.0, 1.0);
+    setGLColor();
+    
+	glBegin(GL_QUADS);
     glVertex3f(0, -1, 50);
 	glVertex3f(20, -1, 50);
 	glVertex3f(20, -1, 60);
 	glVertex3f(0, -1, 60);
-
 	glEnd();
-
-	glPopMatrix();
-
-	
-	
-	
-	glPopMatrix();
-
-
 
 }
 
-
 void MiniGame::setLane(int lane) {
-
 	laneSelect = lane;
-
 }
 
 void MiniGame::setTeamSelect(int team) {

@@ -8,13 +8,9 @@
 #ifndef H_MODEL
 #define H_MODEL
 
-/**
- * CONSTANTS
- */
-
-//DEFAULTS
-#define DEFAULT_NUM_PLAYERS 2
-#define DEFAULT_NUM_NODES 20
+///////
+//CONSTANTS
+///////
 
 //GL CONSTANTS
 #define WIDTH 500
@@ -35,6 +31,7 @@
 #define META 3
 
 //GAME CONSTANTS
+#define NUM_LANES 5
 #define MAP_DENSITY 3 //1(linear) to 6(full mesh)
 #define MAP_DENSITY_STRICTNESS 1000000 //Number of attempts worth spending to try and fit density rule
 #define NULL_LOCATION 99999 //'unattainable' row/column to be used for non-placed nodes
@@ -53,18 +50,12 @@
 #define SHIP_TYPE_CARRIER  2
 #define SHIP_TYPE_BATTLE   3
 
-/**
- * END_CONSTANTS
- */
-
+//DEFAULTS
+#define DEFAULT_NUM_PLAYERS 2
+#define DEFAULT_NUM_NODES 20
+#define DEFAULT_STATE MINIGAME
 
 //Forward declarations- everything has access to everything (woah)
-
-
-#include <iostream>
-#include <string>
-#include <math.h>
-
 class Menu;
 class Player;
 class Fleet;
@@ -75,6 +66,10 @@ class Map;
 class Node;
 class Selector;
 class MiniGame;
+
+#include <iostream>
+#include <string>
+#include <math.h>
 
 #include "Menu.h"
 #include "Player.h"

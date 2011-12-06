@@ -33,7 +33,7 @@ void Selector::compileDL()
     float sqrtOfThreeOverTwo = sqrt(3.0/2.0);
     glPushMatrix();
     glNewList(Selector::displayList, GL_COMPILE);
-    ;
+    
     glScalef(1.1f, 1.0f, 1.1f);
     glBegin(GL_TRIANGLES);
     
@@ -76,8 +76,8 @@ void Selector::draw()
 
 void Selector::set(float x, float y)
 {
-    int tCol = (int)5*x;
-    int tRow = (int)-5*y;
+    int tCol = (int)-5*x;
+    int tRow = (int)5*y;
     if((tCol + tRow)%2 == 0)
     {
         this->column = tCol;
