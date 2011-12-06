@@ -14,7 +14,7 @@ GLuint Selector::displayList;
 
 Selector::Selector()
 {
-    layer = -.25f;
+    layer = -.1f;
     setColor(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
     row = 0;
     column = 0;

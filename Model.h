@@ -53,7 +53,7 @@
 //DEFAULTS
 #define DEFAULT_NUM_PLAYERS 2
 #define DEFAULT_NUM_NODES 20
-#define DEFAULT_STATE MINIGAME
+#define DEFAULT_STATE GAMEPLAY
 
 //Forward declarations- everything has access to everything (woah)
 class Menu;

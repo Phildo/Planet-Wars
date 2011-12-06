@@ -54,17 +54,11 @@ void initGame(int numPlayers, int numNodes)
 /////////
 
 void pregame(){
-	//Main Viewport
-    glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
-	glViewport(0 , 0 , model->width, model->height);
-    
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(model->camCenterX+model->mouseX*-10, model->zoom, model->camCenterY+model->mouseY*10, 
               model->camCenterX, 0, model->camCenterY, 
-              0, 0, 1); 
+              0, 0, -1); 
     
 	menu->setMenu(TITLE);
 	glPushMatrix();
@@ -74,12 +68,6 @@ void pregame(){
 }
 
 void gameplay(){
-	//Main Viewport
-    glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
-	glViewport(0 , 0 , model->width, model->height);
-    
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(model->camCenterX+model->mouseX*-10, model->zoom, model->camCenterY+model->mouseY*10,
@@ -91,21 +79,12 @@ void gameplay(){
 }
 
 void minigame() { 
-    
-    game->update();
-    
-	//Main Viewport
-    glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
-	glViewport(0 , 0 , model->width, model->height);
-    
-	glMatrixMode(GL_MODELVIEW);
+    glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(0.0, 50.0, -10.0, 0.0, 0.0, 20.0, 0.0, 1.0, 0.0);
     
+    game->update();
 	game->drawGame();
-	
 }
 
 
@@ -124,6 +103,12 @@ void DisplayFunc()
 {
 	//Clear screen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    //Main Viewport
+    glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
+	glViewport(0 , 0 , model->width, model->height);
     
 	// The following set the different modes of the game.
 	switch(model->state){
