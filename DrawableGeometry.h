@@ -8,7 +8,7 @@
 #ifndef	DRAWABLEGEOMETRY_H
 #define	DRAWABLEGEOMETRY_H
 
-#ifndef __WIN32__
+#ifndef _WIN32
 #import <OpenGL/OpenGL.h>
 #import <GLUT/GLUT.h>
 #elif

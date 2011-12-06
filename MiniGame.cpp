@@ -87,7 +87,7 @@ void MiniGame::drawGame() {
     
     //Draw Units
 	for(int i = 0; i < units.size(); i++) {
-		units[i]->draw();
+		units[i]->drawAtPosition();
 	}
 
     //Draw Lanes

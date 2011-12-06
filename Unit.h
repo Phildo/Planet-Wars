@@ -32,13 +32,17 @@ public:
 	void takeDamage(int damage);
 	void hasAttacked();
 	double* getPosition();
-	void draw();
 	void update();
 	void setMoving(bool moving);
 	void setPosition();
 	void checkType();
 	bool isDead();
 
+    static bool compiled;       //True iff displayList names a valid glDisplayList
+    static GLuint displayList;  //Name of displaylist for object
+    void compileDL();
+    void draw();
+    void drawAtPosition();
 
 
 };

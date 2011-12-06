@@ -7,7 +7,7 @@
 //
 
 
-#ifndef __WIN32__
+#ifndef _WIN32
     #include <OpenGL/OpenGL.h>
     #include <GLUT/GLUT.h>
 #elif
@@ -111,6 +111,8 @@ void DisplayFunc()
 	glViewport(0 , 0 , model->width, model->height);
     
 	// The following set the different modes of the game.
+    
+    model->state = MINIGAME;
 	switch(model->state){
         case TITLE:
             pregame();

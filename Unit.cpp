@@ -9,11 +9,11 @@
 #include "Unit.h"
 #include "Model.h"
 
-
-
+bool Unit::compiled = false;
+GLuint Unit::displayList;
 
 Unit::Unit(void) {
-
+    if(!Unit::compiled) Unit::compileDL();
 }
 
 Unit::Unit(int uType, int uLane, int uTeam) {
@@ -22,9 +22,10 @@ Unit::Unit(int uType, int uLane, int uTeam) {
     lane = uLane;
     canAttack = true;
 	team = uTeam;
+    isMoving = true;
 	setPosition();
-	isMoving = true;
-
+    checkType();
+    if(!Unit::compiled) Unit::compileDL();
 }
 
 void Unit::takeDamage(int damage) {
@@ -55,51 +56,6 @@ void Unit::update() {
 	if(isMoving && team == 1) {
 		Unit::position[2] -= .1;
 	}
-	
-
-}
-
-void Unit::draw() {
-	
-
-	glPushMatrix();
-
-	
-	glTranslated(position[0], position[1], position[2]);
-
-	//glRotatef( X, 1.0f, 0.0f, 0.0f);
-	//glRotatef( Y, 0.0f, 1.0f, 0.0f);
-	//glRotatef( Z, 0.0f, 0.0f, 1.0f);
-
-	glLineWidth( 3.0 );
-	
-	//glEnable(GL_LIGHTING);
-
-	glBegin( GL_LINE_LOOP );/// don't workglPointSize( 0.0 );
-	GLUquadricObj *quadric;
-	quadric = gluNewQuadric();
-
-	gluQuadricDrawStyle(quadric, GLU_FILL );
-	
-	//glColor3d(1.0,  0.0, 0.0);
-
-	//DrawableGeometry::setColor(1.0, 0.0, 0.0, 0.0, 0.5, 1.0, 1.0);
-	Unit::checkType();	
-	DrawableGeometry::setGLColor();
-
-	
-	gluSphere( quadric , 1 , 36 , 18 );
-
-	gluDeleteQuadric(quadric);
-	glEndList();
-
-	//glDisable(GL_LIGHTING);
-
-	glEnd();
-
-
-	glPopMatrix();
-
 }
 
 void Unit::setPosition() {
@@ -195,42 +151,65 @@ void Unit::checkType() {
 	switch(type) {
 
 	case 1:
-		Unit::health = 1000;
-		Unit::attackDamage = 100;
-		Unit::range = 4;
-		DrawableGeometry::setColor(1.0, 0.0, 0.0, 0.0, 0.5, 1.0, 1.0);
+		health = 1000;
+		attackDamage = 100;
+		range = 4;
+		setColor(1.0, 0.0, 0.0, 0.0, 0.5, 1.0, 1.0);
 		break;
 
 	case 2:
-		Unit::health = 1800;
-		Unit::attackDamage = 50;
-		Unit::range = 1;
-		DrawableGeometry::setColor(0.0, 1.0, 0.0, 0.0, 0.5, 1.0, 1.0);
+		health = 1800;
+		attackDamage = 50;
+		range = 1;
+		setColor(0.0, 1.0, 0.0, 0.0, 0.5, 1.0, 1.0);
 		break;
 
 	case 3:
-		Unit::health = 800;
-		Unit::attackDamage = 180;
-		Unit::range = 3;
-		DrawableGeometry::setColor(0.0, 0.0, 1.0, 0.0, 0.5, 1.0, 1.0);
+		health = 800;
+		attackDamage = 180;
+		range = 3;
+		setColor(0.0, 0.0, 1.0, 0.0, 0.5, 1.0, 1.0);
 		break;
 
 	case 4:
-		Unit::health = 700;
-		Unit::attackDamage = 80;
-		Unit::range = 10;
+		health = 700;
+		attackDamage = 80;
+		range = 10;
 		DrawableGeometry::setColor(1.0, 0.0, 1.0, 0.0, 0.5, 1.0, 1.0);
 		break;
-
-
 	}
-
 }
 
 bool Unit::isDead() {
 	return health < 0;
 }
 
+void Unit::compileDL()
+{
+    if(Unit::compiled) return;
+    Unit::displayList = glGenLists(1);
+    glNewList(Unit::displayList, GL_COMPILE);
+    
+	gluSphere(gluNewQuadric(), 1, 36, 18);
+    
+    glEndList();
+    Unit::compiled = true;
+}
+
+void Unit::draw()
+{
+    if(!Unit::compiled) return;
+    setGLColor();
+    glCallList(Unit::displayList);
+}
+
+void Unit::drawAtPosition()
+{
+    glPushMatrix();
+	glTranslated(position[0], position[1], position[2]);
+    draw();
+    glPopMatrix();
+}
 
 
 
