@@ -73,3 +73,22 @@ void Selector::draw()
     setGLColor();
     glCallList(Selector::displayList);
 }
+
+void Selector::set(int x, int y)
+{
+    int tCol = (int)-5*x;
+    int tRow = (int)5*y;
+    if((tCol + tRow)%2 == 0)
+    {
+        this->column = tCol;
+        this->row = tRow;
+    }
+}
+
+void Selector::drawAtPosition()
+{
+    glPushMatrix();
+    glTranslated(column*2, 0, row*1.2);
+    draw();
+    glPopMatrix();
+}

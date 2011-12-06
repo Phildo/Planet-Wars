@@ -5,10 +5,6 @@
 //  Created by Philip Dougherty on 11/23/11.
 //  Copyright 2011 UW Madison. All rights reserved.
 //
-#include <iostream>
-#include <string>
-#include <math.h>
-
 #include "Model.h"
 
 Model * Model::selfPtr = NULL;
@@ -18,8 +14,11 @@ Model::Model()
     if(Model::selfPtr)
         throw (new std::string("DO NOT CALL CONSTRUCTOR DIRECTLY. USE Model::getSelf()"));
     
-    width = WIDTH;
-    height = HEIGHT;
+    this->numPlayers = DEFAULT_NUM_PLAYERS;
+    this->numNodes = DEFAULT_NUM_NODES;
+    
+    this->width = WIDTH;
+    this->height = HEIGHT;
     
     this->nullNode = NULL;
     this->nullPlayer = NULL;
@@ -43,22 +42,46 @@ Model * Model::getSelf()
 
 Model::~Model()
 {
+	delete menu;
     delete playerArray;
+    delete map;
     delete nodeArray;
     delete selector;
-    delete selfPtr;
+    delete mgame;
 }
 
-void Model::setNumPlayers(int numPlayers)
+Player** Model::setNumPlayers(int numPlayers)
 {
-    Model::getSelf()->numPlayers = numPlayers;
-    Model::getSelf()->playerArray = new Player*[numPlayers];
+    if(!nodeArray) throw new std::string("Allocate Nodes before Players");
+    this->numPlayers = numPlayers;
+    this->playerArray = new Player*[numPlayers];
+    
+    for(int i = 0; i < numPlayers; i++)
+    {
+        playerArray[i] = new Player();
+        playerArray[i]->conquerNode(nodeArray[i]);
+    }
+    
+    return playerArray;
 }
 
-void Model::setNumNodes(int numNodes)
+Node** Model::setNumNodes(int numNodes)
 {
-    Model::getSelf()->numNodes = numNodes;
-    Model::getSelf()->nodeArray = new Node*[numNodes];
+    this->numNodes = numNodes;
+    this->nodeArray = new Node*[numNodes];
+    
+    for(int i = 0; i < numNodes; i++)
+    {
+        nodeArray[i] = new Node(random()*NUM_TYPES);
+    }
+    
+    return nodeArray;
+}
+
+Map * Model::setMap()
+{
+    map = new Map(numNodes);
+    return map;
 }
 
 Selector * Model::setSelector()
@@ -67,10 +90,16 @@ Selector * Model::setSelector()
     return this->selector;
 }
 
-Menus * Model::setMenu(int menu){
-	this->curMenu = new Menus();
-	this->curMenu->setMenu(menu);
-    return this->curMenu;
+Menu * Model::setMenu()
+{
+    this->menu = new Menu();
+    return this->menu;
+}
+
+MiniGame * Model::setMiniGame()
+{
+    this->mgame = new MiniGame();
+    return this->mgame;
 }
 
 void Model::setCameraParams()

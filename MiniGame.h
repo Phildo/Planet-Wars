@@ -1,11 +1,9 @@
-#pragma once
+#ifndef MINIGAME_H
+#define MINIGAME_H
 
-#include <GL\freeglut.h>
-#include <GL\GL.h>
-#include "Unit.h"
 #include <vector>
-
 #include "DrawableGeometry.h"
+#include "Unit.h"
 
 using namespace std;
 
@@ -29,8 +27,6 @@ public:
 	void update();
 	void setLane(int lane);
 	void setTeamSelect(int team);
-
-
-
 };
 
+#endif

@@ -46,6 +46,7 @@ public:
     static GLuint displayList;  //Name of displaylist for object
     void compileDL();
     void draw();
+    void drawAtPosition();
 };
 
 #endif

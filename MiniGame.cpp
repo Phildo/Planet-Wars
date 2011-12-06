@@ -74,7 +74,7 @@ void MiniGame::removeUnit(int index) {
 
 void MiniGame::update() {
 
-	int index = 0;
+	//int index = 0;
 
 	for(int i = 0; i < units.size(); i++) {
 

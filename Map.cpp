@@ -1,25 +1,27 @@
+//
+//  Map.cpp
+//  PlanetWars
+//
+//  Created by Philip Dougherty on 12/5/11.
+//  Copyright 2011 UW Madison. All rights reserved.
+//
 
+#include "Map.h"
 
-
-#include "MapCreator.h"
-#include "Node.h"
-
-
-MapCreator::MapCreator(void)
+Map::Map(int numNodes)
 {
+    this->nodeArray = Model::getSelf()->nodeArray;
+    this->selector = Model::getSelf()->selector;
+    createNodeMap(numNodes);
 }
 
-
-MapCreator::~MapCreator(void)
+Map::~Map()
 {
+    delete nodeArray;
+    delete selector;
 }
 
-
-/*
- * GAME LOGIC FUNCTIONS
- */
-
-void MapCreator::linkNodeToNeighbors(Node * node)
+void Map::linkNodeToNeighbors(Node * node)
 {
     int col;
     int row;
@@ -54,7 +56,7 @@ void MapCreator::linkNodeToNeighbors(Node * node)
                 throw new std::string("PICKED NEIGHBOR OUTSIDE BOUNDS");
                 break;
         }
-
+        
         for(int j = 0; j < Model::getSelf()->numNodes; j++)
         {
             if(nodeArray[j]->column == col && nodeArray[j]->row == row)
@@ -68,16 +70,18 @@ void MapCreator::linkNodeToNeighbors(Node * node)
     }
 }
 
-void MapCreator::createNodeMap(Node * centerNode, int numNodes)
+void Map::createNodeMap(int numNodes)
 {
     //  Two important nodes in this algorithm- sourceNode and newNeighbor. 
     //  sourceNode is the node currently looking to add a neighbor (and should already be assigned a location). 
     //  newNeighbor is the node that is looking to be placed, and will be placed next to sourceNode.
     Node* sourceNode;
     Node* newNeighbor;
+    Node* centerNode;
     int nodesLeftToBeAssigned = numNodes;
-    int rNode;
-    int rNeighbor;
+    
+    int rNode; //Random node from copy array
+    int rNeighbor; //Random neighbor to be assigned
     int numAssignAttempts;
     bool sourceEligible;
     
@@ -86,20 +90,16 @@ void MapCreator::createNodeMap(Node * centerNode, int numNodes)
     int colMin = 0;
     int colMax = 0;
     
-    //Holds all nodes yet to be assigned. Node gets removed as it is assigned a location
-    //Starts with all nodes but 'centerNode', as it is by definition already assigned
     Node** copyArray = new Node*[numNodes];
     for(int i = 0; i < numNodes-1; i++)
     {
-        if(i < Model::getSelf()->numPlayers) copyArray[i] = nodeArray[i];
-        else copyArray[i] = nodeArray[i+1];
+        copyArray[i] = nodeArray[i];
     }
-    nodesLeftToBeAssigned--;
-    
+    centerNode = nodeArray[numNodes];
     centerNode->row = 0;
     centerNode->column = 0;
-    //sourceNode = centerNode;
-
+    nodesLeftToBeAssigned--;
+    
     bool nodeAssigned = false;
     //Assign each node a location
     while(nodesLeftToBeAssigned > 0)
@@ -114,7 +114,7 @@ void MapCreator::createNodeMap(Node * centerNode, int numNodes)
         numAssignAttempts = 0;
         while(!nodeAssigned)
         {
-            //If already tried more than 5 times, ignore the MAP_DENSITY rule
+            //If already tried more than 5 times, loosen the MAP_DENSITY rule
             if(numAssignAttempts < MAP_DENSITY_STRICTNESS)
                 sourceEligible = sourceNode->numNeighborNodes < MAP_DENSITY && ((rNeighbor = sourceNode->getRandomFreeNeighbor()) != -1);
             else
@@ -157,7 +157,7 @@ void MapCreator::createNodeMap(Node * centerNode, int numNodes)
                 //Uncomment for debugging info
                 //std::cout << "SourceNode: " << sourceNode->column << "," << sourceNode->row << std::endl;
                 //std::cout << "NeighborNode: " << newNeighbor->column << "," << newNeighbor->row << "\n" << std::endl;
-
+                
                 //Link new node to all other neighbors based on coordinate
                 linkNodeToNeighbors(newNeighbor);
                 
@@ -195,3 +195,14 @@ void MapCreator::createNodeMap(Node * centerNode, int numNodes)
     
     delete copyArray;
 }
+
+void Map::draw()
+{
+    selector->set((int)Model::getSelf()->mouseX, (int)Model::getSelf()->mouseY);
+    selector->drawAtPosition();
+    for(int i = 0; i < Model::getSelf()->numNodes; i++)
+    {
+        nodeArray[i]->drawAtPosition();
+    }
+}
+

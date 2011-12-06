@@ -8,8 +8,13 @@
 #ifndef	DRAWABLEGEOMETRY_H
 #define	DRAWABLEGEOMETRY_H
 
+#ifndef __WIN32__
+#import <OpenGL/OpenGL.h>
+#import <GLUT/GLUT.h>
+#elif
 #include <GL\freeglut.h>
 #include <GL\GL.h>
+#endif
 
 
 class DrawableGeometry
@@ -18,7 +23,7 @@ public:
     DrawableGeometry();         //Runs compile() if not already compiled
     virtual ~DrawableGeometry();
     
-    int layer;
+    float layer;
     
     static bool compiled;       //True iff displayList names a valid glDisplayList
     static GLuint displayList;  //Name of displaylist for object

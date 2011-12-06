@@ -150,3 +150,11 @@ void Node::draw()
     setGLColor();
     glCallList(Node::displayList);
 }
+
+void Node::drawAtPosition()
+{
+    glPushMatrix();
+    glTranslated(column*2, 0, row*1.2);
+    draw();
+    glPopMatrix();
+}

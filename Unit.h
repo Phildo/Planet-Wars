@@ -8,8 +8,7 @@
 #ifndef H_UNIT
 #define H_UNIT
 
-#include <GL\freeglut.h>
-#include <GL\GL.h>
+#include "Model.h"
 #include "DrawableGeometry.h"
 
 class Unit : public DrawableGeometry
