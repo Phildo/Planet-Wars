@@ -18,7 +18,7 @@ void Node::initStuff()
     this->numNeighborNodes = 0;
     row = NULL_LOCATION;
     column = NULL_LOCATION;
-    layer = 0;
+    layer = 0.0f;
     
     if(!Node::compiled) Node::compileDL();
 }
@@ -109,35 +109,35 @@ void Node::compileDL()
 {
     if(Node::compiled) return;
     Node::displayList = glGenLists(1);
-    double sqrtOfThreeOverTwo = sqrt(3.0/2.0);
+    float sqrtOfThreeOverTwo = sqrt(3.0/2.0);
 
     glNewList(Node::displayList, GL_COMPILE);
     
     glBegin(GL_TRIANGLES);
     
-    glVertex3d(0, 0, 0);
-    glVertex3d(1, layer/5, 0);
-    glVertex3d(0.5, layer/5, sqrtOfThreeOverTwo);
+    glVertex3f(0, 0, 0);
+    glVertex3f(1, layer, 0);
+    glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
 
-    glVertex3d(0, 0, 0);
-    glVertex3d(0.5, layer/5, sqrtOfThreeOverTwo);
-    glVertex3d(-0.5, layer/5, sqrtOfThreeOverTwo);
+    glVertex3f(0, 0, 0);
+    glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
+    glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
     
-    glVertex3d(0, 0, 0);
-    glVertex3d(-0.5, layer/5, sqrtOfThreeOverTwo);
-    glVertex3d(-1, layer/5, 0);
+    glVertex3f(0, 0, 0);
+    glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
+    glVertex3f(-1, layer, 0);
     
-    glVertex3d(0, 0, 0);
-    glVertex3d(-1, layer/5, 0);
-    glVertex3d(-0.5, layer/5, -1*sqrtOfThreeOverTwo);
+    glVertex3f(0, 0, 0);
+    glVertex3f(-1, layer, 0);
+    glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
     
-    glVertex3d(0, 0, 0);
-    glVertex3d(-0.5, layer/5, -1*sqrtOfThreeOverTwo);
-    glVertex3d(0.5, layer/5, -1*sqrtOfThreeOverTwo);  
+    glVertex3f(0, 0, 0);
+    glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
+    glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
     
-    glVertex3d(0, 0, 0);
-    glVertex3d(0.5, layer/5, -1*sqrtOfThreeOverTwo);  
-    glVertex3d(1, layer/5, 0);
+    glVertex3f(0, 0, 0);
+    glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
+    glVertex3f(1, layer, 0);
     
     glEnd();
     glEndList();
@@ -154,7 +154,7 @@ void Node::draw()
 void Node::drawAtPosition()
 {
     glPushMatrix();
-    glTranslated(column*2, 0, row*1.2);
+    glTranslated(column*1.7, 0, row*1.3);
     draw();
     glPopMatrix();
 }

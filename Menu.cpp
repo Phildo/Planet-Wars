@@ -15,7 +15,7 @@ GLuint Menu::displayList;
 
 Menu::Menu()
 {
-    layer = 0;
+    layer = 1.0f;
     setColor(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0); // Base color
     if(!Menu::compiled) Menu::compileDL();
 }
@@ -90,10 +90,10 @@ void Menu::compileDL()
     
     glBegin(GL_QUADS);
     
-    glVertex3d(-1, layer, -1);
-	glVertex3d(-1, layer, 1);
-	glVertex3d(1, layer, 1);
-    glVertex3d(1, layer, -1);
+    glVertex3f(-1, layer, -1);
+	glVertex3f(-1, layer, 1);
+	glVertex3f(1, layer, 1);
+    glVertex3f(1, layer, -1);
     
     glEnd();
     glPopMatrix();

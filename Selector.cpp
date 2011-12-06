@@ -14,7 +14,7 @@ GLuint Selector::displayList;
 
 Selector::Selector()
 {
-    layer = -1;
+    layer = -.25f;
     setColor(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
     row = 0;
     column = 0;
@@ -30,36 +30,36 @@ void Selector::compileDL()
 {
     if(Selector::compiled) return;
     Selector::displayList = glGenLists(1);
-    double sqrtOfThreeOverTwo = sqrt(3.0/2.0);
+    float sqrtOfThreeOverTwo = sqrt(3.0/2.0);
     glPushMatrix();
-    //glScaled(100, 10, 10);
     glNewList(Selector::displayList, GL_COMPILE);
-    
+    ;
+    glScalef(1.1f, 1.0f, 1.1f);
     glBegin(GL_TRIANGLES);
     
-    glVertex3d(0, layer/5, 0);
-    glVertex3d(1, layer/5, 0);
-    glVertex3d(0.5, layer/5, sqrtOfThreeOverTwo);
+    glVertex3f(0, layer, 0);
+    glVertex3f(1, layer, 0);
+    glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
     
-    glVertex3d(0, layer/5, 0);
-    glVertex3d(0.5, layer/5, sqrtOfThreeOverTwo);
-    glVertex3d(-0.5, layer/5, sqrtOfThreeOverTwo);
+    glVertex3f(0, layer, 0);
+    glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
+    glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
     
-    glVertex3d(0, layer/5, 0);
-    glVertex3d(-0.5, layer/5, sqrtOfThreeOverTwo);
-    glVertex3d(-1, layer/5, 0);
+    glVertex3f(0, layer, 0);
+    glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
+    glVertex3f(-1, layer, 0);
     
-    glVertex3d(0, layer/5, 0);
-    glVertex3d(-1, layer/5, 0);
-    glVertex3d(-0.5, layer/5, -1*sqrtOfThreeOverTwo);
+    glVertex3f(0, layer, 0);
+    glVertex3f(-1, layer, 0);
+    glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
     
-    glVertex3d(0, layer/5, 0);
-    glVertex3d(-0.5, layer/5, -1*sqrtOfThreeOverTwo);
-    glVertex3d(0.5, layer/5, -1*sqrtOfThreeOverTwo);  
+    glVertex3f(0, layer, 0);
+    glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
+    glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
     
-    glVertex3d(0, layer/5, 0);
-    glVertex3d(0.5, layer/5, -1*sqrtOfThreeOverTwo);  
-    glVertex3d(1, layer/5, 0);
+    glVertex3f(0, layer, 0);
+    glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
+    glVertex3f(1, layer, 0);
     
     glEnd();
     glPopMatrix();
@@ -74,10 +74,10 @@ void Selector::draw()
     glCallList(Selector::displayList);
 }
 
-void Selector::set(int x, int y)
+void Selector::set(float x, float y)
 {
-    int tCol = (int)-5*x;
-    int tRow = (int)5*y;
+    int tCol = (int)5*x;
+    int tRow = (int)-5*y;
     if((tCol + tRow)%2 == 0)
     {
         this->column = tCol;
@@ -88,7 +88,7 @@ void Selector::set(int x, int y)
 void Selector::drawAtPosition()
 {
     glPushMatrix();
-    glTranslated(column*2, 0, row*1.2);
+    glTranslated(column*1.7, 0, row*1.3);
     draw();
     glPopMatrix();
 }

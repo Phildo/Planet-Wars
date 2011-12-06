@@ -32,7 +32,7 @@ public:
     virtual void draw();        //draws geometry at current location
     
     //Sets specular, ambient, diffuse, and color arrays based on a color with weights on each
-    virtual void setColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a, double sp, double di, double am);
+    virtual void setColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a, float sp, float di, float am);
     //Calls glMaterial on specular, ambient, diffuse, and glColor on color based on stored variables
     virtual void setGLColor();
     

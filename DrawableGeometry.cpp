@@ -40,7 +40,7 @@ void DrawableGeometry::draw()
     glCallList(displayList);
 }
 
-void DrawableGeometry::setColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a, double sp, double di, double am)
+void DrawableGeometry::setColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a, float sp, float di, float am)
 {
 	color[0] = r;
 	color[1] = g;

@@ -104,7 +104,7 @@ MiniGame * Model::setMiniGame()
 
 void Model::setCameraParams()
 {
-    Model::getSelf()->zoom = 4*sqrt(std::max ((double)(rowMax - rowMin), (double)(colMax-colMin))*2.0);
+    Model::getSelf()->zoom = 4*sqrt(std::max ((float)(rowMax - rowMin), (float)(colMax-colMin))*2.0);
     camCenterX = (colMax + colMin)/2.0;
     camCenterY = (rowMax + rowMin)/2.0;
 }
@@ -115,7 +115,7 @@ void Model::setCameraParams()
  */
 
 //Generates a value from 0-1. Just makes code cleaner.
-double Model::random()
+float Model::random()
 {
-    return rand()/(double)RAND_MAX;
+    return rand()/(float)RAND_MAX;
 }

@@ -20,13 +20,19 @@
 #define WIDTH 500
 #define HEIGHT 400
 
-//MENU CONSTANTS
+//STATE CONSTANTS
 #define TITLEMENU 0
 #define MAINMENU 1
 #define GAMEPLAY 2
 #define MINIPAUSE 3
 #define METAPAUSE 4
 #define MINIGAME 5
+
+//MENU
+#define TITLE 0
+#define MAIN 1
+#define MINI 2
+#define META 3
 
 //GAME CONSTANTS
 #define MAP_DENSITY 3 //1(linear) to 6(full mesh)
@@ -95,11 +101,11 @@ public:
     /////////
     int width;
     int height;
-    double mouseX;
-    double mouseY;
-    double zoom;
-    double camCenterX;
-    double camCenterY;
+    float mouseX;
+    float mouseY;
+    float zoom;
+    float camCenterX;
+    float camCenterY;
     
     /////////
     //Game Vars
@@ -142,7 +148,7 @@ public:
     ~Model();
     
     //HELPER FUNCTIONS
-    static double random();
+    static float random();
 };
 
 #endif

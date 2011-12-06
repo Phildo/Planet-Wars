@@ -53,13 +53,13 @@ void pregame(){
 	//Main Viewport
     glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0 , ((double) Model::getSelf()->width) / ((double) Model::getSelf()->height), 1.0f , 100.0);
-	glViewport(0 , 0 , Model::getSelf()->width, Model::getSelf()->height);
+	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
+	glViewport(0 , 0 , model->width, model->height);
     
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(Model::getSelf()->camCenterX+Model::getSelf()->mouseX*10, Model::getSelf()->zoom, Model::getSelf()->camCenterY+Model::getSelf()->mouseY*-10, 
-              Model::getSelf()->camCenterX, 0, Model::getSelf()->camCenterY, 
+	gluLookAt(model->camCenterX+model->mouseX*10, model->zoom, model->camCenterY+model->mouseY*-10, 
+              model->camCenterX, 0, model->camCenterY, 
               0, 0, 1); 
     
 	menu->setMenu(TITLE);
@@ -73,12 +73,12 @@ void gameplay(){
 	//Main Viewport
     glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0 , ((double) Model::getSelf()->width) / ((double) Model::getSelf()->height), 1.0f , 100.0);
-	glViewport(0 , 0 , Model::getSelf()->width, Model::getSelf()->height);
+	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
+	glViewport(0 , 0 , model->width, model->height);
     
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(Model::getSelf()->camCenterX+Model::getSelf()->mouseX*10, Model::getSelf()->zoom, Model::getSelf()->camCenterY+Model::getSelf()->mouseY*-10, Model::getSelf()->camCenterX, 0, Model::getSelf()->camCenterY, 0, 0, -1); 
+	gluLookAt(model->camCenterX+model->mouseX*10, model->zoom, model->camCenterY+model->mouseY*-10, model->camCenterX, 0, model->camCenterY, 0, 0, -1); 
     
 	// Draw different aspects of the game during gameplay:
 	map->draw();
@@ -89,8 +89,8 @@ void minigame() {
 	//Main Viewport
     glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0 , ((double) Model::getSelf()->width) / ((double) Model::getSelf()->height), 1.0f , 100.0);
-	glViewport(0 , 0 , Model::getSelf()->width, Model::getSelf()->height);
+	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
+	glViewport(0 , 0 , model->width, model->height);
     
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -110,14 +110,27 @@ void minigame() {
 //Called when mouse dragged (sets mouseX and mouseY from -1 to 1)
 void PassiveMotionFunc(int x, int y)
 {
-    model->mouseX = (-2.0*x/Model::getSelf()->width)+1.0;
-	model->mouseY = (2.0*y/Model::getSelf()->height)-1.0;
+    model->mouseX = (-2.0*x/model->width)+1.0;
+	model->mouseY = (2.0*y/model->height)-1.0;
 }
 
 void DisplayFunc()
 {
 	//Clear screen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    
+    glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
+	glViewport(0 , 0 , model->width, model->height);
+    
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(model->camCenterX+model->mouseX*10, model->zoom, model->camCenterY+model->mouseY*-10, 
+              model->camCenterX, 0, model->camCenterY, 
+              0, 0, 1); 
+
     
     map->draw();
     
@@ -219,8 +232,8 @@ void ReshapeFunc(int w, int h)
 {
 	if (h <= 0) 
 		return;
-    Model::getSelf()->height = h;
-	Model::getSelf()->width = w;
+    model->height = h;
+	model->width = w;
 }
 
 void initGL(int argc, char * argv[])
@@ -230,7 +243,7 @@ void initGL(int argc, char * argv[])
 	glutInitWindowPosition(0 , 0);
 	glutInitWindowSize(model->width,model->height);
 	glutCreateWindow("Sponge Bob to the Stars!");
-	glutFullScreen();
+	//glutFullScreen();
     
 	//One-Time setups
     glEnable(GL_DEPTH_TEST);

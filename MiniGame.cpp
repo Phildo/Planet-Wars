@@ -123,10 +123,10 @@ void MiniGame::drawGame() {
 
 	glBegin(GL_QUADS);	
     
-    glVertex3d(0, -1, 0);
-	glVertex3d(4, -1, 0);
-	glVertex3d(4, -1, 50);
-	glVertex3d(0, -1, 50);
+    glVertex3f(0, -1, 0);
+	glVertex3f(4, -1, 0);
+	glVertex3f(4, -1, 50);
+	glVertex3f(0, -1, 50);
 
 	glEnd();
 
@@ -149,10 +149,10 @@ void MiniGame::drawGame() {
 
 	glBegin(GL_QUADS);
     
-    glVertex3d(4, -1, 0);
-	glVertex3d(8, -1, 0);
-	glVertex3d(8, -1, 50);
-	glVertex3d(4, -1, 50);
+    glVertex3f(4, -1, 0);
+	glVertex3f(8, -1, 0);
+	glVertex3f(8, -1, 50);
+	glVertex3f(4, -1, 50);
 
 	glEnd();
 	
@@ -176,10 +176,10 @@ void MiniGame::drawGame() {
 
 	glBegin(GL_QUADS);
     
-    glVertex3d(8, -1, 0);
-	glVertex3d(12, -1, 0);
-	glVertex3d(12, -1, 50);
-	glVertex3d(8, -1, 50);
+    glVertex3f(8, -1, 0);
+	glVertex3f(12, -1, 0);
+	glVertex3f(12, -1, 50);
+	glVertex3f(8, -1, 50);
 
 	glEnd();
 	
@@ -201,10 +201,10 @@ void MiniGame::drawGame() {
 
 	glBegin(GL_QUADS);
     
-    glVertex3d(12, -1, 0);
-	glVertex3d(16, -1, 0);
-	glVertex3d(16, -1, 50);
-	glVertex3d(12, -1, 50);
+    glVertex3f(12, -1, 0);
+	glVertex3f(16, -1, 0);
+	glVertex3f(16, -1, 50);
+	glVertex3f(12, -1, 50);
 
 	glEnd();
 
@@ -225,10 +225,10 @@ void MiniGame::drawGame() {
 
 	glBegin(GL_QUADS);
     
-    glVertex3d(16, -1, 0);
-	glVertex3d(20, -1, 0);
-	glVertex3d(20, -1, 50);
-	glVertex3d(16, -1, 50);
+    glVertex3f(16, -1, 0);
+	glVertex3f(20, -1, 0);
+	glVertex3f(20, -1, 50);
+	glVertex3f(16, -1, 50);
 
 	glEnd();
 
@@ -248,10 +248,10 @@ void MiniGame::drawGame() {
 
 	glBegin(GL_QUADS);
     
-    glVertex3d(0, -1, 0);
-	glVertex3d(20, -1, 0);
-	glVertex3d(20, -1, -10);
-	glVertex3d(0, -1, -10);
+    glVertex3f(0, -1, 0);
+	glVertex3f(20, -1, 0);
+	glVertex3f(20, -1, -10);
+	glVertex3f(0, -1, -10);
 
 	glEnd();
 
@@ -271,10 +271,10 @@ void MiniGame::drawGame() {
 
 	glBegin(GL_QUADS);
     
-    glVertex3d(0, -1, 50);
-	glVertex3d(20, -1, 50);
-	glVertex3d(20, -1, 60);
-	glVertex3d(0, -1, 60);
+    glVertex3f(0, -1, 50);
+	glVertex3f(20, -1, 50);
+	glVertex3f(20, -1, 60);
+	glVertex3f(0, -1, 60);
 
 	glEnd();
 

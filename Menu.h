@@ -8,11 +8,7 @@
 #ifndef H_MENU
 #define H_MENU
 
-#define TITLE 0
-#define MAIN 1
-#define MINI 2
-#define META 3
-
+#include "Model.h"
 #include "DrawableGeometry.h"
 
 class Menu: public DrawableGeometry

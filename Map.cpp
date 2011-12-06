@@ -76,12 +76,13 @@ void Map::createNodeMap(int numNodes)
     //  sourceNode is the node currently looking to add a neighbor (and should already be assigned a location). 
     //  newNeighbor is the node that is looking to be placed, and will be placed next to sourceNode.
     Node* sourceNode;
-    Node* newNeighbor;
+    Node* nodeToBeAssigned;
     Node* centerNode;
     int nodesLeftToBeAssigned = numNodes;
     
     int rNode; //Random node from copy array
     int rNeighbor; //Random neighbor to be assigned
+    int mapDensity;
     int numAssignAttempts;
     bool sourceEligible;
     
@@ -95,7 +96,7 @@ void Map::createNodeMap(int numNodes)
     {
         copyArray[i] = nodeArray[i];
     }
-    centerNode = nodeArray[numNodes];
+    centerNode = nodeArray[numNodes-1];
     centerNode->row = 0;
     centerNode->column = 0;
     nodesLeftToBeAssigned--;
@@ -106,48 +107,51 @@ void Map::createNodeMap(int numNodes)
     {
         //Pick a random node from copyArray
         sourceNode = centerNode;
-        rNode = (int)(Model::random()*nodesLeftToBeAssigned);
-        newNeighbor = copyArray[rNode];
-        nodeAssigned = false;
-        
-        //Algorithm ensures node is assigned
         numAssignAttempts = 0;
+        mapDensity = MAP_DENSITY;
+        rNode = (int)(Model::random()*nodesLeftToBeAssigned);
+        nodeToBeAssigned = copyArray[rNode];
+        nodeAssigned = false;
+
         while(!nodeAssigned)
         {
             //If already tried more than 5 times, loosen the MAP_DENSITY rule
-            if(numAssignAttempts < MAP_DENSITY_STRICTNESS)
-                sourceEligible = sourceNode->numNeighborNodes < MAP_DENSITY && ((rNeighbor = sourceNode->getRandomFreeNeighbor()) != -1);
-            else
-                sourceEligible = (rNeighbor = sourceNode->getRandomFreeNeighbor()) != -1;
-            
+            if(numAssignAttempts > mapDensity)
+            {
+                mapDensity++;
+                numAssignAttempts = 0;
+            }
+
+            sourceEligible = (sourceNode->numNeighborNodes < MAP_DENSITY && ((rNeighbor = sourceNode->getRandomFreeNeighbor()) != -1));
+
             //If the current source node is eligible to have a neighbor
             if(sourceEligible)
             {
                 //Assign the new node a location coordinate
                 switch (rNeighbor) {
                     case 0:
-                        newNeighbor->row = sourceNode->row+2;
-                        newNeighbor->column = sourceNode->column;
+                        nodeToBeAssigned->row = sourceNode->row+2;
+                        nodeToBeAssigned->column = sourceNode->column;
                         break;
                     case 1:
-                        newNeighbor->row = sourceNode->row+1;
-                        newNeighbor->column = sourceNode->column+1;
+                        nodeToBeAssigned->row = sourceNode->row+1;
+                        nodeToBeAssigned->column = sourceNode->column+1;
                         break;
                     case 2:
-                        newNeighbor->row = sourceNode->row-1;
-                        newNeighbor->column = sourceNode->column+1;
+                        nodeToBeAssigned->row = sourceNode->row-1;
+                        nodeToBeAssigned->column = sourceNode->column+1;
                         break;
                     case 3:
-                        newNeighbor->row = sourceNode->row-2;
-                        newNeighbor->column = sourceNode->column;
+                        nodeToBeAssigned->row = sourceNode->row-2;
+                        nodeToBeAssigned->column = sourceNode->column;
                         break;
                     case 4:
-                        newNeighbor->row = sourceNode->row-1;
-                        newNeighbor->column = sourceNode->column-1;
+                        nodeToBeAssigned->row = sourceNode->row-1;
+                        nodeToBeAssigned->column = sourceNode->column-1;
                         break;
                     case 5:
-                        newNeighbor->row = sourceNode->row+1;
-                        newNeighbor->column = sourceNode->column-1;
+                        nodeToBeAssigned->row = sourceNode->row+1;
+                        nodeToBeAssigned->column = sourceNode->column-1;
                         break;
                     default:
                         throw new std::string("PICKED NEIGHBOR OUTSIDE BOUNDS");
@@ -159,7 +163,7 @@ void Map::createNodeMap(int numNodes)
                 //std::cout << "NeighborNode: " << newNeighbor->column << "," << newNeighbor->row << "\n" << std::endl;
                 
                 //Link new node to all other neighbors based on coordinate
-                linkNodeToNeighbors(newNeighbor);
+                linkNodeToNeighbors(nodeToBeAssigned);
                 
                 //Remove node from copyArray
                 for(int i = rNode; i < nodesLeftToBeAssigned-1; i++)
@@ -168,14 +172,14 @@ void Map::createNodeMap(int numNodes)
                 }
                 nodesLeftToBeAssigned--;
                 
-                if(newNeighbor->row < rowMin)
-                    rowMin = newNeighbor->row;
-                if(newNeighbor->row > rowMax)
-                    rowMax = newNeighbor->row;
-                if(newNeighbor->column < colMin)
-                    colMin = newNeighbor->column;
-                if(newNeighbor->column > colMax)
-                    colMax = newNeighbor->column;
+                if(nodeToBeAssigned->row < rowMin)
+                    rowMin = nodeToBeAssigned->row;
+                if(nodeToBeAssigned->row > rowMax)
+                    rowMax = nodeToBeAssigned->row;
+                if(nodeToBeAssigned->column < colMin)
+                    colMin = nodeToBeAssigned->column;
+                if(nodeToBeAssigned->column > colMax)
+                    colMax = nodeToBeAssigned->column;
                 
                 nodeAssigned = true;
             }
@@ -198,7 +202,7 @@ void Map::createNodeMap(int numNodes)
 
 void Map::draw()
 {
-    selector->set((int)Model::getSelf()->mouseX, (int)Model::getSelf()->mouseY);
+    selector->set(Model::getSelf()->mouseX, Model::getSelf()->mouseY);
     selector->drawAtPosition();
     for(int i = 0; i < Model::getSelf()->numNodes; i++)
     {
