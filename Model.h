@@ -36,6 +36,10 @@
 #define MAP_DENSITY_STRICTNESS 1000000 //Number of attempts worth spending to try and fit density rule
 #define NULL_LOCATION 99999 //'unattainable' row/column to be used for non-placed nodes
 
+//MAP GEO
+#define ROW_SPACING 1.3
+#define COL_SPACING 1.6
+
 //NODE/UNIT TYPES
 #define NUM_TYPES  4
 #define TYPE_WATER 0
@@ -53,7 +57,7 @@
 //DEFAULTS
 #define DEFAULT_NUM_PLAYERS 2
 #define DEFAULT_NUM_NODES 20
-#define DEFAULT_STATE GAMEPLAY
+#define DEFAULT_STATE MINIGAME
 
 //Forward declarations- everything has access to everything (woah)
 class Menu;

@@ -8,8 +8,8 @@
 
 
 #ifndef __WIN32__
-    #import <OpenGL/OpenGL.h>
-    #import <GLUT/GLUT.h>
+    #include <OpenGL/OpenGL.h>
+    #include <GLUT/GLUT.h>
 #elif
     #include <GL\freeglut.h>
     #include <GL\GL.h>

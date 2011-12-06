@@ -88,7 +88,7 @@ void Selector::set(float x, float y)
 void Selector::drawAtPosition()
 {
     glPushMatrix();
-    glTranslated(column*1.7, 0, row*1.3);
+    glTranslated(column*COL_SPACING, 0, row*ROW_SPACING);
     draw();
     glPopMatrix();
 }

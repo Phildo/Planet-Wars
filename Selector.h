@@ -9,6 +9,7 @@
 #ifndef SELECTOR_H
 #define SELECTOR_H
 
+#include "Model.h"
 #include "DrawableGeometry.h"
 
 class Selector: public DrawableGeometry
