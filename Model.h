@@ -103,7 +103,7 @@
 
 //DEFAULTS
 #define DEFAULT_NUM_PLAYERS 2
-#define DEFAULT_NUM_NODES 200
+#define DEFAULT_NUM_NODES 100
 #define DEFAULT_STATE MINIGAME
 
 //Forward declarations- everything has access to everything (woah)
