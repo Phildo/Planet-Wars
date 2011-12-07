@@ -116,13 +116,13 @@ void Map::createNodeMap(int numNodes)
         while(!nodeAssigned)
         {
             //If already tried more than 5 times, loosen the MAP_DENSITY rule
-            if(numAssignAttempts > mapDensity)
+            if(numAssignAttempts > MAP_DENSITY_STRICTNESS)
             {
                 mapDensity++;
                 numAssignAttempts = 0;
             }
-
-            sourceEligible = (sourceNode->numNeighborNodes < MAP_DENSITY && ((rNeighbor = sourceNode->getRandomFreeNeighbor()) != -1));
+            
+            sourceEligible = ((sourceNode->numNeighborNodes <= mapDensity) && ((rNeighbor = sourceNode->getRandomFreeNeighbor()) != -1));
 
             //If the current source node is eligible to have a neighbor
             if(sourceEligible)
