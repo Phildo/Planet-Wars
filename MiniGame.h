@@ -2,34 +2,30 @@
 #define MINIGAME_H
 
 class Lane;
-#include <vector>
-#include "DrawableGeometry.h"
+#include <math.h>
+#include <iostream>
+#include "Model.h"
+#include "Player.h"
 #include "Unit.h"
 #include "Lane.h"
 
-using namespace std;
-
-class MiniGame : public DrawableGeometry
+class MiniGame
 {
 public:
-	MiniGame(void);
+	MiniGame(Node * node, Player * attacker, Player * defender);
+    
+    Node * node;
+    Player * p1; //Attacker
+    Player * p2; //Defender
 
-	vector<Unit*> units;
-	int numUnits;
-	int laneSelect;
-	int teamSelect;
-    
     Lane ** lanes;
+    int selectedLane;
     
-	void checkAttacks();
-	void attackUnit(Unit *attacker, Unit *attackee);
-	double distance(Unit *unit1, Unit *unit2);
-	void addUnit(int uType, int uLane, int uTeam);
-	void removeUnit(int index);
-	void drawGame();
+    void changeLane(int direction);
+    void selectLane(int lane);
+    void addUnit(Player * p, int type);
 	void update();
-	void setLane(int lane);
-	void setTeamSelect(int team);
+    void drawGame();
 };
 
 #endif

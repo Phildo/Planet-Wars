@@ -15,37 +15,31 @@ class Unit : public DrawableGeometry
 {
 public:
 
-	double range;
-	double position[3];
+    Unit(void); 
+	Unit(int type);
+    void initThings();
+    
+    int pos;
+    
     int type;
     int level;
-	int health;
-	int attackDamage;
-	int lane;
-	bool canAttack;
-	int team;
-	bool isMoving;
+    
+    int health;
+    int damage;
+    int speed;
+	int range;
+    int cooldown;
 
-	Unit(void); 
-	Unit(int uType, int uLane, int uTeam);
-
-
-	void takeDamage(int damage);
-	void hasAttacked();
-	double* getPosition();
-	void update();
-	void setMoving(bool moving);
-	void setPosition();
-	void checkType();
-	bool isDead();
+    void reset();
+    void resetCooldown();
+    void setType(int type);
+    bool attack(Unit * enemy);
 
     static bool compiled;       //True iff displayList names a valid glDisplayList
     static GLuint displayList;  //Name of displaylist for object
     void compileDL();
     void draw();
     void drawAtPosition();
-
-
 };
 
 #endif

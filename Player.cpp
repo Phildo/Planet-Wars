@@ -7,10 +7,14 @@
 //
 
 #include "Player.h"
-#include "Model.h"
 
 Player::Player()
 {
+    fireResources = 0;
+    waterResources = 0;
+    earthResources = 0;
+    airResources = 0;
+    
     this->fleet = new Fleet();
     this->myNodes = new Node*[Model::getSelf()->numNodes];
     this->nodesOwned = 0;
@@ -40,4 +44,14 @@ void Player::conquerNode(Node *node)
 {
     if(!iOwnNode(node))
         myNodes[nodesOwned++] = node;
+    node->owner = this;
+}
+
+Unit * Player::deployUnit(Node *planet, int type)
+{
+    //Check if unit of requested type exists on any ships on current planet,
+    //or if player contains enough resources to create another one. 
+    //If so, remove unit from player's army and return unit. Else, return null.
+    
+    return Model::getSelf()->nullUnit;
 }

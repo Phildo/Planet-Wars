@@ -13,182 +13,93 @@ bool Unit::compiled = false;
 GLuint Unit::displayList;
 
 Unit::Unit(void) {
-    if(!Unit::compiled) Unit::compileDL();
+    initThings();
 }
 
-Unit::Unit(int uType, int uLane, int uTeam) {
-    type = uType;
+Unit::Unit(int type) {
+    setType(type);
+    initThings();
+}
+
+void Unit::initThings()
+{
     level = 1;
-    lane = uLane;
-    canAttack = true;
-	team = uTeam;
-    isMoving = true;
-	setPosition();
-    checkType();
+    pos = 0;
     if(!Unit::compiled) Unit::compileDL();
 }
 
-void Unit::takeDamage(int damage) {
-
-	health = health - ( damage / 30 );
-
+void Unit::reset()
+{
+    setType(type);
+    pos = 0;
 }
 
-void Unit::hasAttacked() {
-	isMoving = false;
-	canAttack = false;
-}
-
-double* Unit::getPosition() {
-	return Unit::position;
-}
-
-void Unit::setMoving(bool moving) {
-	isMoving = moving;
-}
-
-void Unit::update() {
-
-	if(isMoving && team == 0) {
-		Unit::position[2] += .1;
-	}
-
-	if(isMoving && team == 1) {
-		Unit::position[2] -= .1;
-	}
-}
-
-void Unit::setPosition() {
-
-
-	if(team == 0) {
-		switch(lane) {
-
-		case 1: 
-			position[0] = 2.0;
-			position[1] = 0.0;
-			position[2] = 0.0;
-			break;
-
-		case 2: 
-			position[0] = 6.0;
-			position[1] = 0.0;
-			position[2] = 0.0;
-			break;
-
-		case 3: 
-			position[0] = 10.0;
-			position[1] = 0.0;
-			position[2] = 0.0;
-			break;
-
-		case 4: 
-			position[0] = 14.0;
-			position[1] = 0.0;
-			position[2] = 0.0;
-			break;
-
-		case 5: 
-			position[0] = 18.0;
-			position[1] = 0.0;
-			position[2] = 0.0;
-			break;
-
-		default:
-			position[0] = 0.0;
-			position[1] = 0.0;
-			position[2] = 0.0;
-			break;
-		}
-	}
-
-	if(team == 1) {
-		switch(lane) {
-
-		case 1: 
-			position[0] = 2.0;
-			position[1] = 0.0;
-			position[2] = 50.0;
-			break;
-
-		case 2: 
-			position[0] = 6.0;
-			position[1] = 0.0;
-			position[2] = 50.0;
-			break;
-
-		case 3: 
-			position[0] = 10.0;
-			position[1] = 0.0;
-			position[2] = 50.0;
-			break;
-
-		case 4: 
-			position[0] = 14.0;
-			position[1] = 0.0;
-			position[2] = 50.0;
-			break;
-
-		case 5: 
-			position[0] = 18.0;
-			position[1] = 0.0;
-			position[2] = 50.0;
-			break;
-
-		default:
-			position[0] = 0.0;
-			position[1] = 0.0;
-			position[2] = 50.0;
-			break;
-		}
-	}
-	
-
-}
-
-void Unit::checkType() {
-	
+void Unit::setType(int type) {
+	this->type = type;
 	switch(type) {
-
-	case 1:
-		health = 1000;
-		attackDamage = 100;
-		range = 4;
-		setColor(1.0, 0.0, 0.0, 0.0, 0.5, 1.0, 1.0);
-		DrawableGeometry::setGLColor();
-		break;
-
-	case 2:
-		health = 1800;
-		attackDamage = 50;
-		range = 1;
-		setColor(0.0, 1.0, 0.0, 0.0, 0.5, 1.0, 1.0);
-		DrawableGeometry::setGLColor();
-		break;
-
-	case 3:
-		health = 800;
-		attackDamage = 180;
-		range = 3;
-		setColor(0.0, 0.0, 1.0, 0.0, 0.5, 1.0, 1.0);
-		DrawableGeometry::setGLColor();
-		break;
-
-	case 4:
-		health = 700;
-		attackDamage = 80;
-		range = 10;
-		DrawableGeometry::setColor(1.0, 0.0, 1.0, 0.0, 0.5, 1.0, 1.0);
-		DrawableGeometry::setGLColor();
-		break;
-	}
-
-
-
+        case TYPE_WATER:
+            health = WATER_HEALTH;
+            damage = WATER_DAMAGE;
+            speed = WATER_SPEED;
+            range = WATER_RANGE;
+            cooldown = 0;
+            this->setColor(WATER_R, WATER_G, WATER_B, 1.0, 0.1, 0.5, 0.7);
+            break;
+        case TYPE_EARTH:
+            health = EARTH_HEALTH;
+            damage = EARTH_DAMAGE;
+            speed = EARTH_SPEED;
+            range = EARTH_RANGE;
+            cooldown = 0;
+            this->setColor(EARTH_R, EARTH_G, EARTH_B, 1.0, 0.1, 0.5, 0.7);
+            break;
+        case TYPE_WIND:
+            health = WIND_HEALTH;
+            damage = WIND_DAMAGE;
+            speed = WIND_SPEED;
+            range = WIND_RANGE;
+            cooldown = 0;
+            this->setColor(WIND_R, WIND_G, WIND_B, 1.0, 0.1, 0.5, 0.7);
+            break;
+        case TYPE_FIRE:
+            health = FIRE_HEALTH;
+            damage = FIRE_DAMAGE;
+            speed = FIRE_SPEED;
+            range = FIRE_RANGE;
+            cooldown = 0;
+            this->setColor(FIRE_R, FIRE_G, FIRE_B, 1.0, 0.1, 0.5, 0.7);
+            break;
+    }
 }
 
-bool Unit::isDead() {
-	return health <= 0;
+void Unit::resetCooldown()
+{
+    switch(type) {
+        case TYPE_WATER:
+            cooldown = WATER_COOL;
+            break;
+        case TYPE_EARTH:
+            cooldown = EARTH_COOL;
+            break;
+        case TYPE_WIND:
+            cooldown = WIND_COOL;
+            break;
+        case TYPE_FIRE:
+            cooldown = FIRE_COOL;
+            break;
+    }
+}
+
+bool Unit::attack(Unit *enemy)
+{
+    if(cooldown == 0)
+    {
+        enemy->health -= damage;
+        resetCooldown();
+    }
+    else
+        cooldown--;
+    return (enemy->health <= 0);
 }
 
 void Unit::compileDL()
@@ -213,8 +124,7 @@ void Unit::draw()
 void Unit::drawAtPosition()
 {
     glPushMatrix();
-	glTranslated(position[0], position[1], position[2]);
-    draw();
+    glTranslated(0, 0, pos);
     glPopMatrix();
 }
 

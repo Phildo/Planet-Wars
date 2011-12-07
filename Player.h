@@ -9,6 +9,7 @@
 #define H_PLAYER
 
 class Fleet;
+#include "Model.h"
 #include "Fleet.h"
 #include "Node.h"
 
@@ -23,6 +24,12 @@ public:
     
     void attackNode(Node *attackNode, Node *defendNode);
     void conquerNode(Node *node);
+    Unit * deployUnit(Node *planet, int type);
+    
+    int fireResources;
+    int waterResources;
+    int earthResources;
+    int airResources;
     
     Player();
     ~Player();

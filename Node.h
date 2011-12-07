@@ -8,6 +8,9 @@
 #ifndef H_NODE
 #define H_NODE
 
+#include <math.h>
+#include "Model.h"
+#include "Player.h"
 #include "DrawableGeometry.h"
 
 class Node: public DrawableGeometry
@@ -20,6 +23,8 @@ public:
     //Used for information in linking/positioning
     int row;
     int column;
+    
+    Player * owner;
     
     int numNeighborNodes;
     Node ** neighborNodes; 

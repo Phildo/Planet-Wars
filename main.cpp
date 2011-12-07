@@ -45,7 +45,7 @@ void initGame(int numPlayers, int numNodes)
     playerArray = model->setNumPlayers(numPlayers);
     selector = model->setSelector();
     map = model->setMap();
-    game = model->setMiniGame();
+    game = model->setMiniGame(nodeArray[0], playerArray[0], playerArray[1]);
     menu = model->setMenu();
 }
 
@@ -81,7 +81,7 @@ void gameplay(){
 void minigame() { 
     glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(10.0, 50.0, -20.0, 10.0, 0.0, 20.0, 0.0, 1.0, 0.0);
+	gluLookAt(0.0, 20.0, 100.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     
     game->update();
 	game->drawGame();
@@ -110,9 +110,7 @@ void DisplayFunc()
 	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
 	glViewport(0 , 0 , model->width, model->height);
     
-	// The following set the different modes of the game.
-    
-    //model->state = MINIGAME;
+    model->state = GAMEPLAY;
 	switch(model->state){
         case TITLE:
             pregame();
@@ -125,7 +123,6 @@ void DisplayFunc()
             break;
 	}
     
-	//DoubleBuffering
 	glutSwapBuffers();
 }
 
@@ -136,6 +133,17 @@ void IdleFunc()
 
 void KeyboardFunc(unsigned char key, int x, int y)
 {
+    //SHOULD PUT KEY SWITCH STATEMENTS IN INDIVIDUAL STATE CASES
+    //(ie each state has its own set of keystrokes)
+    switch(model->state){
+        case TITLE:
+            break;
+        case GAMEPLAY:
+            break;
+        case MINIGAME:
+            break;
+	}
+    
     switch(key)
     {
         case 27: // Press the ESC key to exit the game immediately.
@@ -156,36 +164,23 @@ void KeyboardFunc(unsigned char key, int x, int y)
             break;
             
         case '[': //left arrow
-            if(game->laneSelect < 5)
-                game->setLane(game->laneSelect+1);
+            game->changeLane(LEFT);
             break;
-            
         case ']': //right arrow
-            if(game->laneSelect > 1)
-                game->setLane(game->laneSelect-1);
+            game->changeLane(RIGHT);
             break;
             
-        case 'q':
-            game->setTeamSelect(1);
-            break;
-            
-        case 'a':
-            game->setTeamSelect(0);
-            break;
         case 'z':
-            game->addUnit(1, game->laneSelect, game->teamSelect);
+            game->addUnit(model->playerArray[0], TYPE_WATER);
             break;
-            
         case 'x':
-            game->addUnit(2, game->laneSelect, game->teamSelect);
+            game->addUnit(model->playerArray[0], TYPE_EARTH);
             break;
-            
         case 'c':
-            game->addUnit(3, game->laneSelect, game->teamSelect);
+            game->addUnit(model->playerArray[0], TYPE_WIND);
             break;
-            
         case 'v':
-            game->addUnit(4, game->laneSelect, game->teamSelect);
+            game->addUnit(model->playerArray[0], TYPE_FIRE);
             break;
     }
 }

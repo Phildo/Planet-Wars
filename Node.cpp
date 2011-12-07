@@ -6,9 +6,8 @@
 //  Copyright 2011 UW Madison. All rights reserved.
 //
 
-#include <math.h>
+
 #include "Node.h"
-#include "Model.h"
 
 void Node::initStuff()
 {
@@ -16,6 +15,7 @@ void Node::initStuff()
     Node *  nN = Model::getSelf()->nullNode;
     assignNeighbors(nN, nN, nN, nN, nN, nN);
     this->numNeighborNodes = 0;
+    owner = Model::getSelf()->nullPlayer;
     row = NULL_LOCATION;
     column = NULL_LOCATION;
     layer = 0.0f;
@@ -46,16 +46,16 @@ void Node::setType(int t)
     
     switch (t) {
         case TYPE_EARTH:
-            this->setColor(0.2, 0.4, 0.1, 1.0, 0.1, 1.0, 0.7);
+            this->setColor(EARTH_R, EARTH_G, EARTH_B, 1.0, 0.1, 0.5, 0.7);
             break;
         case TYPE_WIND:
-            this->setColor(1.0, 1.0, 0.2, 1.0, 0.1, 0.5, 0.7);
+            this->setColor(WIND_R, WIND_G, WIND_B, 1.0, 0.1, 0.5, 0.7);
             break;
         case TYPE_FIRE:
-            this->setColor(1.0, 0.0, 0.0, 1.0, 0.1, 0.5, 0.7);
+            this->setColor(FIRE_R, FIRE_G, FIRE_B, 1.0, 0.1, 0.5, 0.7);
             break;
         case TYPE_WATER:
-            this->setColor(0.0, 0.0, 1.0, 1.0, 0.1, 0.5, 0.7);
+            this->setColor(WATER_R, WATER_G, WATER_B, 1.0, 0.1, 0.5, 0.7);
             break;
         default:
             this->setColor(0.3, 0.3, 0.3, 1.0, 0.1, 0.5, 0.7);

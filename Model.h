@@ -12,6 +12,10 @@
 //CONSTANTS
 ///////
 
+//HELPER CONSTANTS
+#define LEFT 0
+#define RIGHT 1
+
 //GL CONSTANTS
 #define WIDTH 500
 #define HEIGHT 400
@@ -32,7 +36,7 @@
 
 //GAME CONSTANTS
 #define NUM_LANES 5
-#define MAP_DENSITY 3 //1(linear) to 6(full mesh)
+#define MAP_DENSITY 1 //1(linear) to 6(full mesh)
 #define MAP_DENSITY_STRICTNESS 1000000 //Number of attempts worth spending to try and fit density rule
 #define NULL_LOCATION 99999 //'unattainable' row/column to be used for non-placed nodes
 
@@ -40,12 +44,55 @@
 #define ROW_SPACING 1.3
 #define COL_SPACING 1.6
 
+//MINIGAME GEO
+#define LANE_WIDTH 10
+#define LANE_LENGTH 100
+
 //NODE/UNIT TYPES
 #define NUM_TYPES  4
 #define TYPE_WATER 0
 #define TYPE_EARTH 1
 #define TYPE_WIND  2
 #define TYPE_FIRE  3
+
+//TYPE COLOR VARS
+#define WATER_R 0.0
+#define WATER_G 0.0
+#define WATER_B 1.0
+#define EARTH_R 0.2
+#define EARTH_G 0.4
+#define EARTH_B 0.1
+#define WIND_R 1.0
+#define WIND_G 1.0
+#define WIND_B 0.2
+#define FIRE_R 1.0
+#define FIRE_G 0.0
+#define FIRE_B 0.0
+
+//TYPE ATTRIBUTE VARIABLES
+#define WATER_HEALTH 1000;
+#define WATER_DAMAGE 100;
+#define WATER_RANGE 2;
+#define WATER_SPEED 3;
+#define WATER_COOL 5;
+
+#define EARTH_HEALTH 5000;
+#define EARTH_DAMAGE 10;
+#define EARTH_RANGE 1;
+#define EARTH_SPEED 1;
+#define EARTH_COOL 5;
+
+#define WIND_HEALTH 200;
+#define WIND_DAMAGE 50;
+#define WIND_RANGE 10;
+#define WIND_SPEED 5;
+#define WIND_COOL 2;
+
+#define FIRE_HEALTH 1000;
+#define FIRE_DAMAGE 150;
+#define FIRE_RANGE 5;
+#define FIRE_SPEED 3;
+#define FIRE_COOL 6;
 
 //SHIP TYPES
 #define NUM_SHIP_TYPES     4
@@ -56,7 +103,7 @@
 
 //DEFAULTS
 #define DEFAULT_NUM_PLAYERS 2
-#define DEFAULT_NUM_NODES 20
+#define DEFAULT_NUM_NODES 30
 #define DEFAULT_STATE MINIGAME
 
 //Forward declarations- everything has access to everything (woah)
@@ -141,7 +188,7 @@ public:
     Map * setMap();
     Selector * setSelector();
     Menu * setMenu();
-    MiniGame * setMiniGame();
+    MiniGame * setMiniGame(Node * planet, Player * attacker, Player * defender);
 
     Model();
     ~Model();

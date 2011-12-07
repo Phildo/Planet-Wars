@@ -9,16 +9,27 @@
 #ifndef LANE_H
 #define LANE_H
 
+#include <vector.h>
 #include "Model.h"
 #include "DrawableGeometry.h"
 
 class Lane: public DrawableGeometry
 {
 public:
-    Lane(int shift);
+    Lane();
     ~Lane();
+
+    vector <Unit *> attackerUnits;
+    vector <Unit *> defenderUnits;
+    int furthestAttacker;
+    int furthestDefender;
     
-    int shift;
+    void setSelected(bool selected);
+    void deployUnit(Unit * unit, bool attacker);
+    void advanceUnit(Unit * unit, bool attacker);
+    void actUnit(Unit * unit, bool attacker);
+    Unit* findFurthestUnit(bool attacker);
+    void tick();
     
     static bool compiled;       //True iff displayList names a valid glDisplayList
     static GLuint displayList;  //Name of displaylist for object

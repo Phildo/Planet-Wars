@@ -98,9 +98,9 @@ Menu * Model::setMenu()
     return this->menu;
 }
 
-MiniGame * Model::setMiniGame()
+MiniGame * Model::setMiniGame(Node * planet, Player * attacker, Player * defender)
 {
-    this->mgame = new MiniGame();
+    this->mgame = new MiniGame(planet, attacker, defender);
     return this->mgame;
 }
 
