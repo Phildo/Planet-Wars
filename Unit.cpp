@@ -155,6 +155,7 @@ void Unit::checkType() {
 		attackDamage = 100;
 		range = 4;
 		setColor(1.0, 0.0, 0.0, 0.0, 0.5, 1.0, 1.0);
+		DrawableGeometry::setGLColor();
 		break;
 
 	case 2:
@@ -162,6 +163,7 @@ void Unit::checkType() {
 		attackDamage = 50;
 		range = 1;
 		setColor(0.0, 1.0, 0.0, 0.0, 0.5, 1.0, 1.0);
+		DrawableGeometry::setGLColor();
 		break;
 
 	case 3:
@@ -169,6 +171,7 @@ void Unit::checkType() {
 		attackDamage = 180;
 		range = 3;
 		setColor(0.0, 0.0, 1.0, 0.0, 0.5, 1.0, 1.0);
+		DrawableGeometry::setGLColor();
 		break;
 
 	case 4:
@@ -176,8 +179,12 @@ void Unit::checkType() {
 		attackDamage = 80;
 		range = 10;
 		DrawableGeometry::setColor(1.0, 0.0, 1.0, 0.0, 0.5, 1.0, 1.0);
+		DrawableGeometry::setGLColor();
 		break;
 	}
+
+
+
 }
 
 bool Unit::isDead() {

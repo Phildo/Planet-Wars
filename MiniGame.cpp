@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+#include <windows.h>
+
+
 
 MiniGame::MiniGame(void)
 {
@@ -13,6 +16,7 @@ MiniGame::MiniGame(void)
 	//addUnit(4,4,0);
 	laneSelect = 5;
 	teamSelect = 0;
+	numUnits = 0;
     
     lanes = new Lane*[NUM_LANES];
     for(int i = 0; i < NUM_LANES; i++)
@@ -21,16 +25,20 @@ MiniGame::MiniGame(void)
     }
     
     setColor(0.1, 0.2, 0.8, 0.0, 0.5, 1.0, 1.0);
+	DrawableGeometry::setGLColor();
 }
 
 void MiniGame::checkAttacks() {
+
 	for(int i = 0; i < MiniGame::numUnits; i++) {
 		Unit *unit1 = MiniGame::units[i];
 
 		if(unit1->canAttack) {
 
-			for(int j = 0; j < MiniGame::numUnits; i++) {
-			Unit *unit2 = MiniGame::units[j];
+			//MessageBox(NULL, "I am just trying my wedding dress", NULL, NULL);
+
+			for(int j = 0; j < MiniGame::numUnits; j++) {
+				Unit *unit2 = MiniGame::units[j];
 
 			if( unit1->lane == unit2->lane && distance(unit1, unit2) < unit1->range && unit1->team != unit2->team ) {
 					attackUnit(unit1, unit2);
@@ -57,14 +65,14 @@ double MiniGame::distance(Unit *unit1, Unit *unit2) {
 void MiniGame::addUnit(int uType, int uLane, int uTeam) {
 	Unit *newUnit = new Unit(uType, uLane, uTeam);
 	MiniGame::units.push_back(newUnit);
-	numUnits++;
+	numUnits = numUnits + 1;
 }
 
 
 //only remove units at the end of an update for iteration purposes
 void MiniGame::removeUnit(int index) {
 	MiniGame::units.erase(units.begin() + index);
-	numUnits--;
+	numUnits = numUnits - 1;
 }
 
 
@@ -79,11 +87,14 @@ void MiniGame::update() {
 	//	}
 	//	
 	//}
+
+	checkAttacks();
 }
 
 
 void MiniGame::drawGame() {
     setColor(0.1, 0.2, 0.8, 0.0, 0.5, 1.0, 1.0);
+	DrawableGeometry::setGLColor();
     
     //Draw Units
 	for(int i = 0; i < units.size(); i++) {
