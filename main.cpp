@@ -7,13 +7,13 @@
 //
 
 
-//#ifndef _WIN32
-//    #include <OpenGL/OpenGL.h>
-//    #include <GLUT/GLUT.h>
-//#elif
+#ifndef _WIN32
+    #include <OpenGL/OpenGL.h>
+    #include <GLUT/GLUT.h>
+#elif
     #include <GL\freeglut.h>
     #include <GL\GL.h>
-//#endif
+#endif
 
 
 #include <iostream>
