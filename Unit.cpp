@@ -30,7 +30,7 @@ Unit::Unit(int uType, int uLane, int uTeam) {
 
 void Unit::takeDamage(int damage) {
 
-	health = health - damage;
+	health = health - ( damage / 30 );
 
 }
 
@@ -188,7 +188,7 @@ void Unit::checkType() {
 }
 
 bool Unit::isDead() {
-	return health < 0;
+	return health <= 0;
 }
 
 void Unit::compileDL()

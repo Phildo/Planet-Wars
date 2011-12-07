@@ -29,6 +29,7 @@ public:
 	Unit(void); 
 	Unit(int uType, int uLane, int uTeam);
 
+
 	void takeDamage(int damage);
 	void hasAttacked();
 	double* getPosition();

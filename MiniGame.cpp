@@ -30,6 +30,11 @@ MiniGame::MiniGame(void)
 
 void MiniGame::checkAttacks() {
 
+	for(int x = 0; x < MiniGame::numUnits; x++) {
+		units[x]->canAttack = true;
+		units[x]->isMoving = true;
+	}
+
 	for(int i = 0; i < MiniGame::numUnits; i++) {
 		Unit *unit1 = MiniGame::units[i];
 
@@ -46,6 +51,10 @@ void MiniGame::checkAttacks() {
 			}
 		}
 	}
+
+	
+
+
 }
 
 
@@ -77,17 +86,18 @@ void MiniGame::removeUnit(int index) {
 
 
 void MiniGame::update() {
-	//int index = 0;
+
+
+	for(int index = 0; index < numUnits; index++) {
+		if(units[index]->isDead()) {
+			removeUnit(index);
+		}
+		
+	}
+
 	for(int i = 0; i < units.size(); i++) {
 		units[i]->update();
 	}
-	//for(std::vector<Unit*>::iterator it = units.begin(); it != units.end(); ++it, index++) {
-	//	if(units[index]->isDead()) {
-	//		removeUnit(index);
-	//	}
-	//	
-	//}
-
 	checkAttacks();
 }
 
