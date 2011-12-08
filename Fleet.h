@@ -21,9 +21,11 @@ class Fleet
 public:
     Flagship * flagship;
     Ship ** shipArray;
+    int numShips;
     
     Fleet();
     ~Fleet();
+    
+    void refreshShips();
 };
-
 #endif

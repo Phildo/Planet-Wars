@@ -19,6 +19,7 @@ public:
     
     int shipType;
     float layer;
+    bool done;
     
     static bool compiled;       //True iff displayList names a valid glDisplayList
     static GLuint displayList;  //Name of displaylist for object

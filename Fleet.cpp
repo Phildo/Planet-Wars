@@ -12,9 +12,16 @@
 Fleet::Fleet()
 {
     this->flagship = new Flagship();
+    numShips = 0;
 }
 
 Fleet::~Fleet()
 {
     delete this->flagship;
+}
+
+void Fleet::refreshShips()
+{
+    for(int i = 0; i < numShips; i++)
+        shipArray[i]->done = false;
 }

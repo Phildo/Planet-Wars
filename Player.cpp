@@ -73,6 +73,11 @@ Unit * Player::deployUnit(Node *planet, int type)
     return Model::getSelf()->nullUnit;
 }
 
+void Player::endTurn()
+{
+    fleet->refreshShips();
+}
+
 void Player::draw()
 {
     

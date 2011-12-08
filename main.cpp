@@ -78,6 +78,8 @@ void gameplay(){
     if(model->finishTurn)
     {
         map->tick();
+        for(int i = 0; i <DEFAULT_NUM_PLAYERS; i++)
+            playerArray[i]->endTurn();
         model->finishTurn = false;
     }
 	map->draw();
