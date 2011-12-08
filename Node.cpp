@@ -20,6 +20,7 @@ void Node::initStuff()
     row = NULL_LOCATION;
     column = NULL_LOCATION;
     layer = 0.0f;
+	selOffset = 0;
     
     if(!Node::compiled) Node::compileDL();
 }
@@ -62,6 +63,8 @@ void Node::setType(int t)
             this->setColor(0.3, 0.3, 0.3, 1.0, 0.1, 0.5, 0.7);
             break;
     }
+
+	this->setColor(0.3, 0.3, 0.3, 1.0, 0.1, 0.5, 0.7);
 }
 
 int Node::getRandomFreeNeighbor()

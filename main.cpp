@@ -7,13 +7,13 @@
 //
 
 
-#ifndef _WIN32
-    #include <OpenGL/OpenGL.h>
-    #include <GLUT/GLUT.h>
-#elif
+//#ifndef _WIN32
+    //#include <OpenGL/OpenGL.h>
+   // #include <GLUT/GLUT.h>
+//#elif
     #include <GL\freeglut.h>
     #include <GL\GL.h>
-#endif
+//#endif
 
 
 #include <iostream>
@@ -53,6 +53,7 @@ void initGame(int numPlayers, int numNodes)
 //GAME STATES
 /////////
 
+// This is the TITLE
 void pregame(){
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -225,8 +226,14 @@ void initGL(int argc, char * argv[])
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE);
 	glutInitWindowPosition(0 , 0);
 	glutInitWindowSize(model->width,model->height);
-	glutCreateWindow("Sponge Bob to the Stars!");
-	//glutFullScreen();
+	glutCreateWindow("PlanetsConquerer!");
+	glutFullScreen();
+	/*
+	 * The following section is curser specification. You guys can choose what is appropriate,
+	 * but for now I'm getting rid of it.
+	 * Other types: GLUT_CURSOR_CROSSHAIR GLUT_CURSOR_NONE
+	 */
+	glutSetCursor(GLUT_CURSOR_NONE);
     
 	//One-Time setups
     glEnable(GL_DEPTH_TEST);
