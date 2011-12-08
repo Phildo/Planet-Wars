@@ -200,6 +200,12 @@ void Map::createNodeMap(int numNodes)
     delete copyArray;
 }
 
+void Map::tick()
+{
+    for(int i = 0; i < DEFAULT_NUM_NODES; i++)
+        Model::getSelf()->nodeArray[i]->tick();
+}
+
 void Map::draw()
 {
     selector->set(Model::getSelf()->mouseX, Model::getSelf()->mouseY);

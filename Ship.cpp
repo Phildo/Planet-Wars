@@ -14,6 +14,7 @@ GLuint Ship::displayList;
 Ship::Ship()
 {
     this->shipType = SHIP_TYPE_GENERIC;
+    layer = .25;
     if(!Ship::compiled) compileDL();
 }
 
@@ -35,7 +36,12 @@ void Ship::compileDL()
 
     //DRAW SHIP HERE
     glPushMatrix();
-    //draw me
+    glBegin(GL_QUADS);
+    glVertex3d(-.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
+    glVertex3d(-.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
+    glVertex3d(.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
+    glVertex3d(.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
+    glEnd();
     glPopMatrix();
     
     glEndList();

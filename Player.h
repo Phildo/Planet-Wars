@@ -18,21 +18,26 @@ class Player
 public:    
     Fleet * fleet;
     Node ** myNodes;
+    Node * home;
     int nodesOwned;
     
     bool iOwnNode(Node *node);
+    void surrenderNode(Node *node);
     
     void attackNode(Node *attackNode, Node *defendNode);
     void conquerNode(Node *node);
     Unit * deployUnit(Node *planet, int type);
+    void addShip();
     
     int fireResources;
     int waterResources;
     int earthResources;
-    int airResources;
+    int windResources;
     
     Player();
     ~Player();
+    
+    void draw();
 };
 
 #endif

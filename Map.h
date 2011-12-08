@@ -23,6 +23,7 @@ public:
     
     void linkNodeToNeighbors(Node * node);
     void createNodeMap(int numNodes);
+    void tick();
     void draw();
 };
 #endif

@@ -97,7 +97,25 @@ void Node::assignNeighbors(Node *top, Node *topRight, Node *bottomRight, Node *b
 
 void Node::tick()
 {
-    
+    if(owner == Model::getSelf()->nullPlayer) return;
+    switch (type) {
+        case TYPE_EARTH:
+            this->owner->earthResources+=productionRate;
+            break;
+        case TYPE_WIND:
+            this->owner->windResources+=productionRate;
+            break;
+        case TYPE_FIRE:
+            this->owner->fireResources+=productionRate;
+            break;
+        case TYPE_WATER:
+            this->owner->waterResources+=productionRate;
+            break;
+        default:
+            //Nothin'
+            break;
+    }
+    if(owner->home == this) owner->addShip();
 }
 
 

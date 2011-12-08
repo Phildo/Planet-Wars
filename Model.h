@@ -48,6 +48,9 @@
 #define LANE_WIDTH 10
 #define LANE_LENGTH 100
 
+//SIHP GEO
+#define SHIP_SIZE 4
+
 //NODE/UNIT TYPES
 #define NUM_TYPES  4
 #define TYPE_WATER 0
@@ -169,6 +172,7 @@ public:
     MiniGame * mgame;
         //Game State Vars
     int state;
+    bool finishTurn;
     int numPlayers;
     int numNodes;
     int teamSelect;
@@ -189,7 +193,7 @@ public:
     Selector * setSelector();
     Menu * setMenu();
     MiniGame * setMiniGame(Node * planet, Player * attacker, Player * defender);
-
+    
     Model();
     ~Model();
     

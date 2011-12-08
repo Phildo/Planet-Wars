@@ -75,6 +75,11 @@ void gameplay(){
               0, 0, -1); 
     
 	// Draw different aspects of the game during gameplay:
+    if(model->finishTurn)
+    {
+        map->tick();
+        model->finishTurn = false;
+    }
 	map->draw();
 }
 
@@ -162,6 +167,9 @@ void KeyboardFunc(unsigned char key, int x, int y)
         case '2':
             model->state = MINIGAME;
             break;
+            
+        case ' ':
+            model->finishTurn = true;
             
         case '[': //left arrow
             game->changeLane(LEFT);

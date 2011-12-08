@@ -13,7 +13,7 @@ Player::Player()
     fireResources = 0;
     waterResources = 0;
     earthResources = 0;
-    airResources = 0;
+    windResources = 0;
     
     this->fleet = new Fleet();
     this->myNodes = new Node*[Model::getSelf()->numNodes];
@@ -35,6 +35,19 @@ bool Player::iOwnNode(Node *node)
     return false;
 }
 
+void Player::surrenderNode(Node *node)
+{
+    bool found;
+    for(int i = 0; i < this->nodesOwned; i++)
+    {
+        if(myNodes[i] == node)
+            found = true;
+        if(found)
+            myNodes[i] = myNodes[i+1];
+    }
+    node->owner = Model::getSelf()->nullPlayer;
+}
+
 void Player::attackNode(Node *attackNode, Node *defendNode)
 {
     
@@ -43,7 +56,11 @@ void Player::attackNode(Node *attackNode, Node *defendNode)
 void Player::conquerNode(Node *node)
 {
     if(!iOwnNode(node))
+    {
+        if(node->owner != Model::getSelf()->nullPlayer) 
+            node->owner->surrenderNode(node);
         myNodes[nodesOwned++] = node;
+    }
     node->owner = this;
 }
 
@@ -54,4 +71,9 @@ Unit * Player::deployUnit(Node *planet, int type)
     //If so, remove unit from player's army and return unit. Else, return null.
     
     return Model::getSelf()->nullUnit;
+}
+
+void Player::draw()
+{
+    
 }

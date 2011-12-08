@@ -76,8 +76,8 @@ void Selector::draw()
 
 void Selector::set(float x, float y)
 {
-    int tCol = (int)-Model::getSelf()->zoom*x;
-    int tRow = (int)Model::getSelf()->zoom*y;
+    int tCol = (int)-Model::getSelf()->zoom*x/2;
+    int tRow = (int)Model::getSelf()->zoom*y/2;
     if((tCol + tRow)%2 == 0)
     {
         this->column = tCol;

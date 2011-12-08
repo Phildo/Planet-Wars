@@ -62,6 +62,7 @@ Player** Model::setNumPlayers(int numPlayers)
     {
         playerArray[i] = new Player();
         playerArray[i]->conquerNode(nodeArray[i]);
+        playerArray[i]->home = nodeArray[i];
     }
     
     return playerArray;
@@ -110,6 +111,8 @@ void Model::setCameraParams()
     camCenterX = (colMax + colMin)/2.0;
     camCenterY = (rowMax + rowMin)/2.0;
 }
+
+
 
 /**
  * HELPER FUNCTIONS
