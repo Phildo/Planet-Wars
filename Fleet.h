@@ -12,6 +12,7 @@ class Player;
 class Ship;
 class Flagship;
 
+#include <vector.h>
 #include "Player.h"
 #include "Flagship.h"
 #include "Ship.h"
@@ -20,7 +21,7 @@ class Fleet
 {
 public:
     Flagship * flagship;
-    Ship ** shipArray;
+    vector<Ship *> shipArray;
     int numShips;
     
     Fleet();

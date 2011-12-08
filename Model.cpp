@@ -32,7 +32,7 @@ Model::Model()
     this->colMin = 0;
     
     //HELPER STUFF
-    srand(0);
+    srand(SEED);
 }
 
 Model * Model::getSelf()

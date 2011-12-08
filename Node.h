@@ -44,7 +44,8 @@ public:
     int getRandomFreeNeighbor();
     int getRandomNeighbor();
     void assignNeighbors(Node *top, Node *topRight, Node *bottomRight, Node *bottom, Node *bottomLeft, Node *topLeft);
-    
+    bool isNeighborOf(Node * n);
+
     void tick(); //Do whatever needs to be done on the passing of a turn
     
     //Drawable Geometry Stuff

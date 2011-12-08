@@ -95,6 +95,16 @@ void Node::assignNeighbors(Node *top, Node *topRight, Node *bottomRight, Node *b
     this->neighborNodes[5] = topLeft;
 }
 
+bool Node::isNeighborOf(Node * n)
+{
+    for(int i = 0; i < 6; i++)
+    {
+        if(this->neighborNodes[i] == n)
+            return true;
+    }
+    return false;
+}
+
 void Node::tick()
 {
     if(owner == Model::getSelf()->nullPlayer) return;

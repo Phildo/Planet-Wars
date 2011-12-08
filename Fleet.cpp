@@ -22,7 +22,8 @@ Fleet::~Fleet()
 
 void Fleet::addShip()
 {
-    
+    shipArray.resize(shipArray.size()+1);
+    shipArray[shipArray.size()-1] = new Ship();
 }
 
 void Fleet::refreshShips()

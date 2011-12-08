@@ -53,3 +53,12 @@ void Ship::draw()
     if(!Ship::compiled) return;
     glCallList(Ship::displayList);
 }
+
+void Ship::moveToNode(Node *newLoc)
+{
+    if(loc->isNeighborOf(newLoc))
+    {
+        loc = newLoc;
+        done = true;
+    }
+}

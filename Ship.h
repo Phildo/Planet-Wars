@@ -10,6 +10,7 @@
 
 #include "Model.h"
 #include "DrawableGeometry.h"
+#include "Node.h"
 
 class Ship: public DrawableGeometry
 {
@@ -20,12 +21,15 @@ public:
     int shipType;
     float layer;
     bool done;
+    Node * loc;
     
     static bool compiled;       //True iff displayList names a valid glDisplayList
     static GLuint displayList;  //Name of displaylist for object
     
     virtual void compileDL();   //Stores geometry in a displayList
     virtual void draw();        //draws geometry at current location
+    
+    void moveToNode(Node * newLoc);
 };
 
 #endif
