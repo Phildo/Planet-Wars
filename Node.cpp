@@ -47,16 +47,16 @@ void Node::setType(int t)
     
     switch (t) {
         case TYPE_EARTH:
-            this->setColor(EARTH_R, EARTH_G, EARTH_B, 1.0, 0.1, 0.5, 0.7);
+            this->setColor(EARTH_R+selOffset, EARTH_G+selOffset, EARTH_B+selOffset, 1.0, 0.1, 0.5, 0.7);
             break;
         case TYPE_WIND:
-            this->setColor(WIND_R, WIND_G, WIND_B, 1.0, 0.1, 0.5, 0.7);
+            this->setColor(WIND_R+selOffset, WIND_G+selOffset, WIND_B+selOffset, 1.0, 0.1, 0.5, 0.7);
             break;
         case TYPE_FIRE:
-            this->setColor(FIRE_R, FIRE_G, FIRE_B, 1.0, 0.1, 0.5, 0.7);
+            this->setColor(FIRE_R+selOffset, FIRE_G+selOffset, FIRE_B+selOffset, 1.0, 0.1, 0.5, 0.7);
             break;
         case TYPE_WATER:
-            this->setColor(WATER_R, WATER_G, WATER_B, 1.0, 0.1, 0.5, 0.7);
+            this->setColor(WATER_R+selOffset, WATER_G+selOffset, WATER_B+selOffset, 1.0, 0.1, 0.5, 0.7);
             break;
         default:
             this->setColor(0.3, 0.3, 0.3, 1.0, 0.1, 0.5, 0.7);
@@ -104,6 +104,23 @@ bool Node::isNeighborOf(Node * n)
             return true;
     }
     return false;
+}
+
+void Node::select(bool select)
+{
+    selected = select;
+    if(selected)
+    {
+        if(Model::getSelf()->selectedNode != Model::getSelf()->nullNode)
+            Model::getSelf()->selectedNode->select(false);
+        Model::getSelf()->selectedNode = this;
+        selOffset = SELECTION_BRIGHTNESS;
+    }
+    else
+    {
+        Model::getSelf()->selectedNode = Model::getSelf()->nullNode;
+        selOffset = 0;
+    }
 }
 
 void Node::tick()

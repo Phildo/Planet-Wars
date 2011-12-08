@@ -43,6 +43,7 @@
 //MAP GEO
 #define ROW_SPACING 1.3
 #define COL_SPACING 1.6
+#define SELECTION_BRIGHTNESS 0.2
 
 //MINIGAME GEO
 #define LANE_WIDTH 10
@@ -173,6 +174,7 @@ public:
     Selector * selector;
     MiniGame * mgame;
         //Game State Vars
+    Node * selectedNode;
     int state;
     bool finishTurn;
     int numPlayers;

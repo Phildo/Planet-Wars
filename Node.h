@@ -25,6 +25,8 @@ public:
     //Used for information in linking/positioning
     int row;
     int column;
+    bool selected;
+    float selOffset;
     
     Player * owner;
     Ship * ship;
@@ -47,7 +49,7 @@ public:
     int getRandomNeighbor();
     void assignNeighbors(Node *top, Node *topRight, Node *bottomRight, Node *bottom, Node *bottomLeft, Node *topLeft);
     bool isNeighborOf(Node * n);
-
+    void select(bool select);
     void tick(); //Do whatever needs to be done on the passing of a turn
     
     //Drawable Geometry Stuff

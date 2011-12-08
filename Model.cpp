@@ -27,6 +27,8 @@ Model::Model()
     this->nullUnit = NULL;
     this->nullShip = NULL;
         
+    selectedNode = nullNode;
+    
     this->rowMax = 0;
     this->rowMin = 0;
     this->colMax = 0;
