@@ -34,7 +34,9 @@ Node * Map::getNodeAt(int row, int col)
 
 void Map::selectSelected()
 {
-    getNodeAt(selector->row, selector->column)->select(true);
+    Node *n;
+    n = getNodeAt(selector->row, selector->column);
+    if(n != Model::getSelf()->nullNode) n->select(true);
 }
 
 void Map::linkNodeToNeighbors(Node * node)

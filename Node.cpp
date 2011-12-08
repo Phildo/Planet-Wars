@@ -124,6 +124,7 @@ void Node::select(bool select)
         Model::getSelf()->selectedNode = Model::getSelf()->nullNode;
         selOffset = 0;
     }
+    setType(type);
 }
 
 void Node::tick()
