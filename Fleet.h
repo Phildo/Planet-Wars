@@ -14,6 +14,7 @@ class Flagship;
 
 #include "Player.h"
 #include "Flagship.h"
+#include "Ship.h"
 
 class Fleet
 {

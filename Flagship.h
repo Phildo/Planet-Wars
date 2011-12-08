@@ -8,9 +8,11 @@
 #ifndef H_FLAGSHIP
 #define H_FLAGSHIP
 
+#include "Model.h"
 #include "Ship.h"
+#include "DrawableGeometry.h"
 
-class Flagship: public Ship
+class Flagship
 {
 public:
     Flagship();

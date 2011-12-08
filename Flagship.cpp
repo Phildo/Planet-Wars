@@ -11,7 +11,7 @@
 
 Flagship::Flagship()
 {
-    this->shipType = SHIP_TYPE_FLAGSHIP;
+    //this->shipType = SHIP_TYPE_FLAGSHIP;
 }
 
 Flagship::~Flagship()

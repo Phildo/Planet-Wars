@@ -106,7 +106,7 @@ MiniGame * Model::setMiniGame(Node * planet, Player * attacker, Player * defende
 
 void Model::setCameraParams()
 {
-    Model::getSelf()->zoom = 4*sqrt(std::max ((float)(rowMax - rowMin), (float)(colMax-colMin))*2.0);
+    Model::getSelf()->zoom = 4*sqrt(std::max ((float)(rowMax - rowMin), (float)(colMax-colMin))*4.0);
     camCenterX = (colMax + colMin)/2.0;
     camCenterY = (rowMax + rowMin)/2.0;
 }

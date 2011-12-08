@@ -56,18 +56,18 @@
 #define TYPE_FIRE  3
 
 //TYPE COLOR VARS
-#define WATER_R 0.0
-#define WATER_G 0.0
-#define WATER_B 1.0
-#define EARTH_R 0.2
-#define EARTH_G 0.4
-#define EARTH_B 0.1
-#define WIND_R 1.0
-#define WIND_G 1.0
-#define WIND_B 0.2
-#define FIRE_R 1.0
-#define FIRE_G 0.0
-#define FIRE_B 0.0
+#define WATER_R 0.0f
+#define WATER_G 0.0f
+#define WATER_B 1.0f
+#define EARTH_R 0.2f
+#define EARTH_G 0.4f
+#define EARTH_B 0.1f
+#define WIND_R 1.0f
+#define WIND_G 1.0f
+#define WIND_B 0.2f
+#define FIRE_R 1.0f
+#define FIRE_G 0.0f
+#define FIRE_B 0.0f
 
 //TYPE ATTRIBUTE VARIABLES
 #define WATER_HEALTH 1000;
@@ -103,7 +103,7 @@
 
 //DEFAULTS
 #define DEFAULT_NUM_PLAYERS 2
-#define DEFAULT_NUM_NODES 100
+#define DEFAULT_NUM_NODES 50
 #define DEFAULT_STATE MINIGAME
 
 //Forward declarations- everything has access to everything (woah)

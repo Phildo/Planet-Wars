@@ -37,34 +37,34 @@ void Selector::compileDL()
     glScalef(1.1f, 1.0f, 1.1f);
     glBegin(GL_TRIANGLES);
     
-    glVertex3f(0, layer, 0);
-    glVertex3f(1, layer, 0);
+    glVertex3f(0.0, layer, 0.0);
+    glVertex3f(1.0, layer, 0.0);
     glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
     
-    glVertex3f(0, layer, 0);
+    glVertex3f(0.0, layer, 0.0);
     glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
     glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
     
-    glVertex3f(0, layer, 0);
+    glVertex3f(0.0, layer, 0.0);
     glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
-    glVertex3f(-1, layer, 0);
+    glVertex3f(-1.0, layer, 0.0);
     
-    glVertex3f(0, layer, 0);
-    glVertex3f(-1, layer, 0);
-    glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
+    glVertex3f(0.0, layer, 0.0);
+    glVertex3f(-1.0, layer, 0.0);
+    glVertex3f(-0.5, layer, -1.0*sqrtOfThreeOverTwo);
     
-    glVertex3f(0, layer, 0);
-    glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
-    glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
+    glVertex3f(0.0, layer, 0.0);
+    glVertex3f(-0.5, layer, -1.0*sqrtOfThreeOverTwo);
+    glVertex3f(0.5, layer, -1.0*sqrtOfThreeOverTwo);  
     
-    glVertex3f(0, layer, 0);
-    glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
-    glVertex3f(1, layer, 0);
+    glVertex3f(0.0, layer, 0.0);
+    glVertex3f(0.5, layer, -1.0*sqrtOfThreeOverTwo);  
+    glVertex3f(1.0, layer, 0.0);
     
     glEnd();
     glPopMatrix();
-    glEndList();    Selector::compiled = true;
-
+    glEndList();    
+    Selector::compiled = true;
 }
 
 void Selector::draw()
@@ -76,8 +76,8 @@ void Selector::draw()
 
 void Selector::set(float x, float y)
 {
-    int tCol = (int)-5*x;
-    int tRow = (int)5*y;
+    int tCol = (int)-Model::getSelf()->zoom*x;
+    int tRow = (int)Model::getSelf()->zoom*y;
     if((tCol + tRow)%2 == 0)
     {
         this->column = tCol;
