@@ -39,8 +39,8 @@ void Ship::compileDL()
     glBegin(GL_QUADS);
     glVertex3d(-.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
     glVertex3d(-.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
-    glVertex3d(.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
     glVertex3d(.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
+    glVertex3d(.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
     glEnd();
     glPopMatrix();
     
@@ -50,8 +50,21 @@ void Ship::compileDL()
 
 void Ship::draw()
 {
-    if(!Ship::compiled) return;
+    if(!Ship::compiled) return;    
     glCallList(Ship::displayList);
+}
+
+void Ship::drawAtPosition()
+{
+    if(loc == Model::getSelf()->nullNode)
+    {
+        draw();
+        return;
+    }
+    glPushMatrix();
+    glTranslated(loc->column*COL_SPACING, 0, loc->row*ROW_SPACING);
+    draw();
+    glPopMatrix();
 }
 
 void Ship::moveToNode(Node *newLoc)

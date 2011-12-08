@@ -83,6 +83,8 @@ void gameplay(){
         model->finishTurn = false;
     }
 	map->draw();
+    for(int i = 0; i <DEFAULT_NUM_PLAYERS; i++)
+        playerArray[i]->draw();
 }
 
 void minigame() { 

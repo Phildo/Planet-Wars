@@ -28,7 +28,8 @@ public:
     
     virtual void compileDL();   //Stores geometry in a displayList
     virtual void draw();        //draws geometry at current location
-    
+    void drawAtPosition();
+
     void moveToNode(Node * newLoc);
 };
 

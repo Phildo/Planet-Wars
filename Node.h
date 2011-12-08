@@ -11,6 +11,7 @@
 #include <math.h>
 #include "Model.h"
 #include "Player.h"
+#include "Ship.h"
 #include "DrawableGeometry.h"
 
 class Node: public DrawableGeometry
@@ -26,6 +27,7 @@ public:
     int column;
     
     Player * owner;
+    Ship * ship;
     
     int numNeighborNodes;
     Node ** neighborNodes; 

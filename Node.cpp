@@ -16,6 +16,7 @@ void Node::initStuff()
     assignNeighbors(nN, nN, nN, nN, nN, nN);
     this->numNeighborNodes = 0;
     owner = Model::getSelf()->nullPlayer;
+    ship = Model::getSelf()->nullShip;
     row = NULL_LOCATION;
     column = NULL_LOCATION;
     layer = 0.0f;
@@ -125,7 +126,7 @@ void Node::tick()
             //Nothin'
             break;
     }
-    if(owner->home == this) owner->fleet->addShip();
+    if(owner->home == this) owner->fleet->addShip(this);
 }
 
 

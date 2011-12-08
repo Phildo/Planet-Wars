@@ -49,7 +49,7 @@
 #define LANE_LENGTH 100
 
 //SIHP GEO
-#define SHIP_SIZE 4
+#define SHIP_SIZE 1
 
 //NODE/UNIT TYPES
 #define NUM_TYPES  4
@@ -164,6 +164,7 @@ public:
     Player * nullPlayer;
     Unit * nullUnit;
     Node * nullNode;
+    Ship * nullShip;
         //GameObjects
 	Menu * menu;
     Player ** playerArray;

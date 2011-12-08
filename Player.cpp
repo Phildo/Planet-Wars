@@ -15,7 +15,7 @@ Player::Player()
     earthResources = 0;
     windResources = 0;
     
-    this->fleet = new Fleet();
+    this->fleet = new Fleet(this);
     this->myNodes = new Node*[Model::getSelf()->numNodes];
     this->nodesOwned = 0;
 }
@@ -80,5 +80,5 @@ void Player::endTurn()
 
 void Player::draw()
 {
-    
+    fleet->draw();
 }

@@ -21,13 +21,16 @@ class Fleet
 {
 public:
     Flagship * flagship;
+    Player * owner;
     vector<Ship *> shipArray;
     int numShips;
     
-    Fleet();
+    Fleet(Player * o);
     ~Fleet();
     
-    void addShip();
+    void addShip(Node * n);
     void refreshShips();
+    
+    void draw();
 };
 #endif
