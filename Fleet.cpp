@@ -20,6 +20,11 @@ Fleet::~Fleet()
     delete this->flagship;
 }
 
+void Fleet::addShip()
+{
+    
+}
+
 void Fleet::refreshShips()
 {
     for(int i = 0; i < numShips; i++)

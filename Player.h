@@ -26,7 +26,6 @@ public:
     void attackNode(Node *attackNode, Node *defendNode);
     void conquerNode(Node *node);
     Unit * deployUnit(Node *planet, int type);
-    void addShip();
     void endTurn();
     
     int fireResources;

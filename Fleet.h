@@ -26,6 +26,7 @@ public:
     Fleet();
     ~Fleet();
     
+    void addShip();
     void refreshShips();
 };
 #endif
