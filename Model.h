@@ -66,8 +66,8 @@
 #define EARTH_R 0.2f
 #define EARTH_G 0.4f
 #define EARTH_B 0.1f
-#define WIND_R 0.7f
-#define WIND_G 0.7f
+#define WIND_R 0.5f
+#define WIND_G 0.5f
 #define WIND_B 1.0f
 #define FIRE_R 1.0f
 #define FIRE_G 0.0f

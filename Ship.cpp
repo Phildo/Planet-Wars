@@ -37,10 +37,19 @@ void Ship::compileDL()
     //DRAW SHIP HERE
     glPushMatrix();
     glBegin(GL_QUADS);
+    
+    
+    
+    //HANK DRAW SHIP HERE
     glVertex3d(-.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
     glVertex3d(-.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
     glVertex3d(.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
     glVertex3d(.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
+    
+    
+    
+    
+    
     glEnd();
     glPopMatrix();
     

@@ -21,9 +21,20 @@ Map::~Map()
     delete selector;
 }
 
+Node * Map::getNodeAt(int row, int col)
+{
+    for(int i = 0; i < Model::getSelf()->numNodes; i++)
+    {
+        if(nodeArray[i]->row == row && nodeArray[i]->column == col)
+            return nodeArray[i];
+    }
+    
+    return Model::getSelf()->nullNode;
+}
+
 void Map::selectSelected()
 {
-    
+    getNodeAt(selector->row, selector->column)->select(true);
 }
 
 void Map::linkNodeToNeighbors(Node * node)
@@ -207,7 +218,7 @@ void Map::createNodeMap(int numNodes)
 
 void Map::tick()
 {
-    for(int i = 0; i < DEFAULT_NUM_NODES; i++)
+    for(int i = 0; i < Model::getSelf()->numNodes; i++)
         Model::getSelf()->nodeArray[i]->tick();
 }
 

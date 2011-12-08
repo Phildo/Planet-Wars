@@ -78,12 +78,12 @@ void gameplay(){
     if(model->finishTurn)
     {
         map->tick();
-        for(int i = 0; i <DEFAULT_NUM_PLAYERS; i++)
+        for(int i = 0; i < Model::getSelf()->numPlayers; i++)
             playerArray[i]->endTurn();
         model->finishTurn = false;
     }
 	map->draw();
-    for(int i = 0; i <DEFAULT_NUM_PLAYERS; i++)
+    for(int i = 0; i < Model::getSelf()->numPlayers; i++)
         playerArray[i]->draw();
 }
 
@@ -125,7 +125,7 @@ void DisplayFunc()
 	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
 	glViewport(0 , 0 , model->width, model->height);
     
-    model->state = GAMEPLAY;
+    //model->state = GAMEPLAY;
 	switch(model->state){
         case TITLE:
             pregame();
