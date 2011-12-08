@@ -21,6 +21,7 @@ public:
     Map(int numNodes);
     ~Map();
     
+    void selectSelected();
     void linkNodeToNeighbors(Node * node);
     void createNodeMap(int numNodes);
     void tick();

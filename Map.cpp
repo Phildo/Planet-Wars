@@ -21,6 +21,11 @@ Map::~Map()
     delete selector;
 }
 
+void Map::selectSelected()
+{
+    
+}
+
 void Map::linkNodeToNeighbors(Node * node)
 {
     int col;

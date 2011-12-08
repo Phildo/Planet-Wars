@@ -108,6 +108,12 @@ void PassiveMotionFunc(int x, int y)
 	model->mouseY = (2.0*y/model->height)-1.0;
 }
 
+void MouseFunc(int button, int state, int x, int y)
+{
+    if(button == GLUT_LEFT_BUTTON)
+        map->selectSelected();
+}
+
 void DisplayFunc()
 {
 	//Clear screen
@@ -244,6 +250,7 @@ void initGL(int argc, char * argv[])
 	glutReshapeFunc(ReshapeFunc);
 	glutIdleFunc(IdleFunc);
     glutPassiveMotionFunc(PassiveMotionFunc);
+    glutMouseFunc(MouseFunc);
     glutKeyboardFunc(KeyboardFunc);
     glutSpecialFunc(SpecialFunc);
 }
