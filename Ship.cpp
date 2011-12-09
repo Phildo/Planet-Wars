@@ -17,7 +17,12 @@ Ship::Ship(Player * o)
     layer = .25;
     owner = o;
     if(!Ship::compiled) compileDL();
-	//health = 20000;
+	/* Ryan
+	this->shipType = SHIP_TYPE_GENERIC;
+    layer = .25;
+    if(!Ship::compiled) compileDL();
+	health = 20000;
+	*/
 }
 
 Ship::~Ship()
@@ -32,6 +37,49 @@ void Ship::compileDL()
     displayList = glGenLists(1);
     glNewList(Ship::displayList, GL_COMPILE);
     
+	// Ryan
+	/*//Set Color Here
+    setColor(1.0, 0.0, 0.0, 0.0, 0.5, 1.0, 1.0);
+    setGLColor();
+	
+	// pyramids - ships on metamap
+	GLfloat rtri = 0.0f;
+	glTranslatef(0.0, 1.0, 0.0);
+	glRotatef(rtri,0.0f,1.0f,0.0f);					// rotate pyramid on y-axis
+	glBegin(GL_TRIANGLES);							//start to draw the pyramid
+	
+    glColor3f(1.0f,0.0f,0.0f);			// red
+	glVertex3f( 0.0f, 1.0f, 0.0f);		// up-frontplane
+	glColor3f(0.0f,1.0f,0.0f);			// green
+	glVertex3f(-1.0f,-1.0f, 1.0f);		// left-frontplane
+	glColor3f(0.0f,0.0f,1.0f);			// blue
+	glVertex3f( 1.0f,-1.0f, 1.0f);		// right-frontplane
+
+	glColor3f(1.0f,0.0f,0.0f);			// red
+	glVertex3f( 0.0f, 1.0f, 0.0f);		// up-rightplane
+	glColor3f(0.0f,0.0f,1.0f);			// blue
+	glVertex3f( 1.0f,-1.0f, 1.0f);		// left-rightplane
+	glColor3f(0.0f,1.0f,0.0f);			// green
+	glVertex3f( 1.0f,-1.0f, -1.0f);		// right-rightplane
+
+	glColor3f(1.0f,0.0f,0.0f);			// red
+	glVertex3f( 0.0f, 1.0f, 0.0f);		// up-backplane
+	glColor3f(0.0f,1.0f,0.0f);			// green
+	glVertex3f( 1.0f,-1.0f, -1.0f);		// left-backplane
+	glColor3f(0.0f,0.0f,1.0f);			// plane
+	glVertex3f(-1.0f,-1.0f, -1.0f);		// right-backplane
+    
+	glColor3f(1.0f,0.0f,0.0f);			// red
+	glVertex3f( 0.0f, 1.0f, 0.0f);		// up-leftplane
+	glColor3f(0.0f,0.0f,1.0f);			// blue
+	glVertex3f(-1.0f,-1.0f,-1.0f);		// left-leftplane
+	glColor3f(0.0f,1.0f,0.0f);			// green
+	glVertex3f(-1.0f,-1.0f, 1.0f);		// right-leftplane
+	glEnd();							// end of drawing pyramid
+    
+
+    glPopMatrix();
+	*/
 
     //DRAW SHIP HERE
     glPushMatrix();
@@ -57,6 +105,10 @@ void Ship::compileDL()
 
 void Ship::draw()
 {
+	/* Ryan
+    if(!Ship::compiled) return;    
+    glCallList(Ship::displayList);
+	*/
     if(!Ship::compiled) return;   
     if(loc->selected) setColor(0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 1.0);
     else setColor(0.4, 0.4, 0.4, 1.0, 1.0, 1.0, 1.0);
@@ -79,6 +131,13 @@ void Ship::drawAtPosition()
 
 void Ship::moveToNode(Node *newLoc)
 {
+	/* Ryan
+    if(loc->isNeighborOf(newLoc))
+    {
+        loc = newLoc;
+        done = true;
+    }
+	*/
     if(done) return;
     if(loc->isNeighborOf(newLoc))
     {

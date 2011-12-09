@@ -19,6 +19,9 @@ Lane::Lane()
     
     furthestAttacker = 0;
     furthestDefender = 0;
+
+	//attackShip = atkShip;
+	//defendShip = defShip;
 }
 
 Lane::~Lane()
@@ -55,6 +58,20 @@ void Lane::draw()
         attackerUnits[i]->drawAtPosition();
     for(int i = 0; i < defenderUnits.size(); i++)
         defenderUnits[i]->drawAtPosition();
+
+	/* Ryan's Version:
+	glPushMatrix();
+	glRotated(180.0, 0.0, 1.0, 0.0);
+	glTranslated(0.0, 0.0, -LANE_LENGTH/2.0); 
+    for(int i = 0; i < attackerUnits.size(); i++)
+        attackerUnits[i]->drawAtPosition();
+	glPopMatrix();
+	glPushMatrix();
+	glTranslated(0.0, 0.0, -LANE_LENGTH/2.0); 
+    for(int i = 0; i < defenderUnits.size(); i++)
+        defenderUnits[i]->drawAtPosition();
+	glPopMatrix();
+	*/
 }
 
 //LOGIC STUFF
@@ -85,7 +102,7 @@ void Lane::advanceUnit(Unit * unit, bool attacker)
     if(attacker)
     {
         if(unit->pos+unit->speed > LANE_LENGTH-furthestDefender)
-            unit->pos = furthestAttacker;
+            unit->pos = furthestAttacker; // Ryan has this commented out.
         else
             unit->pos = unit->pos+unit->speed;
         
@@ -94,7 +111,7 @@ void Lane::advanceUnit(Unit * unit, bool attacker)
     else
     {
         if(unit->pos+unit->speed > LANE_LENGTH-furthestAttacker)
-            unit->pos = furthestAttacker;
+            unit->pos = furthestAttacker; // Ryan has this commented out.
         else
             unit->pos = unit->pos+unit->speed;
         
@@ -162,6 +179,76 @@ void Lane::actUnit(Unit * unit, bool attacker)
         }
     }
 }
+
+/* Ryan's version:
+void Lane::actUnit(Unit * unit, bool attacker)
+{
+    bool kill;
+    if(attacker)
+    {
+        if(defenderUnits.size() != 0)
+        {
+            if(unit->pos+unit->range >= LANE_LENGTH/2-furthestDefender)
+            {
+                kill = unit->attack(findFurthestUnit(false));
+                if(kill)
+                {
+					//findFurthestUnit(false)->killUnit();
+
+					//use vector.erase() with index in array
+
+                    delete defenderUnits[defenderUnits.size()];
+                    defenderUnits.resize(defenderUnits.size()-1);
+                    if(defenderUnits.size() == 0)
+                        furthestDefender = 0;
+                    else
+                        furthestDefender = findFurthestUnit(false)->pos;
+                }
+            }
+        }
+        else if(unit->pos+unit->speed > LANE_LENGTH) 
+        {
+			//Attack Ship
+			kill = unit->attackShip(defendShip);
+
+			if(kill) {
+				MessageBox(NULL, "Defend ship is dead!", NULL, NULL);
+			}
+            
+        }
+    }
+    else
+    {
+        if(unit->pos+unit->range >= LANE_LENGTH/2-furthestAttacker)
+        {
+            if(attackerUnits.size() != 0)
+            {
+                kill = unit->attack(findFurthestUnit(true));
+                if(kill)
+                {
+					//findFurthestUnit(true)->killUnit();
+					//use vector.erase() with index in array
+                    delete attackerUnits[attackerUnits.size()];
+                    attackerUnits.resize(attackerUnits.size()-1);
+                    if(attackerUnits.size() == 0)
+                        furthestAttacker = 0;
+                    else
+                        furthestAttacker = findFurthestUnit(true)->pos;
+                }
+            }
+            else if(unit->pos+unit->speed > LANE_LENGTH)
+            {
+                //Attack Ship
+				kill = unit->attackShip(attackShip);
+
+				if(kill) {
+					MessageBox(NULL, "Attack ship is dead!", NULL, NULL);
+				}
+            }
+        }
+    }
+}
+*/
 
 Unit* Lane::findFurthestUnit(bool attacker)
 {

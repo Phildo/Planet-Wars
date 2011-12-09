@@ -29,6 +29,7 @@ Model::Model()
     this->nullShip = NULL;
         
     selectedNode = nullNode;
+	// Ryan's code doesn't have the next line:
     selectedShip = nullShip;
     
     this->rowMax = 0;
