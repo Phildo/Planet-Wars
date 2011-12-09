@@ -9,9 +9,11 @@
 #ifndef LANE_H
 #define LANE_H
 
-#include <vector.h>
+#include <vector>
 #include "Model.h"
 #include "DrawableGeometry.h"
+
+using namespace std;
 
 class Lane: public DrawableGeometry
 {
