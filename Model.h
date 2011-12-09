@@ -45,8 +45,8 @@
 #define COL_SPACING 1.6
 
 //MINIGAME GEO
-#define LANE_WIDTH 10
-#define LANE_LENGTH 100
+#define LANE_WIDTH 100
+#define LANE_LENGTH 1000
 
 //SIHP GEO
 #define SHIP_SIZE 1
@@ -77,7 +77,8 @@
 #define WATER_DAMAGE 100;
 #define WATER_RANGE 2;
 #define WATER_SPEED 3;
-#define WATER_COOL 5;
+#define WATER_COOL 5
+;
 
 #define EARTH_HEALTH 5000;
 #define EARTH_DAMAGE 10;
@@ -108,7 +109,7 @@
 #define DEFAULT_NUM_PLAYERS 2
 #define DEFAULT_NUM_NODES 50
 #define SEED 1
-#define DEFAULT_STATE TITLE
+#define DEFAULT_STATE MINIGAME
 
 //Forward declarations- everything has access to everything (woah)
 class Menu;
@@ -175,7 +176,6 @@ public:
     MiniGame * mgame;
         //Game State Vars
     Node * selectedNode;
-    Ship * selectedShip;
     int state;
     bool finishTurn;
     int numPlayers;

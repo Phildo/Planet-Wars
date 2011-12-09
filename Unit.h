@@ -18,6 +18,9 @@ public:
     Unit(void); 
 	Unit(int type);
     void initThings();
+
+
+	int arrayIndex;
     
     int pos;
     
@@ -34,6 +37,7 @@ public:
     void resetCooldown();
     void setType(int type);
     bool attack(Unit * enemy);
+	bool attackShip(Ship *atkShip);
 
     static bool compiled;       //True iff displayList names a valid glDisplayList
     static GLuint displayList;  //Name of displaylist for object

@@ -29,7 +29,6 @@ Model::Model()
     this->nullShip = NULL;
         
     selectedNode = nullNode;
-    selectedShip = nullShip;
     
     this->rowMax = 0;
     this->rowMin = 0;
@@ -68,7 +67,7 @@ Player** Model::setNumPlayers(int numPlayers)
         playerArray[i] = new Player();
         playerArray[i]->conquerNode(nodeArray[i]);
         playerArray[i]->home = nodeArray[i];
-        playerArray[i]->fleet->addShip(playerArray[i]->home, playerArray[i]);
+        playerArray[i]->fleet->addShip(playerArray[i]->home);
     }
     
     return playerArray;
