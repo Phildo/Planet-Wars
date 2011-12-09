@@ -22,6 +22,9 @@ public:
     float layer;
     bool done;
     Node * loc;
+	
+
+	int health;
     
     static bool compiled;       //True iff displayList names a valid glDisplayList
     static GLuint displayList;  //Name of displaylist for object

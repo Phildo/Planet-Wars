@@ -12,10 +12,13 @@ class Player;
 class Ship;
 class Flagship;
 
-#include <vector.h>
+#include <vector>
 #include "Player.h"
 #include "Flagship.h"
 #include "Ship.h"
+
+using namespace std;
+
 
 class Fleet
 {

@@ -9,20 +9,26 @@
 #ifndef LANE_H
 #define LANE_H
 
-#include <vector.h>
+#include <vector>
 #include "Model.h"
 #include "DrawableGeometry.h"
+#include "Ship.h"
+
+
+using namespace std;
 
 class Lane: public DrawableGeometry
 {
 public:
-    Lane();
+    Lane(Ship* atkShip, Ship* defShip);
     ~Lane();
 
-    vector <Unit *> attackerUnits;
-    vector <Unit *> defenderUnits;
+    std::vector<Unit*> attackerUnits;
+    std::vector<Unit*> defenderUnits;
     int furthestAttacker;
     int furthestDefender;
+	Ship* attackShip;
+	Ship* defendShip;
     
     void setSelected(bool selected);
     void deployUnit(Unit * unit, bool attacker);
@@ -35,6 +41,10 @@ public:
     static GLuint displayList;  //Name of displaylist for object
     void compileDL();
     void draw();
+
+
+
+
 };
 
 #endif

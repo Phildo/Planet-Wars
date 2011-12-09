@@ -3,6 +3,7 @@
 
 class Lane;
 #include <math.h>
+#include <time.h>
 #include <iostream>
 #include "Model.h"
 #include "Player.h"
@@ -20,12 +21,18 @@ public:
 
     Lane ** lanes;
     int selectedLane;
+
+	int counter;
+
+	Ship * attackShip;
+	Ship * defendShip;
     
     void changeLane(int direction);
     void selectLane(int lane);
     void addUnit(Player * p, int type);
 	void update();
     void drawGame();
+	void generateUnits();
 };
 
 #endif
