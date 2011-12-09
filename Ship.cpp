@@ -81,7 +81,9 @@ void Ship::moveToNode(Node *newLoc)
     if(done) return;
     if(loc->isNeighborOf(newLoc))
     {
+        loc->ship = Model::getSelf()->nullShip;
         loc = newLoc;
+        loc->ship = this;
         done = true;
     }
 }

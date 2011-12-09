@@ -36,6 +36,7 @@ void Fleet::addShip(Node * n, Player * o)
     shipArray.resize(shipArray.size()+1);
     shipArray[shipArray.size()-1] = new Ship(o);
     shipArray[shipArray.size()-1]->loc = n;
+    n->ship = shipArray[shipArray.size()-1];
     numShips++;
 }
 
