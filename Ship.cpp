@@ -1,3 +1,4 @@
+
 //
 //  Ship.cpp
 //  SpongeBobWars
@@ -16,6 +17,7 @@ Ship::Ship()
     this->shipType = SHIP_TYPE_GENERIC;
     layer = .25;
     if(!Ship::compiled) compileDL();
+	health = 20000;
 }
 
 Ship::~Ship()
@@ -109,3 +111,4 @@ void Ship::moveToNode(Node *newLoc)
         done = true;
     }
 }
+
