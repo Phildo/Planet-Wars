@@ -8,8 +8,8 @@
 
 
 //#ifndef _WIN32
-  //  #include <OpenGL/OpenGL.h>
-  //  #include <GLUT/GLUT.h>
+    //#include <OpenGL/OpenGL.h>
+   //#include <GLUT/GLUT.h>
 //#elif
     #include <GL\freeglut.h>
     #include <GL\GL.h>
@@ -53,7 +53,6 @@ void initGame(int numPlayers, int numNodes)
 //GAME STATES
 /////////
 
-// This is the TITLE
 void pregame(){
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -79,19 +78,19 @@ void gameplay(){
     if(model->finishTurn)
     {
         map->tick();
-        for(int i = 0; i < Model::getSelf()->numPlayers; i++)
+        for(int i = 0; i <DEFAULT_NUM_PLAYERS; i++)
             playerArray[i]->endTurn();
         model->finishTurn = false;
     }
 	map->draw();
-    for(int i = 0; i < Model::getSelf()->numPlayers; i++)
+    for(int i = 0; i <DEFAULT_NUM_PLAYERS; i++)
         playerArray[i]->draw();
 }
 
 void minigame() { 
     glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(0.0, 20.0, 100.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt(0.0, 350.0, 800.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     
     game->update();
 	game->drawGame();
@@ -111,7 +110,7 @@ void PassiveMotionFunc(int x, int y)
 
 void MouseFunc(int button, int state, int x, int y)
 {
-    if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+    if(button == GLUT_LEFT_BUTTON)
         map->selectSelected();
 }
 
@@ -123,10 +122,10 @@ void DisplayFunc()
     //Main Viewport
     glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
+	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 2000.0);
 	glViewport(0 , 0 , model->width, model->height);
     
-    //model->state = GAMEPLAY;
+    //model->state = MINIGAME;
 	switch(model->state){
         case TITLE:
             pregame();
@@ -139,7 +138,6 @@ void DisplayFunc()
             break;
 	}
     
-    model->tickCount++;
 	glutSwapBuffers();
 }
 
@@ -183,10 +181,10 @@ void KeyboardFunc(unsigned char key, int x, int y)
         case ' ':
             model->finishTurn = true;
             
-        case '[': //left arrow
+        case '[': 
             game->changeLane(LEFT);
             break;
-        case ']': //right arrow
+        case ']': 
             game->changeLane(RIGHT);
             break;
             
@@ -227,14 +225,8 @@ void initGL(int argc, char * argv[])
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE);
 	glutInitWindowPosition(0 , 0);
 	glutInitWindowSize(model->width,model->height);
-	glutCreateWindow("PlanetsConquerer!");
-	glutFullScreen();
-	/*
-	 * The following section is curser specification. You guys can choose what is appropriate,
-	 * but for now I'm getting rid of it.
-	 * Other types: GLUT_CURSOR_CROSSHAIR GLUT_CURSOR_NONE
-	 */
-	glutSetCursor(GLUT_CURSOR_NONE);
+	glutCreateWindow("Sponge Bob to the Stars!");
+	//glutFullScreen();
     
 	//One-Time setups
     glEnable(GL_DEPTH_TEST);
