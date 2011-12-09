@@ -143,7 +143,8 @@ void Node::tick()
             //Nothin'
             break;
     }
-    if(owner->home == this) owner->fleet->addShip(this, owner);
+    if(owner->home == this) 
+        owner->fleet->addShip(this, owner);
 }
 
 

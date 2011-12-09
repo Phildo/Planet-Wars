@@ -5,6 +5,9 @@ MiniGame::MiniGame(Node * planet, Player * attacker, Player * defender)
     node = planet;
     p1 = attacker;
     p2 = defender;
+
+	//attackShip = new Ship();
+	//defendShip = new Ship();
     
     lanes = new Lane*[NUM_LANES];
     for(int i = 0; i < NUM_LANES; i++)
@@ -13,6 +16,9 @@ MiniGame::MiniGame(Node * planet, Player * attacker, Player * defender)
     }
     selectedLane = 0;
     lanes[selectedLane]->setSelected(true);
+
+	//srand ( time(NULL) );
+	//counter = 0;	
 }
 
 void MiniGame::changeLane(int direction)

@@ -125,7 +125,12 @@ void Lane::actUnit(Unit * unit, bool attacker)
         }
         else
         {
-            //Attack Ship
+			//Attack Ship
+			//kill = unit->attackShip(defendShip);
+
+			if(kill) {
+				//MessageBox(NULL, "Defend ship is dead!", NULL, NULL);
+			}
         }
     }
     else
@@ -148,6 +153,11 @@ void Lane::actUnit(Unit * unit, bool attacker)
             else
             {
                 //Attack Ship
+				//kill = unit->attackShip(attackShip);
+
+				if(kill) {
+					//MessageBox(NULL, "Attack ship is dead!", NULL, NULL);
+				}
             }
         }
     }

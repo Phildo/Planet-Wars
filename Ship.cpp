@@ -17,6 +17,7 @@ Ship::Ship(Player * o)
     layer = .25;
     owner = o;
     if(!Ship::compiled) compileDL();
+	//health = 20000;
 }
 
 Ship::~Ship()
@@ -84,6 +85,7 @@ void Ship::moveToNode(Node *newLoc)
         loc->ship = Model::getSelf()->nullShip;
         loc = newLoc;
         loc->ship = this;
+        owner->conquerNode(loc);
         done = true;
     }
 }
