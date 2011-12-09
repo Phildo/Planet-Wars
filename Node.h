@@ -26,7 +26,6 @@ public:
     int row;
     int column;
     bool selected;
-    float selOffset;
     
     Player * owner;
     Ship * ship;
@@ -55,6 +54,7 @@ public:
     //Drawable Geometry Stuff
     static bool compiled;       //True iff displayList names a valid glDisplayList
     static GLuint displayList;  //Name of displaylist for object
+    static GLuint rimDList;
     void compileDL();
     void draw();
     void drawAtPosition();

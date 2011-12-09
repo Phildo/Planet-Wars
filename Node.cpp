@@ -20,7 +20,7 @@ void Node::initStuff()
     row = NULL_LOCATION;
     column = NULL_LOCATION;
     layer = 0.0f;
-	selOffset = 0;
+    selected = false;
     
     if(!Node::compiled) Node::compileDL();
 }
@@ -45,26 +45,24 @@ Node::~Node()
 void Node::setType(int t)
 {
     this->type = t;
-    
+
     switch (t) {
         case TYPE_EARTH:
-            this->setColor(EARTH_R+selOffset, EARTH_G+selOffset, EARTH_B+selOffset, 1.0, 0.1, 0.5, 0.7);
+            this->setColor(EARTH_R, EARTH_G, EARTH_B, 1.0, 0.1, 0.5, 0.7);
             break;
         case TYPE_WIND:
-            this->setColor(WIND_R+selOffset, WIND_G+selOffset, WIND_B+selOffset, 1.0, 0.1, 0.5, 0.7);
+            this->setColor(WIND_R, WIND_G, WIND_B, 1.0, 0.1, 0.5, 0.7);
             break;
         case TYPE_FIRE:
-            this->setColor(FIRE_R+selOffset, FIRE_G+selOffset, FIRE_B+selOffset, 1.0, 0.1, 0.5, 0.7);
+            this->setColor(FIRE_R, FIRE_G, FIRE_B, 1.0, 0.1, 0.5, 0.7);
             break;
         case TYPE_WATER:
-            this->setColor(WATER_R+selOffset, WATER_G+selOffset, WATER_B+selOffset, 1.0, 0.1, 0.5, 0.7);
+            this->setColor(WATER_R, WATER_G, WATER_B, 1.0, 0.1, 0.5, 0.7);
             break;
         default:
             this->setColor(0.3, 0.3, 0.3, 1.0, 0.1, 0.5, 0.7);
             break;
     }
-
-	this->setColor(0.3, 0.3, 0.3, 1.0, 0.1, 0.5, 0.7);
 }
 
 int Node::getRandomFreeNeighbor()
@@ -116,15 +114,11 @@ void Node::select(bool select)
     {
         if(Model::getSelf()->selectedNode != Model::getSelf()->nullNode)
             Model::getSelf()->selectedNode->select(false);
-        Model::getSelf()->selectedNode = this;
-        selOffset = SELECTION_BRIGHTNESS;
-        setColor(sinf((float)((Model::getSelf()->tickCount/100.0))/2)+1, sinf((float)((Model::getSelf()->tickCount/100.0))/2)+1, sinf((float)((Model::getSelf()->tickCount/100.0))/2)+1, 1.0, 1.0, 1.0, 1.0);
+        Model::getSelf()->selectedNode = this;        
     }
     else
     {
         Model::getSelf()->selectedNode = Model::getSelf()->nullNode;
-        selOffset = 0;
-        setColor(0.3, 0.3, 0.3, 1.0, 0.1, 0.5, 0.7);
     }
 }
 
@@ -155,6 +149,7 @@ void Node::tick()
 //DRAWABLE GEO FUNCTIONS
 bool Node::compiled = false;
 GLuint Node::displayList;
+GLuint Node::rimDList;
 
 void Node::compileDL()
 {
@@ -163,7 +158,6 @@ void Node::compileDL()
     float sqrtOfThreeOverTwo = sqrt(3.0/2.0);
 
     glNewList(Node::displayList, GL_COMPILE);
-    
     glBegin(GL_TRIANGLES);
     
     glVertex3f(0, 0, 0);
@@ -192,14 +186,53 @@ void Node::compileDL()
     
     glEnd();
     glEndList();
+    
+    
+    
+    
+    
+    Node::rimDList = glGenLists(1);
+    glNewList(Node::rimDList, GL_COMPILE);
+    
+    glPushMatrix();
+    glScalef(0.9, 0.9, 0.9);
+    glBegin(GL_TRIANGLES);
+    
+    
+    //glVertex3f(1, layer+0.1, 0);
+    //glVertex3f(0.5, layer+0.1, sqrtOfThreeOverTwo);
+    //glVertex3f(-0.5, layer+0.1, sqrtOfThreeOverTwo);
+    glVertex3f(-0.5, layer+0.1, -1*sqrtOfThreeOverTwo);
+    glVertex3f(0.5, layer+0.1, -1*sqrtOfThreeOverTwo); 
+    glVertex3f(-1, layer+0.1, 0);
+    //glVertex3f(1, layer+0.1, 0);
+     
+    glEnd();
+    glPopMatrix();
+    glEndList();
+     
+    
+
     Node::compiled = true;
 }
 
 void Node::draw()
 {
     if(!Node::compiled) return;
+    if(selected)
+    {
+        float color;
+        color = sinf((float)(Model::getSelf()->tickCount/200.0))/2+.5;
+        if(color < 0.3f) color = 0.3f;
+        setColor(color, color, color, 1.0, 1.0, 1.0, 1.0);
+    }
+    else
+        setColor(0.3, 0.3, 0.3, 1.0, 0.1, 0.5, 0.7);
     setGLColor();
     glCallList(Node::displayList);
+    setType(type);
+    setGLColor();
+    glCallList(Node::rimDList);
 }
 
 void Node::drawAtPosition()
