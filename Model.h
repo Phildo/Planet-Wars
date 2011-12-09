@@ -108,7 +108,7 @@
 #define DEFAULT_NUM_PLAYERS 2
 #define DEFAULT_NUM_NODES 50
 #define SEED 1
-#define DEFAULT_STATE MINIGAME
+#define DEFAULT_STATE TITLE
 
 //Forward declarations- everything has access to everything (woah)
 class Menu;
