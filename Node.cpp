@@ -109,6 +109,7 @@ bool Node::isNeighborOf(Node * n)
 
 void Node::select(bool select)
 {
+    if(selected && select) return;
     selected = select;
     if(selected)
     {
