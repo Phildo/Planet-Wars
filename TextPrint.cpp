@@ -1,8 +1,20 @@
 
+#ifdef TARGET_OS_MAC
+    #include <OpenGL/OpenGL.h>
+    #include <GLUT/GLUT.h>
+#endif
+
+#ifdef __linux__
+  // Linux Includes Here
+  #error Can't be compiled on Linux yet
+#endif
+
+#ifdef _WIN32 || _WIN64
+    #include <GL\freeglut.h>
+    #include <GL\GL.h>
+#endif
 
 #include "TextPrint.h"
-#include <GL\freeglut.h>
-#include <GL\GL.h>
 
 TextPrint::TextPrint(void)
 {
@@ -64,25 +76,15 @@ GLUT_STROKE_MONO_ROMAN
 */
 
 void TextPrint::strokePrint(int x, int y, int z, 
-	float r, float g, float b, void * font, char *string)
+	float r, float g, float b, char *string)
 {
-	glColor3f( r, g, b );
-	glRasterPos3f(x, y, z);
-	int len, i;
-	len = (int)strlen(string);
-	for (i = 0; i < len; i++) {
-		glutBitmapCharacter(font, string[i]);
-	}
-
-
-}
-void output(GLfloat x, GLfloat y, char *text)
-{
-    char *p;
+	char *p;
     
     glPushMatrix();
-    glTranslatef(x, y, 0);
-    for (p = text; *p; p++)
+	glColor3f(r,g,b);
+    glTranslatef(x, y, z);
+    for (p = string; *p; p++)
         glutStrokeCharacter(GLUT_STROKE_ROMAN, *p);
     glPopMatrix();
+
 }
