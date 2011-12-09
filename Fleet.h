@@ -12,13 +12,10 @@ class Player;
 class Ship;
 class Flagship;
 
-#include <vector>
+#include <vector.h>
 #include "Player.h"
 #include "Flagship.h"
 #include "Ship.h"
-
-using namespace std;
-
 
 class Fleet
 {
@@ -31,7 +28,9 @@ public:
     Fleet(Player * o);
     ~Fleet();
     
-    void addShip(Node * n);
+    bool hasShip(Ship * s);
+    
+    void addShip(Node * n, Player * o);
     void refreshShips();
     
     void draw();

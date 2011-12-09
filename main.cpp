@@ -7,13 +7,13 @@
 //
 
 
-//#ifndef _WIN32
-    //#include <OpenGL/OpenGL.h>
-   //#include <GLUT/GLUT.h>
-//#elif
+#ifndef _WIN32
+    #include <OpenGL/OpenGL.h>
+    #include <GLUT/GLUT.h>
+#elif
     #include <GL\freeglut.h>
     #include <GL\GL.h>
-//#endif
+#endif
 
 
 #include <iostream>
@@ -53,6 +53,7 @@ void initGame(int numPlayers, int numNodes)
 //GAME STATES
 /////////
 
+// This is the TITLE
 void pregame(){
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -78,19 +79,19 @@ void gameplay(){
     if(model->finishTurn)
     {
         map->tick();
-        for(int i = 0; i <DEFAULT_NUM_PLAYERS; i++)
+        for(int i = 0; i < Model::getSelf()->numPlayers; i++)
             playerArray[i]->endTurn();
         model->finishTurn = false;
     }
 	map->draw();
-    for(int i = 0; i <DEFAULT_NUM_PLAYERS; i++)
+    for(int i = 0; i < Model::getSelf()->numPlayers; i++)
         playerArray[i]->draw();
 }
 
 void minigame() { 
     glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(0.0, 350.0, 800.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt(0.0, 20.0, 100.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     
     game->update();
 	game->drawGame();
@@ -110,8 +111,10 @@ void PassiveMotionFunc(int x, int y)
 
 void MouseFunc(int button, int state, int x, int y)
 {
-    if(button == GLUT_LEFT_BUTTON)
+    if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+    {
         map->selectSelected();
+    }
 }
 
 void DisplayFunc()
@@ -122,10 +125,10 @@ void DisplayFunc()
     //Main Viewport
     glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 2000.0);
+	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
 	glViewport(0 , 0 , model->width, model->height);
     
-    //model->state = MINIGAME;
+    model->state = GAMEPLAY;
 	switch(model->state){
         case TITLE:
             pregame();
@@ -138,6 +141,7 @@ void DisplayFunc()
             break;
 	}
     
+    model->tickCount++;
 	glutSwapBuffers();
 }
 
@@ -148,72 +152,59 @@ void IdleFunc()
 
 void KeyboardFunc(unsigned char key, int x, int y)
 {
-	//SHOULD PUT KEY SWITCH STATEMENTS IN INDIVIDUAL STATE CASES
-	//(ie each state has its own set of keystrokes)
-	switch(model->state){
-	case TITLE:
-		switch (key)
-		{
-
-		}
-		break;
-	case GAMEPLAY:
-		switch (key)
-		{
-		case 'p':
-			model->state = METAPAUSE;
-			break;
-
-		}
-		break;
-	case MINIGAME:
-		switch (key)
-		{
-		case '[': //left arrow
-			game->changeLane(LEFT);
-			break;
-		case ']': //right arrow
-			game->changeLane(RIGHT);
-			break;
-		case 'z':
-			game->addUnit(model->playerArray[0], TYPE_WATER);
-			break;
-		case 'x':
-			game->addUnit(model->playerArray[0], TYPE_EARTH);
-			break;
-		case 'c':
-			game->addUnit(model->playerArray[0], TYPE_WIND);
-			break;
-		case 'v':
-			game->addUnit(model->playerArray[0], TYPE_FIRE);
-			break;
-		}    
-
-		break;
+    //SHOULD PUT KEY SWITCH STATEMENTS IN INDIVIDUAL STATE CASES
+    //(ie each state has its own set of keystrokes)
+    switch(model->state){
+        case TITLE:
+            break;
+        case GAMEPLAY:
+            break;
+        case MINIGAME:
+            break;
 	}
-	// General key statements:
-	switch(key)
-	{
-	case 27: // Press the ESC key to exit the game immediately.
-		exit(0);
-		break;
-	case 'p':
-		//Menu::setMenu(META);
-		break;
-		// For state testing:
-	case '1':
-		model->state = GAMEPLAY;
-		break;
-	case '0':
-		model->state = TITLE;
-		break;
-	case '2':
-		model->state = MINIGAME;
-		break;
-		
-	case ' ': // I'm not sure where this is supposed to go.
-		model->finishTurn = true;
-	}
+    
+    switch(key)
+    {
+        case 27: // Press the ESC key to exit the game immediately.
+            exit(0);
+            break;
+        case 'p':
+            //Menu::setMenu(META);
+            break;
+            // For state testing:
+        case '1':
+            model->state = GAMEPLAY;
+            break;
+        case '0':
+            model->state = TITLE;
+            break;
+        case '2':
+            model->state = MINIGAME;
+            break;
+            
+        case ' ':
+            model->finishTurn = true;
+            
+        case '[': //left arrow
+            game->changeLane(LEFT);
+            break;
+        case ']': //right arrow
+            game->changeLane(RIGHT);
+            break;
+            
+        case 'z':
+            game->addUnit(model->playerArray[0], TYPE_WATER);
+            break;
+        case 'x':
+            game->addUnit(model->playerArray[0], TYPE_EARTH);
+            break;
+        case 'c':
+            game->addUnit(model->playerArray[0], TYPE_WIND);
+            break;
+        case 'v':
+            game->addUnit(model->playerArray[0], TYPE_FIRE);
+            break;
+    }
 }
 
 void SpecialFunc(int key, int x, int y)
@@ -238,8 +229,14 @@ void initGL(int argc, char * argv[])
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE);
 	glutInitWindowPosition(0 , 0);
 	glutInitWindowSize(model->width,model->height);
-	glutCreateWindow("Sponge Bob to the Stars!");
+	glutCreateWindow("PlanetsConquerer!");
 	//glutFullScreen();
+	/*
+	 * The following section is curser specification. You guys can choose what is appropriate,
+	 * but for now I'm getting rid of it.
+	 * Other types: GLUT_CURSOR_CROSSHAIR GLUT_CURSOR_NONE
+	 */
+	glutSetCursor(GLUT_CURSOR_NONE);
     
 	//One-Time setups
     glEnable(GL_DEPTH_TEST);

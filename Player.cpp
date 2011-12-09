@@ -70,9 +70,7 @@ Unit * Player::deployUnit(Node *planet, int type)
     //or if player contains enough resources to create another one. 
     //If so, remove unit from player's army and return unit. Else, return null.
     
-    //return Model::getSelf()->nullUnit;
-
-	return new Unit(type);
+    return Model::getSelf()->nullUnit;
 }
 
 void Player::endTurn()

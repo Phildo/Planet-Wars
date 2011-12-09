@@ -11,20 +11,19 @@
 #include "Model.h"
 #include "DrawableGeometry.h"
 #include "Node.h"
+#include "Player.h"
 
 class Ship: public DrawableGeometry
 {
 public:
-    Ship();
+    Ship(Player * o);
     ~Ship();
     
     int shipType;
     float layer;
     bool done;
     Node * loc;
-	
-
-	int health;
+    Player * owner;
     
     static bool compiled;       //True iff displayList names a valid glDisplayList
     static GLuint displayList;  //Name of displaylist for object

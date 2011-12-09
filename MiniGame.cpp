@@ -5,20 +5,14 @@ MiniGame::MiniGame(Node * planet, Player * attacker, Player * defender)
     node = planet;
     p1 = attacker;
     p2 = defender;
-	attackShip = new Ship();
-	defendShip = new Ship();
     
     lanes = new Lane*[NUM_LANES];
     for(int i = 0; i < NUM_LANES; i++)
     {
-        lanes[i] = new Lane(attackShip, defendShip);
+        lanes[i] = new Lane();
     }
     selectedLane = 0;
     lanes[selectedLane]->setSelected(true);
-
-	srand ( time(NULL) );
-	counter = 0;	
-
 }
 
 void MiniGame::changeLane(int direction)
@@ -49,9 +43,6 @@ void MiniGame::update() {
     {
         lanes[i]->tick();
     }
-
-	generateUnits();
-
 }
 
 
@@ -65,57 +56,22 @@ void MiniGame::drawGame() {
         glPopMatrix();
     }
 
-	//glBegin(GL_QUADS);
- //   glVertex3f(-10, -1, 10);
-	//glVertex3f(10, -1, 10);
-	//glVertex3f(10, -1, 10);
-	//glVertex3f(-10, -1, 10);
-	//glEnd();
+	glBegin(GL_QUADS);
+    glVertex3f(-10, -1, 10);
+	glVertex3f(10, -1, 10);
+	glVertex3f(10, -1, 10);
+	glVertex3f(-10, -1, 10);
+	glEnd();
 
-	//glBegin(GL_QUADS);
- //   glVertex3f(-10, -1, 60);
-	//glVertex3f(10, -1, 60);
-	//glVertex3f(10, -1, 70);
-	//glVertex3f(-10, -1, 70);
-	//glEnd();
-
-}
-
-void MiniGame::generateUnits() {
-
-	int randLane;
-	int randType;
-	randLane = rand() % NUM_LANES;
-	randType = rand() % 4;
-
-
-	if(counter == 0) {
-		Unit* temp = new Unit();
-
-		switch(randType) {
-		case 0:
-			temp->setType(0);
-			break;
-		case 1:
-			temp->setType(1);
-			break;
-		case 2:
-			temp->setType(2);
-			break;
-		case 3:
-			temp->setType(3);
-			break;
-		}
-		lanes[randLane]->deployUnit(temp, false);
-	}
-
-	counter++;
-
-	if(counter == 60) {
-		counter = 0;
-	}
-
+	glBegin(GL_QUADS);
+    glVertex3f(-10, -1, 60);
+	glVertex3f(10, -1, 60);
+	glVertex3f(10, -1, 70);
+	glVertex3f(-10, -1, 70);
+	glEnd();
 
 }
+
+
 
 

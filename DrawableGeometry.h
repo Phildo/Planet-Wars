@@ -8,13 +8,13 @@
 #ifndef	DRAWABLEGEOMETRY_H
 #define	DRAWABLEGEOMETRY_H
 
-//#ifndef _WIN32
-  //  #import <OpenGL/OpenGL.h>
-  //  #import <GLUT/GLUT.h>
-//#elif
+#ifndef _WIN32
+    #import <OpenGL/OpenGL.h>
+    #import <GLUT/GLUT.h>
+#elif
     #include <GL\freeglut.h>
     #include <GL\GL.h>
-//#endif
+#endif
 
 
 class DrawableGeometry

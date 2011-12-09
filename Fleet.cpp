@@ -21,11 +21,20 @@ Fleet::~Fleet()
     delete this->flagship;
 }
 
-void Fleet::addShip(Node * n)
+bool Fleet::hasShip(Ship * s)
+{
+    for(int i = 0; i < numShips; i++)
+    {
+        if(shipArray[i] == s) return true;
+    }
+    return false;
+}
+
+void Fleet::addShip(Node * n, Player * o)
 {
     if(n->ship != Model::getSelf()->nullShip) return;
     shipArray.resize(shipArray.size()+1);
-    shipArray[shipArray.size()-1] = new Ship();
+    shipArray[shipArray.size()-1] = new Ship(o);
     shipArray[shipArray.size()-1]->loc = n;
     numShips++;
 }

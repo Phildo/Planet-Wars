@@ -36,7 +36,28 @@ void Map::selectSelected()
 {
     Node *n;
     n = getNodeAt(selector->row, selector->column);
-    if(n != Model::getSelf()->nullNode) n->select(true);
+    if(n != Model::getSelf()->nullNode)
+    {
+        n->select(true);
+        if(n->ship != Model::getSelf()->nullShip)
+        {
+            if(Model::getSelf()->playerArray[0]->fleet->hasShip(n->ship))
+                Model::getSelf()->selectedShip = n->ship;
+        }
+        else
+        {
+            if(Model::getSelf()->selectedShip != NULL)
+            {
+                Model::getSelf()->selectedShip->moveToNode(n);
+                Model::getSelf()->selectedShip = Model::getSelf()->nullShip;
+            }
+        }
+    }
+    else
+    {
+        Model::getSelf()->selectedNode->select(false); 
+        Model::getSelf()->selectedShip = Model::getSelf()->nullShip;
+    }
 }
 
 void Map::linkNodeToNeighbors(Node * node)
