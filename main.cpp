@@ -69,7 +69,6 @@ void pregame(){
 	gluPerspective(60.0 , ((double) Model::getSelf()->width) / ((double) Model::getSelf()->height), 1.0f , 100.0);
 	glViewport(0 , 0 , Model::getSelf()->width, Model::getSelf()->height);
 
-	TextPrint::strokePrint(0,10,0,.3,.3,.3, "TESTING");
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -242,6 +241,7 @@ void DisplayFunc()
 			break;
 		case MINIPAUSE:
 			minipause();
+			break;
         case GAMEPLAY:
             gameplay();
             break;
