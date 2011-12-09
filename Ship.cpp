@@ -1,3 +1,4 @@
+
 //
 //  Ship.cpp
 //  SpongeBobWars
@@ -11,18 +12,12 @@
 bool Ship::compiled = false;
 GLuint Ship::displayList;
 
-Ship::Ship(Player * o)
+Ship::Ship()
 {
     this->shipType = SHIP_TYPE_GENERIC;
     layer = .25;
-    owner = o;
-    if(!Ship::compiled) compileDL();
-	/* Ryan
-	this->shipType = SHIP_TYPE_GENERIC;
-    layer = .25;
     if(!Ship::compiled) compileDL();
 	health = 20000;
-	*/
 }
 
 Ship::~Ship()
@@ -32,16 +27,21 @@ Ship::~Ship()
 
 void Ship::compileDL()
 {
+
     //Sample compilation of a simple sphere 
     if(Ship::compiled) return;
     displayList = glGenLists(1);
     glNewList(Ship::displayList, GL_COMPILE);
     
-	// Ryan
-	/*//Set Color Here
+    //Set Color Here
     setColor(1.0, 0.0, 0.0, 0.0, 0.5, 1.0, 1.0);
     setGLColor();
+
+    //DRAW SHIP HERE
+    glPushMatrix();
+
 	
+
 	// pyramids - ships on metamap
 	GLfloat rtri = 0.0f;
 	glTranslatef(0.0, 1.0, 0.0);
@@ -79,25 +79,6 @@ void Ship::compileDL()
     
 
     glPopMatrix();
-	*/
-
-    //DRAW SHIP HERE
-    glPushMatrix();
-    
-    glBegin(GL_QUADS);
-    glVertex3f(-.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
-    glVertex3f(-.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
-    glVertex3f(.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
-    glVertex3f(.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
-    glEnd();
-    
-    glBegin(GL_TRIANGLES);
-    glVertex3d(.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
-    glVertex3d(SHIP_SIZE, layer, 0);
-    glVertex3d(.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
-    glEnd();
-    
-    glPopMatrix();
     
     glEndList();
     Ship::compiled = true;
@@ -105,14 +86,7 @@ void Ship::compileDL()
 
 void Ship::draw()
 {
-	/* Ryan
     if(!Ship::compiled) return;    
-    glCallList(Ship::displayList);
-	*/
-    if(!Ship::compiled) return;   
-    if(loc->selected) setColor(0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 1.0);
-    else setColor(0.4, 0.4, 0.4, 1.0, 1.0, 1.0, 1.0);
-    setGLColor();
     glCallList(Ship::displayList);
 }
 
@@ -131,20 +105,10 @@ void Ship::drawAtPosition()
 
 void Ship::moveToNode(Node *newLoc)
 {
-	/* Ryan
     if(loc->isNeighborOf(newLoc))
     {
         loc = newLoc;
-        done = true;
-    }
-	*/
-    if(done) return;
-    if(loc->isNeighborOf(newLoc))
-    {
-        loc->ship = Model::getSelf()->nullShip;
-        loc = newLoc;
-        loc->ship = this;
-        owner->conquerNode(loc);
         done = true;
     }
 }
+
