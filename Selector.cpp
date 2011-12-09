@@ -70,6 +70,7 @@ void Selector::compileDL()
 void Selector::draw()
 {
     if(!Selector::compiled) return;
+    setColor(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
     setGLColor();
     glCallList(Selector::displayList);
 }

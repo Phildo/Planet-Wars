@@ -118,13 +118,14 @@ void Node::select(bool select)
             Model::getSelf()->selectedNode->select(false);
         Model::getSelf()->selectedNode = this;
         selOffset = SELECTION_BRIGHTNESS;
+        setColor(sinf((float)((Model::getSelf()->tickCount/100.0))/2)+1, sinf((float)((Model::getSelf()->tickCount/100.0))/2)+1, sinf((float)((Model::getSelf()->tickCount/100.0))/2)+1, 1.0, 1.0, 1.0, 1.0);
     }
     else
     {
         Model::getSelf()->selectedNode = Model::getSelf()->nullNode;
         selOffset = 0;
+        setColor(0.3, 0.3, 0.3, 1.0, 0.1, 0.5, 0.7);
     }
-    setType(type);
 }
 
 void Node::tick()

@@ -7,13 +7,13 @@
 //
 
 
-//#ifndef _WIN32
-    //#include <OpenGL/OpenGL.h>
-   // #include <GLUT/GLUT.h>
-//#elif
+#ifndef _WIN32
+    #include <OpenGL/OpenGL.h>
+    #include <GLUT/GLUT.h>
+#elif
     #include <GL\freeglut.h>
     #include <GL\GL.h>
-//#endif
+#endif
 
 
 #include <iostream>
@@ -111,7 +111,7 @@ void PassiveMotionFunc(int x, int y)
 
 void MouseFunc(int button, int state, int x, int y)
 {
-    if(button == GLUT_LEFT_BUTTON)
+    if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
         map->selectSelected();
 }
 
@@ -139,6 +139,7 @@ void DisplayFunc()
             break;
 	}
     
+    model->tickCount++;
 	glutSwapBuffers();
 }
 
@@ -227,7 +228,7 @@ void initGL(int argc, char * argv[])
 	glutInitWindowPosition(0 , 0);
 	glutInitWindowSize(model->width,model->height);
 	glutCreateWindow("PlanetsConquerer!");
-	glutFullScreen();
+	//glutFullScreen();
 	/*
 	 * The following section is curser specification. You guys can choose what is appropriate,
 	 * but for now I'm getting rid of it.

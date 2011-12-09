@@ -157,6 +157,7 @@ public:
     float zoom;
     float camCenterX;
     float camCenterY;
+    int tickCount;
     
     /////////
     //Game Vars

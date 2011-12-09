@@ -14,6 +14,7 @@ Model::Model()
     if(Model::selfPtr)
         throw (new std::string("DO NOT CALL CONSTRUCTOR DIRECTLY. USE Model::getSelf()"));
 
+    tickCount = 0;
     
     this->width = WIDTH;
     this->height = HEIGHT;
