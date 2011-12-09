@@ -6,6 +6,8 @@ class Hud
 public:
 	Hud(void);
 	~Hud(void);
+	static void drawMeta();
+	static void drawMini();
 };
 
 #endif
