@@ -7,13 +7,13 @@
 //
 
 
-#ifndef _WIN32
-    #include <OpenGL/OpenGL.h>
-    #include <GLUT/GLUT.h>
-#elif
+//#ifndef _WIN32
+  //  #include <OpenGL/OpenGL.h>
+  //  #include <GLUT/GLUT.h>
+//#elif
     #include <GL\freeglut.h>
     #include <GL\GL.h>
-#endif
+//#endif
 
 
 #include <iostream>
@@ -126,7 +126,7 @@ void DisplayFunc()
 	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
 	glViewport(0 , 0 , model->width, model->height);
     
-    model->state = GAMEPLAY;
+    //model->state = GAMEPLAY;
 	switch(model->state){
         case TITLE:
             pregame();

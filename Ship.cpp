@@ -25,6 +25,7 @@ Ship::~Ship()
 
 void Ship::compileDL()
 {
+
     //Sample compilation of a simple sphere 
     if(Ship::compiled) return;
     displayList = glGenLists(1);
@@ -36,21 +37,45 @@ void Ship::compileDL()
 
     //DRAW SHIP HERE
     glPushMatrix();
-    glBegin(GL_QUADS);
+
+	
+
+	// pyramids - ships on metamap
+	GLfloat rtri = 0.0f;
+	glTranslatef(0.0, 1.0, 0.0);
+	glRotatef(rtri,0.0f,1.0f,0.0f);					// rotate pyramid on y-axis
+	glBegin(GL_TRIANGLES);							//start to draw the pyramid
+	
+    glColor3f(1.0f,0.0f,0.0f);			// red
+	glVertex3f( 0.0f, 1.0f, 0.0f);		// up-frontplane
+	glColor3f(0.0f,1.0f,0.0f);			// green
+	glVertex3f(-1.0f,-1.0f, 1.0f);		// left-frontplane
+	glColor3f(0.0f,0.0f,1.0f);			// blue
+	glVertex3f( 1.0f,-1.0f, 1.0f);		// right-frontplane
+
+	glColor3f(1.0f,0.0f,0.0f);			// red
+	glVertex3f( 0.0f, 1.0f, 0.0f);		// up-rightplane
+	glColor3f(0.0f,0.0f,1.0f);			// blue
+	glVertex3f( 1.0f,-1.0f, 1.0f);		// left-rightplane
+	glColor3f(0.0f,1.0f,0.0f);			// green
+	glVertex3f( 1.0f,-1.0f, -1.0f);		// right-rightplane
+
+	glColor3f(1.0f,0.0f,0.0f);			// red
+	glVertex3f( 0.0f, 1.0f, 0.0f);		// up-backplane
+	glColor3f(0.0f,1.0f,0.0f);			// green
+	glVertex3f( 1.0f,-1.0f, -1.0f);		// left-backplane
+	glColor3f(0.0f,0.0f,1.0f);			// plane
+	glVertex3f(-1.0f,-1.0f, -1.0f);		// right-backplane
     
+	glColor3f(1.0f,0.0f,0.0f);			// red
+	glVertex3f( 0.0f, 1.0f, 0.0f);		// up-leftplane
+	glColor3f(0.0f,0.0f,1.0f);			// blue
+	glVertex3f(-1.0f,-1.0f,-1.0f);		// left-leftplane
+	glColor3f(0.0f,1.0f,0.0f);			// green
+	glVertex3f(-1.0f,-1.0f, 1.0f);		// right-leftplane
+	glEnd();							// end of drawing pyramid
     
-    
-    //HANK DRAW SHIP HERE
-    glVertex3d(-.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
-    glVertex3d(-.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
-    glVertex3d(.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
-    glVertex3d(.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
-    
-    
-    
-    
-    
-    glEnd();
+
     glPopMatrix();
     
     glEndList();
