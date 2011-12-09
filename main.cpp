@@ -54,18 +54,110 @@ void initGame(int numPlayers, int numNodes)
 /////////
 
 // This is the TITLE
+
 void pregame(){
+	//Main Viewport
+    glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60.0 , ((double) Model::getSelf()->width) / ((double) Model::getSelf()->height), 1.0f , 100.0);
+	glViewport(0 , 0 , Model::getSelf()->width, Model::getSelf()->height);
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(model->camCenterX+model->mouseX*-10, model->zoom, model->camCenterY+model->mouseY*10, 
-              model->camCenterX, 0, model->camCenterY, 
-              0, 0, -1); 
-    
+	// Notes for the camera:
+	// Eye`2`
+	// Center
+	// Lookat
+	gluLookAt(
+		Model::getSelf()->camCenterX+Model::getSelf()->mouseX*10, Model::getSelf()->zoom, Model::getSelf()->mouseY*-10, 
+		0, 0, 0, 
+		0, 0, -1
+		); 
+
 	menu->setMenu(TITLE);
 	glPushMatrix();
-	glScalef(5.0, 1, 5.0);
+	glScalef(10.0, 0, 7.0);
 	menu->draw();
 	glPopMatrix();
+}
+
+void mainMenu(){
+	//Main Viewport
+    glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60.0 , ((double) Model::getSelf()->width) / ((double) Model::getSelf()->height), 1.0f , 100.0);
+	glViewport(0 , 0 , Model::getSelf()->width, Model::getSelf()->height);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	// Notes for the camera:
+	// Eye
+	// Center
+	// Lookat
+	gluLookAt(
+		Model::getSelf()->camCenterX+Model::getSelf()->mouseX*10, Model::getSelf()->zoom, Model::getSelf()->mouseY*-10, 
+		0, 0, 0, 
+		0, 0, -1
+		); 
+
+	menu->setMenu(META);
+	glPushMatrix();
+	glScalef(10.0, 0, 7.0);
+	menu->draw();
+	glPopMatrix();
+}
+
+void metapause(){
+	//Main Viewport
+    glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60.0 , ((double) Model::getSelf()->width) / ((double) Model::getSelf()->height), 1.0f , 100.0);
+	glViewport(0 , 0 , Model::getSelf()->width, Model::getSelf()->height);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	// Notes for the camera:
+	// Eye
+	// Center
+	// Lookat
+	gluLookAt(
+		Model::getSelf()->camCenterX+Model::getSelf()->mouseX*10, Model::getSelf()->zoom, Model::getSelf()->mouseY*-10, 
+		0, 0, 0, 
+		0, 0, -1
+		); 
+
+	menu->setMenu(META);
+	glPushMatrix();
+	glScalef(10.0, 0, 7.0);
+	menu->draw();
+	glPopMatrix();
+}
+
+void minipause(){
+	//Main Viewport
+    glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60.0 , ((double) Model::getSelf()->width) / ((double) Model::getSelf()->height), 1.0f , 100.0);
+	glViewport(0 , 0 , Model::getSelf()->width, Model::getSelf()->height);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	// Notes for the camera:
+	// Eye
+	// Center
+	// Lookat
+	gluLookAt(
+		Model::getSelf()->camCenterX+Model::getSelf()->mouseX*10, Model::getSelf()->zoom, Model::getSelf()->mouseY*-10, 
+		0, 0, 0, 
+		0, 0, -1
+		); 
+
+	menu->setMenu(MINI);
+	glPushMatrix();
+	glScalef(10.0, 0, 7.0);
+	menu->draw();
+	glPopMatrix();
+
 }
 
 void gameplay(){
@@ -128,11 +220,19 @@ void DisplayFunc()
 	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
 	glViewport(0 , 0 , model->width, model->height);
     
-    model->state = GAMEPLAY;
+   
 	switch(model->state){
         case TITLE:
             pregame();
             break;
+		case MAINMENU:
+			mainMenu();
+			break;
+		case METAPAUSE:
+			metapause();
+			break;
+		case MINIPAUSE:
+			minipause();
         case GAMEPLAY:
             gameplay();
             break;
@@ -152,59 +252,100 @@ void IdleFunc()
 
 void KeyboardFunc(unsigned char key, int x, int y)
 {
-    //SHOULD PUT KEY SWITCH STATEMENTS IN INDIVIDUAL STATE CASES
-    //(ie each state has its own set of keystrokes)
-    switch(model->state){
-        case TITLE:
-            break;
-        case GAMEPLAY:
-            break;
-        case MINIGAME:
-            break;
+	//SHOULD PUT KEY SWITCH STATEMENTS IN INDIVIDUAL STATE CASES
+	//(ie each state has its own set of keystrokes)
+	switch(model->state){
+	case TITLE:
+		switch (key)
+		{
+		case 13:
+			model->state = MAINMENU;
+			break;
+		}
+		break;
+	case MAINMENU:
+		switch (key)
+		{
+		case 13:
+			model->state = GAMEPLAY;
+			break;
+		}
+		break;
+	case METAPAUSE:
+		switch (key)
+		{
+		case 13:
+			model->state = GAMEPLAY;
+			break;
+		}
+		break;
+	case MINIPAUSE:
+		switch (key)
+		{
+		case 13:
+			model->state = MINIGAME;
+			break;
+		}
+		break;
+	case GAMEPLAY:
+		switch (key)
+		{
+		case 'p':
+			model->state = METAPAUSE;
+			break;
+		}
+		break;
+	case MINIGAME:
+		switch (key)
+		{
+		case 'p':
+			model->state = MINIPAUSE;
+			break;
+		case '[': //left arrow
+			game->changeLane(LEFT);
+			break;
+		case ']': //right arrow
+			game->changeLane(RIGHT);
+			break;
+		case 'z':
+			game->addUnit(model->playerArray[0], TYPE_WATER);
+			break;
+		case 'x':
+			game->addUnit(model->playerArray[0], TYPE_EARTH);
+			break;
+		case 'c':
+			game->addUnit(model->playerArray[0], TYPE_WIND);
+			break;
+		case 'v':
+			game->addUnit(model->playerArray[0], TYPE_FIRE);
+			break;
+		}    
+
+		break;
 	}
-    
-    switch(key)
-    {
-        case 27: // Press the ESC key to exit the game immediately.
-            exit(0);
-            break;
-        case 'p':
-            //Menu::setMenu(META);
-            break;
-            // For state testing:
-        case '1':
-            model->state = GAMEPLAY;
-            break;
-        case '0':
-            model->state = TITLE;
-            break;
-        case '2':
-            model->state = MINIGAME;
-            break;
-            
-        case ' ':
-            model->finishTurn = true;
-            
-        case '[': //left arrow
-            game->changeLane(LEFT);
-            break;
-        case ']': //right arrow
-            game->changeLane(RIGHT);
-            break;
-            
-        case 'z':
-            game->addUnit(model->playerArray[0], TYPE_WATER);
-            break;
-        case 'x':
-            game->addUnit(model->playerArray[0], TYPE_EARTH);
-            break;
-        case 'c':
-            game->addUnit(model->playerArray[0], TYPE_WIND);
-            break;
-        case 'v':
-            game->addUnit(model->playerArray[0], TYPE_FIRE);
-            break;
-    }
+	// General key statements:
+	switch(key)
+	{
+	case 27: // Press the ESC key to exit the game immediately.
+		exit(0);
+		break;
+	case 'p':
+		//Menu::setMenu(META);
+		break;
+		// For state testing:
+	case '1':
+		model->state = GAMEPLAY;
+		break;
+	case '0':
+		model->state = TITLE;
+		break;
+	case '2':
+		model->state = MINIGAME;
+		break;
+		
+	case ' ': // I'm not sure where this is supposed to go.
+		model->finishTurn = true;
+	}
 }
 
 void SpecialFunc(int key, int x, int y)
