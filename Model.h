@@ -48,13 +48,6 @@
 #define LANE_WIDTH 10
 #define LANE_LENGTH 100
 
-// R
-/*
-//MINIGAME GEO
-#define LANE_WIDTH 100
-#define LANE_LENGTH 1000
-*/
-
 //SIHP GEO
 #define SHIP_SIZE 1
 
@@ -182,7 +175,7 @@ public:
     MiniGame * mgame;
         //Game State Vars
     Node * selectedNode;
-    Ship * selectedShip; // Ryan doesn't have this
+    Ship * selectedShip;
     int state;
     bool finishTurn;
     int numPlayers;

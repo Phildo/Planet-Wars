@@ -14,15 +14,11 @@ GLuint Unit::displayList;
 
 Unit::Unit(void) {
     initThings();
-	// Ryan
-	// arrayIndex = 0;
 }
 
 Unit::Unit(int type) {
     setType(type);
     initThings();
-	// R
-	//arrayIndex = 0;
 }
 
 void Unit::initThings()
@@ -105,21 +101,6 @@ bool Unit::attack(Unit *enemy)
         cooldown--;
     return (enemy->health <= 0);
 }
-/* R:
-
-bool Unit::attackShip(Ship *atkShip) {
-
-	if(cooldown == 0)
-    {
-        atkShip->health -= damage;
-        resetCooldown();
-    }
-    else
-        cooldown--;
-    return (atkShip->health <= 0);
-
-}
-*/
 
 void Unit::compileDL()
 {
@@ -144,8 +125,6 @@ void Unit::drawAtPosition()
 {
     glPushMatrix();
     glTranslated(0, 0, pos);
-	// R:
-	// draw();
     glPopMatrix();
 }
 

@@ -1,4 +1,3 @@
-
 //
 //  Ship.cpp
 //  SpongeBobWars
@@ -16,9 +15,8 @@ Ship::Ship(Player * o)
 {
     this->shipType = SHIP_TYPE_GENERIC;
     layer = .25;
+    owner = o;
     if(!Ship::compiled) compileDL();
-    this->owner = o;
-	health = 20000;
 }
 
 Ship::~Ship()
@@ -28,57 +26,28 @@ Ship::~Ship()
 
 void Ship::compileDL()
 {
-
     //Sample compilation of a simple sphere 
     if(Ship::compiled) return;
     displayList = glGenLists(1);
     glNewList(Ship::displayList, GL_COMPILE);
     
-    //Set Color Here
-    setColor(1.0, 0.0, 0.0, 0.0, 0.5, 1.0, 1.0);
-    setGLColor();
 
     //DRAW SHIP HERE
     glPushMatrix();
-
-	
-
-	// pyramids - ships on metamap
-	GLfloat rtri = 0.0f;
-	glTranslatef(0.0, 1.0, 0.0);
-	glRotatef(rtri,0.0f,1.0f,0.0f);					// rotate pyramid on y-axis
-	glBegin(GL_TRIANGLES);							//start to draw the pyramid
-	
-    glColor3f(1.0f,0.0f,0.0f);			// red
-	glVertex3f( 0.0f, 1.0f, 0.0f);		// up-frontplane
-	glColor3f(0.0f,1.0f,0.0f);			// green
-	glVertex3f(-1.0f,-1.0f, 1.0f);		// left-frontplane
-	glColor3f(0.0f,0.0f,1.0f);			// blue
-	glVertex3f( 1.0f,-1.0f, 1.0f);		// right-frontplane
-
-	glColor3f(1.0f,0.0f,0.0f);			// red
-	glVertex3f( 0.0f, 1.0f, 0.0f);		// up-rightplane
-	glColor3f(0.0f,0.0f,1.0f);			// blue
-	glVertex3f( 1.0f,-1.0f, 1.0f);		// left-rightplane
-	glColor3f(0.0f,1.0f,0.0f);			// green
-	glVertex3f( 1.0f,-1.0f, -1.0f);		// right-rightplane
-
-	glColor3f(1.0f,0.0f,0.0f);			// red
-	glVertex3f( 0.0f, 1.0f, 0.0f);		// up-backplane
-	glColor3f(0.0f,1.0f,0.0f);			// green
-	glVertex3f( 1.0f,-1.0f, -1.0f);		// left-backplane
-	glColor3f(0.0f,0.0f,1.0f);			// plane
-	glVertex3f(-1.0f,-1.0f, -1.0f);		// right-backplane
     
-	glColor3f(1.0f,0.0f,0.0f);			// red
-	glVertex3f( 0.0f, 1.0f, 0.0f);		// up-leftplane
-	glColor3f(0.0f,0.0f,1.0f);			// blue
-	glVertex3f(-1.0f,-1.0f,-1.0f);		// left-leftplane
-	glColor3f(0.0f,1.0f,0.0f);			// green
-	glVertex3f(-1.0f,-1.0f, 1.0f);		// right-leftplane
-	glEnd();							// end of drawing pyramid
+    glBegin(GL_QUADS);
+    glVertex3f(-.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
+    glVertex3f(-.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
+    glVertex3f(.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
+    glVertex3f(.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
+    glEnd();
     
-
+    glBegin(GL_TRIANGLES);
+    glVertex3d(.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
+    glVertex3d(SHIP_SIZE, layer, 0);
+    glVertex3d(.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
+    glEnd();
+    
     glPopMatrix();
     
     glEndList();
@@ -87,7 +56,10 @@ void Ship::compileDL()
 
 void Ship::draw()
 {
-    if(!Ship::compiled) return;    
+    if(!Ship::compiled) return;   
+    if(loc->selected) setColor(0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 1.0);
+    else setColor(0.4, 0.4, 0.4, 1.0, 1.0, 1.0, 1.0);
+    setGLColor();
     glCallList(Ship::displayList);
 }
 
@@ -106,10 +78,12 @@ void Ship::drawAtPosition()
 
 void Ship::moveToNode(Node *newLoc)
 {
+    if(done) return;
     if(loc->isNeighborOf(newLoc))
     {
+        loc->ship = Model::getSelf()->nullShip;
         loc = newLoc;
+        loc->ship = this;
         done = true;
     }
 }
-

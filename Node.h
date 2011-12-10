@@ -54,8 +54,7 @@ public:
     //Drawable Geometry Stuff
     static bool compiled;       //True iff displayList names a valid glDisplayList
     static GLuint displayList;  //Name of displaylist for object
-    static GLuint typDList;
-    static GLuint ownDList;
+    static GLuint rimDList;
     void compileDL();
     void draw();
     void drawAtPosition();

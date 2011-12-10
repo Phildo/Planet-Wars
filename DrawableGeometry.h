@@ -8,20 +8,20 @@
 #ifndef	DRAWABLEGEOMETRY_H
 #define	DRAWABLEGEOMETRY_H
 
-//#ifdef TARGET_OS_MAC
+#ifdef TARGET_OS_MAC
     #include <OpenGL/OpenGL.h>
     #include <GLUT/GLUT.h>
-//#endif
+#endif
 
-//#ifdef __linux__
+#ifdef __linux__
   // Linux Includes Here
-//  #error Can't be compiled on Linux yet
-//#endif
+  #error Can't be compiled on Linux yet
+#endif
 
-//#ifdef _WIN32 || _WIN64
-//    #include <GL\freeglut.h>
-//    #include <GL\GL.h>
-//#endif
+#ifdef _WIN32 || _WIN64
+    #include <GL\freeglut.h>
+    #include <GL\GL.h>
+#endif
 
 
 

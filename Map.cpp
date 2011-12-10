@@ -55,8 +55,7 @@ void Map::selectSelected()
     }
     else
     {
-        if(Model::getSelf()->selectedNode != Model::getSelf()->nullNode)
-            Model::getSelf()->selectedNode->select(false); 
+        Model::getSelf()->selectedNode->select(false); 
         Model::getSelf()->selectedShip = Model::getSelf()->nullShip;
     }
 }

@@ -11,6 +11,7 @@
 #include "Model.h"
 #include "DrawableGeometry.h"
 #include "Node.h"
+#include "Player.h"
 
 class Ship: public DrawableGeometry
 {
@@ -23,9 +24,6 @@ public:
     bool done;
     Node * loc;
     Player * owner;
-	
-
-	int health;
     
     static bool compiled;       //True iff displayList names a valid glDisplayList
     static GLuint displayList;  //Name of displaylist for object

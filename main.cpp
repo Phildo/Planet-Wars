@@ -6,20 +6,20 @@
 //  Copyright 2011 UW Madison. All rights reserved.
 //
 
-//#ifdef TARGET_OS_MAC
+#ifdef TARGET_OS_MAC
     #include <OpenGL/OpenGL.h>
     #include <GLUT/GLUT.h>
-//#endif
+#endif
 
-//#ifdef __linux__
+#ifdef __linux__
   // Linux Includes Here
-//  #error Can't be compiled on Linux yet
-//#endif
+  #error Can't be compiled on Linux yet
+#endif
 
-//#ifdef _WIN32 || _WIN64
-//    #include <GL\freeglut.h>
-//    #include <GL\GL.h>
-//#endif
+#ifdef _WIN32 || _WIN64
+    #include <GL\freeglut.h>
+    #include <GL\GL.h>
+#endif
 
 
 #include <iostream>
@@ -228,6 +228,7 @@ void DisplayFunc()
 	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
 	glViewport(0 , 0 , model->width, model->height);
     
+   
 	switch(model->state){
         case TITLE:
             pregame();
@@ -299,11 +300,8 @@ void KeyboardFunc(unsigned char key, int x, int y)
 		switch (key)
 		{
 		case 'p':
-            model->state = METAPAUSE;
+			model->state = METAPAUSE;
 			break;
-        case ' ': // I'm not sure where this is supposed to go.
-            model->finishTurn = true;
-            break;
 		}
 		break;
 	case MINIGAME:
@@ -353,6 +351,9 @@ void KeyboardFunc(unsigned char key, int x, int y)
 	case '2':
 		model->state = MINIGAME;
 		break;
+		
+	case ' ': // I'm not sure where this is supposed to go.
+		model->finishTurn = true;
 	}
 }
 

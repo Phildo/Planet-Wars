@@ -12,8 +12,6 @@
 #include <vector>
 #include "Model.h"
 #include "DrawableGeometry.h"
-// Ryan's Code:
-//#include "Ship.h"
 
 using namespace std;
 
@@ -27,8 +25,6 @@ public:
     vector <Unit *> defenderUnits;
     int furthestAttacker;
     int furthestDefender;
-	//Ship* attackShip;
-	//Ship* defendShip;
     
     void setSelected(bool selected);
     void deployUnit(Unit * unit, bool attacker);

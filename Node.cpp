@@ -143,16 +143,14 @@ void Node::tick()
             //Nothin'
             break;
     }
-    if(owner->home == this) 
-        owner->fleet->addShip(this, owner);
+    if(owner->home == this) owner->fleet->addShip(this, owner);
 }
 
 
 //DRAWABLE GEO FUNCTIONS
 bool Node::compiled = false;
 GLuint Node::displayList;
-GLuint Node::typDList;
-GLuint Node::ownDList;
+GLuint Node::rimDList;
 
 void Node::compileDL()
 {
@@ -194,8 +192,8 @@ void Node::compileDL()
     
     
     
-    Node::typDList = glGenLists(1);
-    glNewList(Node::typDList, GL_COMPILE);
+    Node::rimDList = glGenLists(1);
+    glNewList(Node::rimDList, GL_COMPILE);
     
     glPushMatrix();
     glScalef(0.9, 0.9, 0.9);
@@ -211,45 +209,6 @@ void Node::compileDL()
     //glVertex3f(1, layer+0.1, 0);
      
     glEnd();
-    glPopMatrix();
-    glEndList();
-    
-    
-    
-    
-    Node::ownDList = glGenLists(1);
-    glNewList(Node::ownDList, GL_COMPILE);
-    
-    glPushMatrix();
-    glScalef(0.5, 0.5, 0.5);
-    glBegin(GL_TRIANGLES);
-    
-    glVertex3f(0, 0, 0);
-    glVertex3f(1, layer, 0);
-    glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
-    
-    glVertex3f(0, 0, 0);
-    glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
-    glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
-    
-    glVertex3f(0, 0, 0);
-    glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
-    glVertex3f(-1, layer, 0);
-    
-    glVertex3f(0, 0, 0);
-    glVertex3f(-1, layer, 0);
-    glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
-    
-    glVertex3f(0, 0, 0);
-    glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
-    glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
-    
-    glVertex3f(0, 0, 0);
-    glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
-    glVertex3f(1, layer, 0);
-    
-    glEnd();
-
     glPopMatrix();
     glEndList();
      
@@ -274,13 +233,7 @@ void Node::draw()
     glCallList(Node::displayList);
     setType(type);
     setGLColor();
-    glCallList(Node::typDList);
-    if(owner == Model::getSelf()->playerArray[0])
-    {
-        setColor(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
-        setGLColor();
-        glCallList(Node::ownDList);
-    }
+    glCallList(Node::rimDList);
 }
 
 void Node::drawAtPosition()

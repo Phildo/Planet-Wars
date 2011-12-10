@@ -3,20 +3,20 @@
 
 #include "Model.h"
 #include "DrawableGeometry.h"
-//#ifdef TARGET_OS_MAC
-    //#include <OpenGL/OpenGL.h>
-    //#include <GLUT/GLUT.h>
-//#endif
+#ifdef TARGET_OS_MAC
+    #include <OpenGL/OpenGL.h>
+    #include <GLUT/GLUT.h>
+#endif
 
-//#ifdef __linux__
+#ifdef __linux__
   // Linux Includes Here
-  //#error Can't be compiled on Linux yet
-//#endif
+  #error Can't be compiled on Linux yet
+#endif
 
-//#ifdef _WIN32 || _WIN64
-//    #include <GL\freeglut.h>
-//    #include <GL\GL.h>
-//#endif
+#ifdef _WIN32 || _WIN64
+    #include <GL\freeglut.h>
+    #include <GL\GL.h>
+#endif
 
 
 class Hud
