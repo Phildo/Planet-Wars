@@ -12,11 +12,12 @@
 bool Ship::compiled = false;
 GLuint Ship::displayList;
 
-Ship::Ship()
+Ship::Ship(Player * o)
 {
     this->shipType = SHIP_TYPE_GENERIC;
     layer = .25;
     if(!Ship::compiled) compileDL();
+    this->owner = o;
 	health = 20000;
 }
 

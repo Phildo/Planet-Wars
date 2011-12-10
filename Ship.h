@@ -15,13 +15,14 @@
 class Ship: public DrawableGeometry
 {
 public:
-    Ship();
+    Ship(Player * o);
     ~Ship();
     
     int shipType;
     float layer;
     bool done;
     Node * loc;
+    Player * owner;
 	
 
 	int health;
