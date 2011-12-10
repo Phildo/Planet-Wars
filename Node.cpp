@@ -150,17 +150,20 @@ void Node::tick()
 //DRAWABLE GEO FUNCTIONS
 bool Node::compiled = false;
 GLuint Node::displayList;
-GLuint Node::rimDList;
+GLuint Node::typDList;
+GLuint Node::ownDList;
+GLuint Node::homDList;
 
 void Node::compileDL()
 {
     if(Node::compiled) return;
-    Node::displayList = glGenLists(1);
+    
     float sqrtOfThreeOverTwo = sqrt(3.0/2.0);
 
+    Node::displayList = glGenLists(1);
     glNewList(Node::displayList, GL_COMPILE);
-    glBegin(GL_TRIANGLES);
     
+    glBegin(GL_TRIANGLES);
     glVertex3f(0, 0, 0);
     glVertex3f(1, layer, 0);
     glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
@@ -184,32 +187,102 @@ void Node::compileDL()
     glVertex3f(0, 0, 0);
     glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
     glVertex3f(1, layer, 0);
-    
     glEnd();
+    
     glEndList();
     
     
     
     
     
-    Node::rimDList = glGenLists(1);
-    glNewList(Node::rimDList, GL_COMPILE);
+    Node::typDList = glGenLists(1);
+    glNewList(Node::typDList, GL_COMPILE);
     
     glPushMatrix();
-    glScalef(0.9, 0.9, 0.9);
+    glScalef(0.9, 1.0, 0.9);
     glBegin(GL_TRIANGLES);
-    
-    
-    //glVertex3f(1, layer+0.1, 0);
-    //glVertex3f(0.5, layer+0.1, sqrtOfThreeOverTwo);
-    //glVertex3f(-0.5, layer+0.1, sqrtOfThreeOverTwo);
     glVertex3f(-0.5, layer+0.1, -1*sqrtOfThreeOverTwo);
     glVertex3f(0.5, layer+0.1, -1*sqrtOfThreeOverTwo); 
     glVertex3f(-1, layer+0.1, 0);
-    //glVertex3f(1, layer+0.1, 0);
-     
     glEnd();
     glPopMatrix();
+    
+    glEndList();
+    
+    
+    
+    
+    Node::ownDList = glGenLists(1);
+    glNewList(Node::ownDList, GL_COMPILE);
+    
+    glPushMatrix();
+    glScalef(0.8, 1.0, 0.8);
+    glBegin(GL_TRIANGLES);
+    glVertex3f(0, 0, 0);
+    glVertex3f(1, layer, 0);
+    glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
+    
+    glVertex3f(0, 0, 0);
+    glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
+    glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
+    
+    glVertex3f(0, 0, 0);
+    glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
+    glVertex3f(-1, layer, 0);
+    
+    glVertex3f(0, 0, 0);
+    glVertex3f(-1, layer, 0);
+    glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
+    
+    glVertex3f(0, 0, 0);
+    glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
+    glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
+    
+    glVertex3f(0, 0, 0);
+    glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
+    glVertex3f(1, layer, 0);
+    glEnd();
+    glPopMatrix();
+    
+    glEndList();
+    
+    
+    
+    
+    
+    
+    Node::homDList = glGenLists(1);
+    glNewList(Node::homDList, GL_COMPILE);
+    
+    glPushMatrix();
+    glScalef(0.8, 1.0, 0.8);
+    glBegin(GL_TRIANGLES);
+    glVertex3f(0, 0, 0);
+    glVertex3f(1, layer, 0);
+    glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
+    
+    glVertex3f(0, 0, 0);
+    glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
+    glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
+    
+    glVertex3f(0, 0, 0);
+    glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
+    glVertex3f(-1, layer, 0);
+    
+    glVertex3f(0, 0, 0);
+    glVertex3f(-1, layer, 0);
+    glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
+    
+    glVertex3f(0, 0, 0);
+    glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
+    glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
+    
+    glVertex3f(0, 0, 0);
+    glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
+    glVertex3f(1, layer, 0);
+    glEnd();
+    glPopMatrix();
+    
     glEndList();
      
     
@@ -233,7 +306,7 @@ void Node::draw()
     glCallList(Node::displayList);
     setType(type);
     setGLColor();
-    glCallList(Node::rimDList);
+    glCallList(Node::typDList);
 }
 
 void Node::drawAtPosition()

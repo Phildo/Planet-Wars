@@ -6,19 +6,17 @@
 //  Copyright 2011 UW Madison. All rights reserved.
 //
 
-#ifdef TARGET_OS_MAC
-    #include <OpenGL/OpenGL.h>
-    #include <GLUT/GLUT.h>
-#endif
+
 
 #ifdef __linux__
   // Linux Includes Here
   #error Can't be compiled on Linux yet
-#endif
-
-#ifdef _WIN32 || _WIN64
+#elif defined _WIN32 || _WIN64
     #include <GL\freeglut.h>
     #include <GL\GL.h>
+#else
+    #include <OpenGL/OpenGL.h>
+    #include <GLUT/GLUT.h>
 #endif
 
 
