@@ -164,27 +164,27 @@ void Node::compileDL()
     glNewList(Node::displayList, GL_COMPILE);
     
     glBegin(GL_TRIANGLES);
-    glVertex3f(0, 0, 0);
+    glVertex3f(0, layer, 0);
     glVertex3f(1, layer, 0);
     glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
 
-    glVertex3f(0, 0, 0);
+    glVertex3f(0, layer, 0);
     glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
     glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
     
-    glVertex3f(0, 0, 0);
+    glVertex3f(0, layer, 0);
     glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
     glVertex3f(-1, layer, 0);
     
-    glVertex3f(0, 0, 0);
+    glVertex3f(0, layer, 0);
     glVertex3f(-1, layer, 0);
     glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
     
-    glVertex3f(0, 0, 0);
+    glVertex3f(0, layer, 0);
     glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
     glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
     
-    glVertex3f(0, 0, 0);
+    glVertex3f(0, layer, 0);
     glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
     glVertex3f(1, layer, 0);
     glEnd();
@@ -216,31 +216,31 @@ void Node::compileDL()
     glNewList(Node::ownDList, GL_COMPILE);
     
     glPushMatrix();
-    glScalef(0.8, 1.0, 0.8);
+    glScalef(0.6, 1.0, 0.6);
     glBegin(GL_TRIANGLES);
-    glVertex3f(0, 0, 0);
-    glVertex3f(1, layer, 0);
-    glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
+    glVertex3f(0, layer+0.11, 0);
+    glVertex3f(1, layer+0.11, 0);
+    glVertex3f(0.5, layer+0.11, sqrtOfThreeOverTwo);
     
-    glVertex3f(0, 0, 0);
-    glVertex3f(0.5, layer, sqrtOfThreeOverTwo);
-    glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
+    glVertex3f(0, layer+0.11, 0);
+    glVertex3f(0.5, layer+0.11, sqrtOfThreeOverTwo);
+    glVertex3f(-0.5, layer+0.11, sqrtOfThreeOverTwo);
     
-    glVertex3f(0, 0, 0);
-    glVertex3f(-0.5, layer, sqrtOfThreeOverTwo);
-    glVertex3f(-1, layer, 0);
+    glVertex3f(0, layer+0.11, 0);
+    glVertex3f(-0.5, layer+0.11, sqrtOfThreeOverTwo);
+    glVertex3f(-1, layer+0.11, 0);
     
-    glVertex3f(0, 0, 0);
-    glVertex3f(-1, layer, 0);
-    glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
+    glVertex3f(0, layer+0.11, 0);
+    glVertex3f(-1, layer+0.11, 0);
+    glVertex3f(-0.5, layer+0.11, -1*sqrtOfThreeOverTwo);
     
-    glVertex3f(0, 0, 0);
-    glVertex3f(-0.5, layer, -1*sqrtOfThreeOverTwo);
-    glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
+    glVertex3f(0, layer+0.11, 0);
+    glVertex3f(-0.5, layer+0.11, -1*sqrtOfThreeOverTwo);
+    glVertex3f(0.5, layer+0.11, -1*sqrtOfThreeOverTwo);  
     
-    glVertex3f(0, 0, 0);
-    glVertex3f(0.5, layer, -1*sqrtOfThreeOverTwo);  
-    glVertex3f(1, layer, 0);
+    glVertex3f(0, layer+0.11, 0);
+    glVertex3f(0.5, layer+0.11, -1*sqrtOfThreeOverTwo);  
+    glVertex3f(1, layer+0.11, 0);
     glEnd();
     glPopMatrix();
     
@@ -307,6 +307,12 @@ void Node::draw()
     setType(type);
     setGLColor();
     glCallList(Node::typDList);
+    if(owner == Model::getSelf()->playerArray[0])
+    {
+        setColor(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0);
+        setGLColor();
+        glCallList(Node::ownDList);
+    }
 }
 
 void Node::drawAtPosition()
