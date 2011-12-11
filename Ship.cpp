@@ -88,3 +88,9 @@ void Ship::moveToNode(Node *newLoc)
         done = true;
     }
 }
+
+Unit * Ship::deployUnit(int type)
+{
+    
+    return Model::getSelf()->nullUnit;
+}
