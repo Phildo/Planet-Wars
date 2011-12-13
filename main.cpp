@@ -179,7 +179,7 @@ void gameplay(){
     if(model->finishTurn)
     {
         map->tick();
-        /*DEBUG
+        //*DEBUG
         std::cout << "Wa:\t"<<playerArray[0]->waterNodesOwned<<std::endl;
         std::cout << "Ea:\t"<<playerArray[0]->earthNodesOwned<<std::endl;
         std::cout << "Wi:\t"<<playerArray[0]->windNodesOwned<<std::endl;
@@ -317,8 +317,14 @@ void KeyboardFunc(unsigned char key, int x, int y)
 		case 'p':
 			model->state = METAPAUSE;
 			break;
-		}
-		break;
+        case 's':
+            playerArray[0]->purchaseShip();
+            break;
+        case ' ':
+            model->finishTurn = true;
+            break;
+        }
+        break;
 	case MINIGAME:
 		switch (key)
 		{
@@ -366,9 +372,6 @@ void KeyboardFunc(unsigned char key, int x, int y)
 	case '2':
 		model->state = MINIGAME;
 		break;
-		
-	case ' ': // I'm not sure where this is supposed to go.
-		model->finishTurn = true;
 	}
 }
 

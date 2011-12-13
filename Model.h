@@ -40,6 +40,7 @@
 #define MAP_DENSITY 1 //1(linear) to 6(full mesh)
 #define MAP_DENSITY_STRICTNESS 1000000 //Number of attempts worth spending to try and fit density rule
 #define NULL_LOCATION 99999 //'unattainable' row/column to be used for non-placed nodes
+#define SHIP_COST 10
 
 //MAP GEO
 #define ROW_SPACING 1.3

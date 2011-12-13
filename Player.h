@@ -36,7 +36,8 @@ public:
     void endTurn();
     
     bool hasShip(Ship * s);
-    void addShip(Node * n);
+    bool addShip(Node * n);
+    void purchaseShip();
     void refreshShips();
     
     Player();

@@ -124,13 +124,22 @@ bool Player::hasShip(Ship * s)
     return false;
 }
 
-void Player::addShip(Node * n)
+bool Player::addShip(Node * n)
 {
-    if(n->ship != Model::getSelf()->nullShip) return;
+    if(n->ship != Model::getSelf()->nullShip) return false;
     shipArray[numShips] = new Ship(this);
     shipArray[numShips]->loc = n;
     n->ship = shipArray[numShips];
     numShips++;
+    return true;
+}
+
+void Player::purchaseShip()
+{
+    if(darkResources < SHIP_COST)
+        return;
+    if(addShip(home))
+        darkResources-=SHIP_COST;
 }
 
 void Player::refreshShips()

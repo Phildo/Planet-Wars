@@ -59,32 +59,34 @@ void Hud::compileDL()
     //Left
     glVertex3f(-1, -1, -2.0f);
     glVertex3f(-1, 1, -2.0f);
-    glVertex3f(-.8, 1, -2.0f);
-    glVertex3f(-.8, -1, -2.0f);
+    glVertex3f(-.9, 1, -2.0f);
+    glVertex3f(-.9, -1, -2.0f);
     
     //Right
-    glVertex3f(.8, -1, -2.0f);
-    glVertex3f(.8, 1, -2.0f);
+    glVertex3f(.9, -1, -2.0f);
+    glVertex3f(.9, 1, -2.0f);
     glVertex3f(1, 1, -2.0f);
     glVertex3f(1, -1, -2.0f);
     
     //Top
-    glVertex3f(-1, .8, -2.0f);
+    glVertex3f(-1, .9, -2.0f);
     glVertex3f(-1, 1, -2.0f);
     glVertex3f(1, 1, -2.0f);
-    glVertex3f(1, .8, -2.0f);
+    glVertex3f(1, .9, -2.0f);
     
     //Bottom
     glVertex3f(-1, -1, -2.0f);
-    glVertex3f(-1, -.8, -2.0f);
-    glVertex3f(1, -.8, -2.0f);
+    glVertex3f(-1, -.9, -2.0f);
+    glVertex3f(1, -.9, -2.0f);
     glVertex3f(1, -1, -2.0f);
 
     glEnd();
     glPopMatrix();
     
     glEndList();   
-
+    
+    
+    
     
     Hud::compiled = true;
 }
