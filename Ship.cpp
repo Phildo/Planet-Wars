@@ -99,6 +99,74 @@ void Ship::draw()
     setColor(0.2+red+don, 0.2+don, 0.2+blue+don, 1.0, 1.0, 1.0, 1.0);
     setGLColor();
     glCallList(Ship::displayList);
+    drawCargo();
+}
+
+void Ship::drawCargo()
+{
+    double h;
+    glPushMatrix();
+    glScalef(0.6, 1.0, 0.6);
+    
+    if(numWaterUnits>0)
+        h = 5;
+    //Draw Water
+    setColor(WATER_R, WATER_G, WATER_B, 1.0, 0.1, 0.5, 0.7);
+    setGLColor();
+    h = (float)numWaterUnits/(float)MAX_UNITS;
+    if(h > 0)
+    {
+        glBegin(GL_QUADS);
+        glVertex3f(-.5*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
+        glVertex3f(-.5*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
+        glVertex3f(-.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
+        glVertex3f(-.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
+        glEnd();
+    }
+    
+    //Draw Earth
+    setColor(EARTH_R, EARTH_G, EARTH_B, 1.0, 0.1, 0.5, 0.7);
+    setGLColor();
+    h = (float)numEarthUnits/(float)MAX_UNITS;
+    if(h > 0)
+    {
+        glBegin(GL_QUADS);
+        glVertex3f(-.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
+        glVertex3f(-.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
+        glVertex3f(0, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
+        glVertex3f(0, layer+0.1, -.5*SHIP_SIZE);
+        glEnd();
+    }
+    
+    //Draw Wind
+    setColor(WIND_R, WIND_G, WIND_B, 1.0, 0.1, 0.5, 0.7);
+    setGLColor();
+    h = (float)numWindUnits/(float)MAX_UNITS;
+    if(h > 0)
+    {
+        glBegin(GL_QUADS);
+        glVertex3f(0, layer+0.1, -.5*SHIP_SIZE);
+        glVertex3f(0, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
+        glVertex3f(.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
+        glVertex3f(.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
+        glEnd();
+    }
+    
+    //Draw Fire
+    setColor(FIRE_R, FIRE_G, FIRE_B, 1.0, 0.1, 0.5, 0.7);
+    setGLColor();
+    h = (float)numFireUnits/(float)MAX_UNITS;
+    if(h > 0)
+    {
+        glBegin(GL_QUADS);
+        glVertex3f(.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
+        glVertex3f(.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
+        glVertex3f(.5*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
+        glVertex3f(.5*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
+        glEnd();
+    }
+    
+    glPopMatrix();
 }
 
 void Ship::drawAtPosition()
@@ -132,20 +200,20 @@ void Ship::addUnit(int type)
     switch(type)
     {
         case TYPE_WATER:
-            if(numWaterUnits >= MAX_UNITS) return;
-            numWaterUnits+=owner->waterNodesOwned;
+            if(numWaterUnits+owner->waterNodesOwned >= MAX_UNITS) numWaterUnits = MAX_UNITS;
+            else numWaterUnits+=owner->waterNodesOwned;
             break;
         case TYPE_EARTH:
-            if(numEarthUnits >= MAX_UNITS) return;
-            numEarthUnits+=owner->earthNodesOwned;
+            if(numEarthUnits+owner->earthNodesOwned >= MAX_UNITS) numEarthUnits = MAX_UNITS;
+            else numEarthUnits+=owner->earthNodesOwned;
             break;
         case TYPE_WIND:
-            if(numWindUnits >= MAX_UNITS) return;
-            numWindUnits+=owner->windNodesOwned;
+            if(numWindUnits+owner->windNodesOwned >= MAX_UNITS) numWindUnits = MAX_UNITS;
+            else numWindUnits+=owner->windNodesOwned;
             break;
         case TYPE_FIRE:
-            if(numFireUnits >= MAX_UNITS) return;
-            numFireUnits+=owner->fireNodesOwned;
+            if(numFireUnits+owner->fireNodesOwned >= MAX_UNITS) numFireUnits = MAX_UNITS;
+            else numFireUnits+=owner->fireNodesOwned;
             break;
         case TYPE_DARK:
             owner->darkResources+=owner->darkNodesOwned;

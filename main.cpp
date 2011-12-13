@@ -395,7 +395,7 @@ void initGL(int argc, char * argv[])
 	glutInitWindowPosition(0 , 0);
 	glutInitWindowSize(model->width,model->height);
 	glutCreateWindow("PlanetsConquerer!");
-	glutFullScreen();
+	//glutFullScreen();
 	/*
 	 * The following section is curser specification. You guys can choose what is appropriate,
 	 * but for now I'm getting rid of it.
