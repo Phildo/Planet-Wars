@@ -128,6 +128,7 @@ class Menu;
 class Player;
 class Ship;
 class Unit;
+class Hud;
 class Map;
 class Node;
 class Selector;
@@ -141,6 +142,7 @@ class MiniGame;
 #include "Player.h"
 #include "Ship.h"
 #include "Unit.h"
+#include "Hud.h"
 #include "Map.h"
 #include "Node.h"
 #include "Selector.h"
@@ -178,6 +180,7 @@ public:
         //GameObjects
 	Menu * menu;
     Player ** playerArray;
+    Hud * hud;
     Map * map;
     Node ** nodeArray;
     Selector * selector;
@@ -203,6 +206,7 @@ public:
     void setCameraParams();
     Player ** setNumPlayers(int numPlayers);
     Node ** setNumNodes(int numNodes);
+    Hud * setHud();
     Map * setMap();
     Selector * setSelector();
     Menu * setMenu();

@@ -30,6 +30,7 @@
 //MODEL ACCESSORS:: DO NOT ABUSE THESE!!!!
 Model * model;
 Player ** playerArray;
+Hud * hud;
 Map * map;
 Node ** nodeArray;
 Selector * selector;
@@ -49,8 +50,9 @@ void initGame(int numPlayers, int numNodes)
     nodeArray =  model->setNumNodes(numNodes);
     playerArray = model->setNumPlayers(numPlayers);
     selector = model->setSelector();
+    hud = model->setHud();
     map = model->setMap();
-    game = model->setMiniGame(nodeArray[0], playerArray[0]->shipArray[0], playerArray[1]->shipArray[0]);
+    //game = model->setMiniGame(nodeArray[0], playerArray[0]->shipArray[0], playerArray[1]->shipArray[0]);
     menu = model->setMenu();
 }
 
@@ -66,7 +68,6 @@ void pregame(){
 	glLoadIdentity();
 	gluPerspective(60.0 , ((double) Model::getSelf()->width) / ((double) Model::getSelf()->height), 1.0f , 100.0);
 	glViewport(0 , 0 , Model::getSelf()->width, Model::getSelf()->height);
-
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -169,6 +170,7 @@ void minipause(){
 void gameplay(){
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+    hud->drawMapv();
 	gluLookAt(model->camCenterX+model->mouseX*-10, model->zoom, model->camCenterY+model->mouseY*10,
               model->camCenterX, 0, model->camCenterY,
               0, 0, -1); 
@@ -177,7 +179,7 @@ void gameplay(){
     if(model->finishTurn)
     {
         map->tick();
-        //*DEBUG
+        /*DEBUG
         std::cout << "Wa:\t"<<playerArray[0]->waterNodesOwned<<std::endl;
         std::cout << "Ea:\t"<<playerArray[0]->earthNodesOwned<<std::endl;
         std::cout << "Wi:\t"<<playerArray[0]->windNodesOwned<<std::endl;
@@ -393,7 +395,7 @@ void initGL(int argc, char * argv[])
 	glutInitWindowPosition(0 , 0);
 	glutInitWindowSize(model->width,model->height);
 	glutCreateWindow("PlanetsConquerer!");
-	//glutFullScreen();
+	glutFullScreen();
 	/*
 	 * The following section is curser specification. You guys can choose what is appropriate,
 	 * but for now I'm getting rid of it.

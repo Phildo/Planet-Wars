@@ -86,6 +86,12 @@ Node** Model::setNumNodes(int numNodes)
     return nodeArray;
 }
 
+Hud * Model::setHud()
+{
+    hud = new Hud();
+    return hud;
+}
+
 Map * Model::setMap()
 {
     map = new Map(numNodes);
