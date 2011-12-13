@@ -117,10 +117,10 @@ void Ship::drawCargo()
     if(h > 0)
     {
         glBegin(GL_QUADS);
-        glVertex3f(-.5*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
-        glVertex3f(-.5*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
-        glVertex3f(-.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
-        glVertex3f(-.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
+        glVertex3f(-.5*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
+        glVertex3f(-.5*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(-.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(-.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
         glEnd();
     }
     
@@ -131,10 +131,10 @@ void Ship::drawCargo()
     if(h > 0)
     {
         glBegin(GL_QUADS);
-        glVertex3f(-.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
-        glVertex3f(-.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
-        glVertex3f(0, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
-        glVertex3f(0, layer+0.1, -.5*SHIP_SIZE);
+        glVertex3f(-.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
+        glVertex3f(-.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(0, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(0, layer+0.1, .5*SHIP_SIZE);
         glEnd();
     }
     
@@ -145,10 +145,10 @@ void Ship::drawCargo()
     if(h > 0)
     {
         glBegin(GL_QUADS);
-        glVertex3f(0, layer+0.1, -.5*SHIP_SIZE);
-        glVertex3f(0, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
-        glVertex3f(.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
-        glVertex3f(.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
+        glVertex3f(0, layer+0.1, .5*SHIP_SIZE);
+        glVertex3f(0, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
         glEnd();
     }
     
@@ -159,10 +159,10 @@ void Ship::drawCargo()
     if(h > 0)
     {
         glBegin(GL_QUADS);
-        glVertex3f(.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
-        glVertex3f(.25*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
-        glVertex3f(.5*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE+(h*SHIP_SIZE));
-        glVertex3f(.5*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
+        glVertex3f(.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
+        glVertex3f(.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(.5*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(.5*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
         glEnd();
     }
     
