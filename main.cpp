@@ -35,7 +35,7 @@ Map * map;
 Node ** nodeArray;
 Selector * selector;
 Menu * menu;
-MiniGame * game;
+// MiniGame * game; //<- CANNOT USE AS MODEL'S GAME IS DYNAMIC
 
 /////////
 //GAME LOGIC FUNCTIONS
@@ -208,8 +208,8 @@ void minigame() {
 	glLoadIdentity();
 	gluLookAt(0.0, 20.0, 100.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     
-    game->update();
-	game->drawGame();
+    model->mgame->update();
+	model->mgame->drawGame();
 }
 
 
@@ -332,22 +332,22 @@ void KeyboardFunc(unsigned char key, int x, int y)
 			model->state = MINIPAUSE;
 			break;
 		case '[': //left arrow
-			game->changeLane(LEFT);
+			model->mgame->changeLane(LEFT);
 			break;
 		case ']': //right arrow
-			game->changeLane(RIGHT);
+			model->mgame->changeLane(RIGHT);
 			break;
 		case 'z':
-			game->deployUnit(model->selectedShip, TYPE_WATER);
+			model->mgame->deployUnit(model->selectedShip, TYPE_WATER);
 			break;
 		case 'x':
-			game->deployUnit(model->selectedShip, TYPE_EARTH);
+			model->mgame->deployUnit(model->selectedShip, TYPE_EARTH);
 			break;
 		case 'c':
-			game->deployUnit(model->selectedShip, TYPE_WIND);
+			model->mgame->deployUnit(model->selectedShip, TYPE_WIND);
 			break;
 		case 'v':
-			game->deployUnit(model->selectedShip, TYPE_FIRE);
+			model->mgame->deployUnit(model->selectedShip, TYPE_FIRE);
 			break;
 		}    
 
