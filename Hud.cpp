@@ -3,6 +3,18 @@
 
 Hud::Hud(void)
 {
+    pOneNodes = new Node *[NUM_TYPES];
+    pTwoNodes = new Node *[NUM_TYPES];
+    
+    for(int i = 0; i < NUM_TYPES; i++)
+    {
+        pOneNodes[i] = new Node(i);
+        pOneNodes[i]->owner = Model::getSelf()->playerArray[0];
+        pOneNodes[i]->display = true;
+        pTwoNodes[i] = new Node(i);
+        pTwoNodes[i]->owner = Model::getSelf()->playerArray[1];
+        pTwoNodes[i]->display = true;
+    }
     if(!Hud::compiled) Hud::compileDL();
 }
 
@@ -110,5 +122,37 @@ void Hud::drawMapv()
     setColor(0.5f, 0.5f, 0.5f, 1.0f, 0.1f, 0.5f, 0.7f);
     setGLColor();
     glCallList(mapvDl);
+    float dif = -2.0f/((float)NUM_TYPES+2.0f);
+    glPushMatrix();
+    glTranslated(-1.4, 0.2, 0.0);
+    glTranslatef(0.0, 1.0, -2.0);
+    glTranslatef(0.0, dif, 0.0);
+    for(int i = 0; i < NUM_TYPES; i++)
+    {
+        glTranslatef(0.0, dif, 0.0);
+        glPushMatrix();
+        glRotatef(Model::getSelf()->tickCount/10, 0.0, 1.0, 0.0);
+        glRotatef(80, 1.0f, 0.0f, 0.0f);
+        glScalef(0.1,0.1,0.1);
+        pOneNodes[i]->draw();
+        glPopMatrix();
+    }
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslated(1.4, 0.2, 0.0);
+    glTranslatef(0.0, 1.0, -2.0);
+    glTranslatef(0.0, dif, 0.0);
+    for(int i = 0; i < NUM_TYPES; i++)
+    {
+        glTranslatef(0.0, dif, 0.0);
+        glPushMatrix();
+        glRotatef(Model::getSelf()->tickCount/10, 0.0, 1.0, 0.0);
+        glRotatef(80, 1.0f, 0.0f, 0.0f);
+        glScalef(0.1,0.1,0.1);
+        pTwoNodes[i]->draw();
+        glPopMatrix();
+    }
+    glPopMatrix();
     
 }

@@ -3,6 +3,8 @@
 
 #include "Model.h"
 #include "DrawableGeometry.h"
+#include "Node.h"
+#include "Ship.h"
 
 class Hud: public DrawableGeometry
 {
@@ -14,6 +16,9 @@ public:
     static GLuint metaDl;
     static GLuint miniDl;
     static GLuint mapvDl;
+    
+    Node ** pOneNodes;
+    Node ** pTwoNodes;
     
     void compileDL();       //Stores geometry in a displayList   
 	void drawMeta();

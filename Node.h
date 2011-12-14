@@ -25,6 +25,7 @@ public:
     int row;
     int column;
     bool selected;
+    bool display; //<- only used by Hud
     
     Player * owner;
     Ship * ship;
