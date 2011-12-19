@@ -16,6 +16,7 @@ Ship::Ship(Player * o)
     this->shipType = SHIP_TYPE_GENERIC;
     layer = .25;
     owner = o;
+    destination = Model::getSelf()->nullNode;
     numWaterUnits = 0;
     numEarthUnits = 0;
     numWindUnits = 0; 
@@ -182,9 +183,33 @@ void Ship::drawAtPosition()
     glPopMatrix();
 }
 
-void Ship::moveToNode(Node *newLoc)
+void Ship::tick()
 {
-    if(done) return;
+    done = false;
+    djikstrasToDestination();
+}
+
+void Ship::setDestination(Node * destiny)
+{
+    this->destination = destiny;
+
+    if(!done)
+    {
+        djikstrasToDestination();
+    }
+    
+}
+
+void Ship::djikstrasToDestination()
+{
+    if(destination == Model::getSelf()->nullNode) return;
+    if(!done) moveToNode(Model::getSelf()->map->findNextDjikNodFromAtoB(loc, destination));
+    if(loc == destination) destination = Model::getSelf()->nullNode;
+}
+
+bool Ship::moveToNode(Node *newLoc)
+{
+    if(done || newLoc == Model::getSelf()->nullNode) return false;
     if(loc->isNeighborOf(newLoc))
     {
         loc->ship = Model::getSelf()->nullShip;
@@ -192,7 +217,9 @@ void Ship::moveToNode(Node *newLoc)
         loc->ship = this;
         done = true;
         this->owner->conquerNode(loc);
+        return true;
     }
+    return false;
 }
 
 void Ship::addUnit(int type)

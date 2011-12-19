@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "TextPrint.h"
+//#include "TextPrint.h"
 #include "Model.h"
 
 //MODEL ACCESSORS:: DO NOT ABUSE THESE!!!!
