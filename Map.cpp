@@ -122,6 +122,14 @@ void Map::selectSelected()
                     if(n->ship == Model::getSelf()->nullShip) Model::getSelf()->selectedShip->setDestination(n);
                     Model::getSelf()->selectedShip = n->ship;
                 }
+                else if(n->ship != Model::getSelf()->nullShip &&
+                        ((Model::getSelf()->playerturn == P_ONE_TURN && 
+                          n->ship->owner != Model::getSelf()->playerArray[0]) ||
+                         (Model::getSelf()->playerturn == P_TWO_TURN && 
+                          n->ship->owner != Model::getSelf()->playerArray[1])))
+                {
+                    if(n->isNeighborOf(Model::getSelf()->selectedNode)) Model::getSelf()->enterMiniGame(n, Model::getSelf()->selectedShip, n->ship);
+                }
             }
             else
             {
@@ -135,6 +143,14 @@ void Map::selectSelected()
                     n->select(true);
                     if(n->ship == Model::getSelf()->nullShip) Model::getSelf()->selectedShip->setDestination(n);
                     Model::getSelf()->selectedShip = n->ship;
+                }
+                else if(n->ship != Model::getSelf()->nullShip &&
+                        ((Model::getSelf()->playerturn == P_ONE_TURN && 
+                          n->ship->owner != Model::getSelf()->playerArray[0]) ||
+                         (Model::getSelf()->playerturn == P_TWO_TURN && 
+                          n->ship->owner != Model::getSelf()->playerArray[1])))
+                {
+                    if(n->isNeighborOf(Model::getSelf()->selectedNode)) Model::getSelf()->enterMiniGame(n, Model::getSelf()->selectedShip, n->ship);
                 }
             }
         }

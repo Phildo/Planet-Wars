@@ -321,7 +321,10 @@ void KeyboardFunc(unsigned char key, int x, int y)
 			model->state = METAPAUSE;
 			break;
         case 's':
-            playerArray[0]->purchaseShip();
+            if(model->playerturn == P_ONE_TURN)
+                playerArray[0]->purchaseShip();
+            else
+                playerArray[1]->purchaseShip();
             break;
         case ' ':
             model->finishTurn = true;
