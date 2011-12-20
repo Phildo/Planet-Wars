@@ -32,6 +32,7 @@ public:
     void compileDL();       //Stores geometry in a displayList
     void draw();  
     void drawArrow();       //draws geometry at current location
+    void drawArrowFromNodeToNode(Node * a, Node * b);
     void drawDot();
     void set(float x, float y); //sets row/column based on mouse x and y
     void drawAtPosition();

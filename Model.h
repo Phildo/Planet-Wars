@@ -28,6 +28,9 @@
 #define METAPAUSE 4
 #define MINIGAME 5
 
+#define P_ONE_TURN 0
+#define P_TWO_TURN 1
+
 //MENU
 #define TITLE 0
 #define MAIN 1
@@ -190,6 +193,7 @@ public:
     Node * selectedNode;
     Ship * selectedShip;
     int state;
+    int playerturn;
     bool finishTurn;
     int numPlayers;
     int numNodes;

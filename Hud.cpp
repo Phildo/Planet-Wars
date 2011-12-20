@@ -11,9 +11,11 @@ Hud::Hud(void)
         pOneNodes[i] = new Node(i);
         pOneNodes[i]->owner = Model::getSelf()->playerArray[0];
         pOneNodes[i]->display = true;
+        pOneRot = 0;
         pTwoNodes[i] = new Node(i);
         pTwoNodes[i]->owner = Model::getSelf()->playerArray[1];
         pTwoNodes[i]->display = true;
+        pTwoRot = 0;
     }
     if(!Hud::compiled) Hud::compileDL();
 }
@@ -131,7 +133,13 @@ void Hud::drawMapv()
     {
         glTranslatef(0.0, dif, 0.0);
         glPushMatrix();
-        glRotatef(Model::getSelf()->tickCount/10, 0.0, 1.0, 0.0);
+        if(Model::getSelf()->playerturn == P_ONE_TURN)
+            pOneRot+=.1f;
+        else
+            pOneRot+=.01f;
+        if(pOneRot == 360.0f)
+            pOneRot = 0.0;
+        glRotatef(pOneRot, 0.0, 1.0, 0.0);
         glRotatef(80, 1.0f, 0.0f, 0.0f);
         glScalef(0.1,0.1,0.1);
         pOneNodes[i]->draw();
@@ -147,7 +155,13 @@ void Hud::drawMapv()
     {
         glTranslatef(0.0, dif, 0.0);
         glPushMatrix();
-        glRotatef(Model::getSelf()->tickCount/10, 0.0, 1.0, 0.0);
+        if(Model::getSelf()->playerturn == P_TWO_TURN)
+            pTwoRot+=.1f;
+        else
+            pTwoRot+=.01f;
+        if(pTwoRot == 360.0f)
+            pTwoRot = 0.0;
+        glRotatef(pTwoRot, 0.0, 1.0, 0.0);       
         glRotatef(80, 1.0f, 0.0f, 0.0f);
         glScalef(0.1,0.1,0.1);
         pTwoNodes[i]->draw();

@@ -22,6 +22,7 @@ Model::Model()
     this->numPlayers = DEFAULT_NUM_PLAYERS;
     this->numNodes = DEFAULT_NUM_NODES;
     this->state = DEFAULT_STATE;
+    this->playerturn = P_ONE_TURN;
     
     this->nullNode = NULL;
     this->nullPlayer = NULL;

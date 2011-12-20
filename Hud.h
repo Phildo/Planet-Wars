@@ -18,7 +18,9 @@ public:
     static GLuint mapvDl;
     
     Node ** pOneNodes;
+    float pOneRot;
     Node ** pTwoNodes;
+    float pTwoRot;
     
     void compileDL();       //Stores geometry in a displayList   
 	void drawMeta();

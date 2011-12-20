@@ -59,16 +59,16 @@ void Ship::compileDL()
     glPushMatrix();
     glScalef(0.6, 1.0, 0.6);
     glBegin(GL_QUADS);
-    glVertex3f(-.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
-    glVertex3f(-.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
-    glVertex3f(.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
-    glVertex3f(.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
+    glVertex3f(-.5*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
+    glVertex3f(-.5*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
+    glVertex3f(.5*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
+    glVertex3f(.5*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
     glEnd();
     
     glBegin(GL_TRIANGLES);
-    glVertex3d(.5*SHIP_SIZE, layer, -.5*SHIP_SIZE);
-    glVertex3d(SHIP_SIZE+0.2, layer, 0);
-    glVertex3d(.5*SHIP_SIZE, layer, .5*SHIP_SIZE);
+    glVertex3d(.5*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
+    glVertex3d(SHIP_SIZE+0.2, layer+0.1, 0);
+    glVertex3d(.5*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
     glEnd();
     glPopMatrix();
     
@@ -181,12 +181,22 @@ void Ship::drawAtPosition()
     glTranslated(loc->column*COL_SPACING, 0, loc->row*ROW_SPACING);
     draw();
     glPopMatrix();
+    if(Model::getSelf()->map->getNodeAt(Model::getSelf()->selector->row, 
+                                        Model::getSelf()->selector->column) == loc &&
+       destination != Model::getSelf()->nullNode)
+        Model::getSelf()->selector->drawArrowFromNodeToNode(loc, destination);
 }
 
 void Ship::tick()
 {
-    done = false;
-    djikstrasToDestination();
+    if((Model::getSelf()->playerturn == P_ONE_TURN && 
+         owner == Model::getSelf()->playerArray[0]) ||
+        (Model::getSelf()->playerturn == P_TWO_TURN && 
+         owner == Model::getSelf()->playerArray[1]))
+    {
+        done = false;
+        djikstrasToDestination();
+    }
 }
 
 void Ship::setDestination(Node * destiny)
@@ -209,6 +219,7 @@ void Ship::djikstrasToDestination()
 
 bool Ship::moveToNode(Node *newLoc)
 {
+    if(Model::getSelf()->selectedShip == this) Model::getSelf()->selectedShip = Model::getSelf()->nullShip;
     if(done || newLoc == Model::getSelf()->nullNode) return false;
     if(loc->isNeighborOf(newLoc))
     {

@@ -181,9 +181,12 @@ void Node::tick()
 {
     if(owner == Model::getSelf()->nullPlayer) return;
     djikRating = 999999999;
-    if(this->ship != Model::getSelf()->nullShip) 
-        if(!this->ship->done)this->ship->addUnit(type);
-    if(owner->home == this) owner->darkResources++;
+    if(Model::getSelf()->playerturn%2 == 1)
+    {
+        if(this->ship != Model::getSelf()->nullShip) 
+            if(!this->ship->done)this->ship->addUnit(type);
+        if(owner->home == this) owner->darkResources++;
+    }
 }
 
 

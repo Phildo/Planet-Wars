@@ -179,7 +179,10 @@ void gameplay(){
     if(model->finishTurn)
     {
         map->tick();
-        //*DEBUG
+        Model::getSelf()->selectedShip = Model::getSelf()->nullShip;
+        Model::getSelf()->playerturn = (Model::getSelf()->playerturn+1)%2;
+
+        /*DEBUG
         std::cout << "Wa:\t"<<playerArray[0]->waterNodesOwned<<std::endl;
         std::cout << "Ea:\t"<<playerArray[0]->earthNodesOwned<<std::endl;
         std::cout << "Wi:\t"<<playerArray[0]->windNodesOwned<<std::endl;
@@ -398,7 +401,7 @@ void initGL(int argc, char * argv[])
 	glutInitWindowPosition(0 , 0);
 	glutInitWindowSize(model->width,model->height);
 	glutCreateWindow("PlanetsConquerer!");
-	//glutFullScreen();
+	glutFullScreen();
 	/*
 	 * The following section is curser specification. You guys can choose what is appropriate,
 	 * but for now I'm getting rid of it.

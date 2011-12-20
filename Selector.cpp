@@ -76,29 +76,29 @@ void Selector::compileDL()
     glPushMatrix();
     glScalef(0.1f, 1.0f, 0.1f);
     glBegin(GL_TRIANGLES);
-    glVertex3f(0.0, layer+.22f, 0.0);
-    glVertex3f(1.0, layer+.22f, 0.0);
-    glVertex3f(0.5, layer+.22f, sqrtOfThreeOverTwo);
+    glVertex3f(0.0, layer+.5f, 0.0);
+    glVertex3f(1.0, layer+.5f, 0.0);
+    glVertex3f(0.5, layer+.5f, sqrtOfThreeOverTwo);
     
-    glVertex3f(0.0, layer+.22f, 0.0);
-    glVertex3f(0.5, layer+.22f, sqrtOfThreeOverTwo);
-    glVertex3f(-0.5, layer+.22f, sqrtOfThreeOverTwo);
+    glVertex3f(0.0, layer+.5f, 0.0);
+    glVertex3f(0.5, layer+.5f, sqrtOfThreeOverTwo);
+    glVertex3f(-0.5, layer+.5f, sqrtOfThreeOverTwo);
     
-    glVertex3f(0.0, layer+.22f, 0.0);
-    glVertex3f(-0.5, layer+.22f, sqrtOfThreeOverTwo);
-    glVertex3f(-1.0, layer+.22f, 0.0);
+    glVertex3f(0.0, layer+.5f, 0.0);
+    glVertex3f(-0.5, layer+.5f, sqrtOfThreeOverTwo);
+    glVertex3f(-1.0, layer+.5f, 0.0);
     
-    glVertex3f(0.0, layer+.22f, 0.0);
-    glVertex3f(-1.0, layer+.22f, 0.0);
-    glVertex3f(-0.5, layer+.22f, -1.0*sqrtOfThreeOverTwo);
+    glVertex3f(0.0, layer+.5f, 0.0);
+    glVertex3f(-1.0, layer+.5f, 0.0);
+    glVertex3f(-0.5, layer+.5f, -1.0*sqrtOfThreeOverTwo);
     
-    glVertex3f(0.0, layer+.22f, 0.0);
-    glVertex3f(-0.5, layer+.22f, -1.0*sqrtOfThreeOverTwo);
-    glVertex3f(0.5, layer+.22f, -1.0*sqrtOfThreeOverTwo);  
+    glVertex3f(0.0, layer+.5f, 0.0);
+    glVertex3f(-0.5, layer+.5f, -1.0*sqrtOfThreeOverTwo);
+    glVertex3f(0.5, layer+.5f, -1.0*sqrtOfThreeOverTwo);  
     
-    glVertex3f(0.0, layer+.22f, 0.0);
-    glVertex3f(0.5, layer+.22f, -1.0*sqrtOfThreeOverTwo);  
-    glVertex3f(1.0, layer+.22f, 0.0);
+    glVertex3f(0.0, layer+.5f, 0.0);
+    glVertex3f(0.5, layer+.5f, -1.0*sqrtOfThreeOverTwo);  
+    glVertex3f(1.0, layer+.5f, 0.0);
     glEnd();
     glPopMatrix();
     
@@ -111,17 +111,17 @@ void Selector::compileDL()
     
     glBegin(GL_TRIANGLES);
     
-    glVertex3d(0.0f, layer+0.5f, -0.3f);
-    glVertex3d(0.0f, layer+0.5f, 0.3f);
-    glVertex3d(0.8f, layer+0.5f, 0.3f);
+    glVertex3d(0.0f, layer+0.3f, -0.3f);
+    glVertex3d(0.0f, layer+0.3f, 0.3f);
+    glVertex3d(0.8f, layer+0.3f, 0.3f);
 
-    glVertex3d(0.8f, layer+0.5f, 0.3f);
-    glVertex3d(0.8f, layer+0.5f, -0.3f);
-    glVertex3d(0.0f, layer+0.5f, -0.3f);
+    glVertex3d(0.8f, layer+0.3f, 0.3f);
+    glVertex3d(0.8f, layer+0.3f, -0.3f);
+    glVertex3d(0.0f, layer+0.3f, -0.3f);
     
-    glVertex3d(0.8f, layer+0.5f, 1.0f);
-    glVertex3d(1.0f, layer+0.5f, 0);
-    glVertex3d(0.8f, layer+0.5f, -1.0f);
+    glVertex3d(0.8f, layer+0.3f, 1.0f);
+    glVertex3d(1.0f, layer+0.3f, 0);
+    glVertex3d(0.8f, layer+0.3f, -1.0f);
     
     glEnd();
     
@@ -150,23 +150,32 @@ void Selector::drawArrow()
     
     setGLColor();
     
+    Node * b = new Node();
+    b->row = row;
+    b->column = column;
+    drawArrowFromNodeToNode(Model::getSelf()->selectedShip->loc, b);
+    delete b;
+}
+
+void Selector::drawArrowFromNodeToNode(Node * a, Node * b)
+{
     glPushMatrix();
     
-    glTranslatef(Model::getSelf()->selectedShip->loc->column*COL_SPACING, 0, 
-                 Model::getSelf()->selectedShip->loc->row*ROW_SPACING);
+    glTranslatef(a->column*COL_SPACING, 0, 
+                 a->row*ROW_SPACING);
     glRotatef(90, 0.0, 1.0, 0.0);
-    float x = (float)(column*COL_SPACING-Model::getSelf()->selectedShip->loc->column*COL_SPACING);
-    float y = (float)(row*ROW_SPACING-Model::getSelf()->selectedShip->loc->row*ROW_SPACING);
+    float x = (float)(b->column*COL_SPACING-a->column*COL_SPACING);
+    float y = (float)(b->row*ROW_SPACING-a->row*ROW_SPACING);
     float mag = sqrtf((x*x)+(y*y));
     float rot = acos(y/mag)*180.0f/3.1415f + 180;
-    if(column < Model::getSelf()->selectedShip->loc->column) rot*=-1;
+    if(b->column < a->column) rot*=-1;
     glRotatef(rot, 0.0, 1.0, 0.0);
     glScalef(mag, 1.0f, 1.0f);
-
+    
     glCallList(Selector::arrow);
-
+    
     glPopMatrix();
-
+    
 }
 
 void Selector::drawDot()
