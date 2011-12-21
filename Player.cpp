@@ -83,7 +83,7 @@ void Player::conquerNode(Node *node)
     {
         if(node->owner != Model::getSelf()->nullPlayer) 
             node->owner->surrenderNode(node);
-        myNodes[nodesOwned+1] = node;
+        myNodes[nodesOwned] = node;
     
     
         switch(node->type)
@@ -127,6 +127,7 @@ bool Player::hasShip(Ship * s)
 bool Player::addShip(Node * n)
 {
     if(n->ship != Model::getSelf()->nullShip) return false;
+    //if(!hasNode(n)) return false;
     shipArray[numShips] = new Ship(this);
     shipArray[numShips]->loc = n;
     n->ship = shipArray[numShips];

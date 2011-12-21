@@ -65,22 +65,20 @@ void MiniGame::deployUnit(Ship * s, int type) {
 }
 
 void MiniGame::update() {
-    /*
+    
     if(attacker->numWaterUnits + attacker->numEarthUnits + attacker->numWindUnits + attacker->numFireUnits == 0 &&
        lanes[0]->attackerIndex == 0 &&
        lanes[1]->attackerIndex == 0 &&
        lanes[2]->attackerIndex == 0 &&
        lanes[3]->attackerIndex == 0 &&
-       lanes[4]->attackerIndex == 0 &&
-       lanes[5]->attackerIndex == 0)
+       lanes[4]->attackerIndex == 0)
         attacker->health -= 1000;
     if(defender->numWaterUnits + defender->numEarthUnits + defender->numWindUnits + defender->numFireUnits == 0 &&
        lanes[0]->defenderIndex == 0 &&
        lanes[1]->defenderIndex == 0 &&
        lanes[2]->defenderIndex == 0 &&
        lanes[3]->defenderIndex == 0 &&
-       lanes[4]->defenderIndex == 0 &&
-       lanes[5]->defenderIndex == 0)
+       lanes[4]->defenderIndex == 0)
         defender->health -= 1000;
     
     if(attacker->health <= 0) 
@@ -93,7 +91,7 @@ void MiniGame::update() {
         Lane::winMini = true;
         Lane::attackerWin = true;
     }
-     */
+     
     
     for(int i = 0; i < NUM_LANES; i++)
     {
@@ -111,6 +109,37 @@ void MiniGame::drawGame() {
         lanes[i]->draw();
         glPopMatrix();
     }
+    
+    glPushMatrix();
+    if(attacker->owner == Model::getSelf()->playerArray[0])
+        glColor3f(1.0, 0.0, 0.0);
+    else
+        glColor3f(0.0, 0.0, 1.0);
+    glTranslatef(0.0, 0.0, LANE_LENGTH/2);
+    glBegin(GL_QUADS);
+    glVertex3d(-.5*(LANE_WIDTH*NUM_LANES), -100.0, 0.0);
+    glVertex3d(.5*(LANE_WIDTH*NUM_LANES), -100.0, 0.0);
+    glVertex3d(.5*(LANE_WIDTH*NUM_LANES), -100.0, -300.0);
+    glVertex3d(-.5*(LANE_WIDTH*NUM_LANES), -100.0, -300.0);
+    glEnd();
+    glPopMatrix();
+    
+    glPushMatrix();
+    if(defender->owner == Model::getSelf()->playerArray[0])
+        glColor3f(1.0, 0.0, 0.0);
+    else
+        glColor3f(0.0, 0.0, 1.0);
+    glTranslatef(0.0, 0.0, LANE_LENGTH/-2);
+    glBegin(GL_QUADS);
+    glVertex3d(-.5*(LANE_WIDTH*NUM_LANES), -100.0, 0.0);
+    glVertex3d(.5*(LANE_WIDTH*NUM_LANES), -100.0, 0.0);
+    glVertex3d(.5*(LANE_WIDTH*NUM_LANES), -100.0, 300.0);
+    glVertex3d(-.5*(LANE_WIDTH*NUM_LANES), -100.0, 300.0);
+    glEnd();
+    glPopMatrix();
+    
+    
+    
     
     //Draw Health
     glColor3f(0.0, 1.0, 0.0);

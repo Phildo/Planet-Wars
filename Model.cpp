@@ -70,7 +70,7 @@ Player** Model::setNumPlayers(int numPlayers)
         nodeArray[i]->setType(TYPE_DARK);
         playerArray[i]->conquerNode(nodeArray[i]);
         playerArray[i]->home = nodeArray[i];
-        playerArray[i]->addShip(playerArray[i]->home);
+        playerArray[i]->addShip(nodeArray[i]);
     }
     
     return playerArray;

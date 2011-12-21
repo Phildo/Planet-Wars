@@ -6,6 +6,9 @@ Hud::Hud(void)
     pOneNodes = new Node *[NUM_TYPES];
     pTwoNodes = new Node *[NUM_TYPES];
     
+    pOneShip = new Ship(Model::getSelf()->playerArray[0]);
+    pTwoShip = new Ship(Model::getSelf()->playerArray[1]);
+    
     for(int i = 0; i < NUM_TYPES; i++)
     {
         pOneNodes[i] = new Node(i);
@@ -29,6 +32,7 @@ bool Hud::compiled = false;       //True iff displayList names a valid glDisplay
 GLuint Hud::metaDl;
 GLuint Hud::miniDl;
 GLuint Hud::mapvDl;
+GLuint Hud::typeMappingDl;
 
 void Hud::compileDL()
 {
@@ -60,10 +64,51 @@ void Hud::compileDL()
     glEndList();   
     
     
+    Hud::typeMappingDl = glGenLists(1);
+    glNewList(Hud::typeMappingDl, GL_COMPILE);
+    
+    glPushMatrix();
+    glTranslated(-0.5, 0.0, 0.0);
+    glColor3f(WATER_R, WATER_G, WATER_B);
+    glBegin(GL_QUADS);
+    glVertex3d(0.0, 0.25, 0.0);
+    glVertex3d(0.25, 0.25, 0.0);
+    glVertex3d(0.25, 0.0, 0.0);
+    glVertex3d(0.0, 0.0, 0.0);
+    glEnd();
+    glTranslated(0.25, 0.0, 0.0);
+    glColor3f(EARTH_R, EARTH_G, EARTH_B);
+    glBegin(GL_QUADS);
+    glVertex3d(0.0, 0.25, 0.0);
+    glVertex3d(0.25, 0.25, 0.0);
+    glVertex3d(0.25, 0.0, 0.0);
+    glVertex3d(0.0, 0.0, 0.0);
+    glEnd();
+    glTranslated(0.25, 0.0, 0.0);
+    glColor3f(WIND_R, WIND_G, WIND_B);
+    glBegin(GL_QUADS);
+    glVertex3d(0.0, 0.25, 0.0);
+    glVertex3d(0.25, 0.25, 0.0);
+    glVertex3d(0.25, 0.0, 0.0);
+    glVertex3d(0.0, 0.0, 0.0);
+    glEnd();
+    glTranslated(0.25, 0.0, 0.0);
+    glColor3f(FIRE_R, FIRE_G, FIRE_B);
+    glBegin(GL_QUADS);
+    glVertex3d(0.0, 0.25, 0.0);
+    glVertex3d(0.25, 0.25, 0.0);
+    glVertex3d(0.25, 0.0, 0.0);
+    glVertex3d(0.0, 0.0, 0.0);
+    glEnd();
+    glPopMatrix();
+    
+    glEndList();
+    
     
     
     Hud::mapvDl = glGenLists(1);
     glNewList(Hud::mapvDl, GL_COMPILE);
+    /*
     float w = (float)Model::getSelf()->width/(float)Model::getSelf()->height;
     float h = (float)Model::getSelf()->height/(float)Model::getSelf()->width;
     glPushMatrix();
@@ -96,7 +141,7 @@ void Hud::compileDL()
 
     glEnd();
     glPopMatrix();
-    
+    */
     glEndList();   
     
     
@@ -115,6 +160,7 @@ void Hud::drawMini()
 {
     if(!Hud::compiled) return;
 
+    
 
 }
 
@@ -126,9 +172,22 @@ void Hud::drawMapv()
     glCallList(mapvDl);
     float dif = -2.0f/((float)NUM_TYPES+2.0f);
     glPushMatrix();
-    glTranslated(-1.4, 0.2, 0.0);
+    glTranslated(-1.5, 0.2, 0.0);
     glTranslatef(0.0, 1.0, -2.0);
     glTranslatef(0.0, dif, 0.0);
+    
+    glPushMatrix();
+    glScalef(0.2, 0.2, 0.2);
+    glRotatef(pOneRot, 0.0, 1.0, 0.0);
+    glTranslated(0.0, 0.0, -0.4);
+    glRotatef(80, 1.0f, 0.0f, 0.0f);
+    pOneShip->numWaterUnits = ((float)pOneShip->owner->waterNodesOwned/(float)(pOneShip->owner->nodesOwned-pOneShip->owner->darkNodesOwned))*MAX_UNITS;
+    pOneShip->numEarthUnits = ((float)pOneShip->owner->earthNodesOwned/(float)(pOneShip->owner->nodesOwned-pOneShip->owner->darkNodesOwned))*MAX_UNITS;
+    pOneShip->numWindUnits = ((float)pOneShip->owner->windNodesOwned/(float)(pOneShip->owner->nodesOwned-pOneShip->owner->darkNodesOwned))*MAX_UNITS;
+    pOneShip->numFireUnits = ((float)pOneShip->owner->fireNodesOwned/(float)(pOneShip->owner->nodesOwned-pOneShip->owner->darkNodesOwned))*MAX_UNITS;
+    pOneShip->draw();
+    glPopMatrix();
+    
     for(int i = 0; i < NUM_TYPES; i++)
     {
         glTranslatef(0.0, dif, 0.0);
@@ -145,12 +204,31 @@ void Hud::drawMapv()
         pOneNodes[i]->draw();
         glPopMatrix();
     }
+    glTranslatef(0.0, dif, 0.0);
+    glRotatef(pOneRot, 0.0, 1.0, 0.0);
+
+    gluSphere(gluNewQuadric(), 0.15, 5, 5);
     glPopMatrix();
     
+    
+    
     glPushMatrix();
-    glTranslated(1.4, 0.2, 0.0);
+    glTranslated(1.5, 0.2, 0.0);
     glTranslatef(0.0, 1.0, -2.0);
     glTranslatef(0.0, dif, 0.0);
+    
+    glPushMatrix();
+    glScalef(0.2, 0.2, 0.2);
+    glRotatef(pTwoRot, 0.0, 1.0, 0.0);
+    glTranslated(0.0, 0.0, -0.4);
+    glRotatef(80, 1.0f, 0.0f, 0.0f);
+    pTwoShip->numWaterUnits = ((float)pTwoShip->owner->waterNodesOwned/(float)(pOneShip->owner->nodesOwned-pOneShip->owner->darkNodesOwned))*MAX_UNITS;
+    pTwoShip->numEarthUnits = ((float)pTwoShip->owner->earthNodesOwned/(float)(pOneShip->owner->nodesOwned-pOneShip->owner->darkNodesOwned))*MAX_UNITS;
+    pTwoShip->numWindUnits = ((float)pTwoShip->owner->windNodesOwned/(float)(pOneShip->owner->nodesOwned-pOneShip->owner->darkNodesOwned))*MAX_UNITS;
+    pTwoShip->numFireUnits = ((float)pTwoShip->owner->fireNodesOwned/(float)(pOneShip->owner->nodesOwned-pOneShip->owner->darkNodesOwned))*MAX_UNITS;
+    pTwoShip->draw();
+    glPopMatrix();
+    
     for(int i = 0; i < NUM_TYPES; i++)
     {
         glTranslatef(0.0, dif, 0.0);
@@ -167,6 +245,10 @@ void Hud::drawMapv()
         pTwoNodes[i]->draw();
         glPopMatrix();
     }
+    glTranslatef(0.0, dif, 0.0);
+    glRotatef(pTwoRot, 0.0, 1.0, 0.0);
+    
+    gluSphere(gluNewQuadric(), 0.15, 5, 5);
     glPopMatrix();
     
 }

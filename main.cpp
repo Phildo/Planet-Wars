@@ -178,6 +178,16 @@ void gameplay(){
 	// Draw different aspects of the game during gameplay:
     if(model->finishTurn)
     {
+        if(playerArray[0]->nodesOwned == 0)
+        {
+            model->state = VICTORY;
+            model->victor = false;
+        }
+        if(playerArray[1]->nodesOwned == 0)
+        {
+            model->state = VICTORY;
+            model->victor = true;
+        }
         map->tick();
         Model::getSelf()->selectedShip = Model::getSelf()->nullShip;
         Model::getSelf()->playerturn = (Model::getSelf()->playerturn+1)%2;
@@ -213,6 +223,24 @@ void minigame() {
     
     model->mgame->update();
 	model->mgame->drawGame();
+}
+
+void victory()
+{
+    glLoadIdentity();
+    gluLookAt(0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0);
+    if(model->victor)
+        glColor3f(1.0, 0.0, 0.0);
+    else 
+        glColor3f(0.0, 0.0, 1.0);
+    
+    glDisable(GL_LIGHTING);
+    glBegin(GL_QUADS);
+    glVertex3f(-30.0, 0.0, -30.0);
+    glVertex3f(-30.0, 0.0, 30.0);
+    glVertex3f(30.0, 0.0, 30.0);
+    glVertex3f(30.0, 0.0, -30.0);
+    glEnd();
 }
 
 
@@ -267,6 +295,9 @@ void DisplayFunc()
         case MINIGAME:
             minigame();
             break;
+        case VICTORY:
+            victory();
+            break;
 	}
     
     model->tickCount++;
@@ -318,9 +349,14 @@ void KeyboardFunc(unsigned char key, int x, int y)
 	case GAMEPLAY:
 		switch (key)
 		{
-		case 'p':
-			model->state = METAPAUSE;
+		case 'q':
+			if(model->playerturn == P_ONE_TURN)
+                model->finishTurn = true;
 			break;
+        case 'p':
+            if(model->playerturn == P_TWO_TURN)
+                model->finishTurn = true;
+            break;
         case 's':
             if(model->playerturn == P_ONE_TURN)
                 playerArray[0]->purchaseShip();
@@ -328,7 +364,7 @@ void KeyboardFunc(unsigned char key, int x, int y)
                 playerArray[1]->purchaseShip();
             break;
         case ' ':
-            model->finishTurn = true;
+            //model->finishTurn = true;
             break;
         }
         break;
@@ -336,14 +372,20 @@ void KeyboardFunc(unsigned char key, int x, int y)
 		switch (key)
 		{
 		case 'p':
-			model->state = MINIPAUSE;
+			//model->state = MINIPAUSE;
 			break;
-		case '[': //left arrow
-			model->mgame->changeLane(LEFT, true);
+		case 'i': //left arrow
+			model->mgame->changeLane(LEFT, playerArray[1] == model->mgame->attacker->owner);
 			break;
-		case ']': //right arrow
-			model->mgame->changeLane(RIGHT, true);
+		case 'o': //right arrow
+			model->mgame->changeLane(RIGHT, playerArray[1] == model->mgame->attacker->owner);
 			break;
+        case 'w': //left arrow
+            model->mgame->changeLane(LEFT, playerArray[0] == model->mgame->attacker->owner);
+            break;
+        case 'e': //right arrow
+            model->mgame->changeLane(RIGHT, playerArray[0] == model->mgame->attacker->owner);
+            break;
 		case 'a':
             if(playerArray[0] == model->mgame->attacker->owner)
                 model->mgame->deployUnit(model->mgame->attacker, TYPE_WATER);
@@ -409,12 +451,14 @@ void KeyboardFunc(unsigned char key, int x, int y)
 	case '1':
 		model->state = GAMEPLAY;
 		break;
-	case '0':
+	/*
+     case '0':
 		model->state = TITLE;
 		break;
 	case '2':
 		model->state = MINIGAME;
 		break;
+     */
 	}
 }
 

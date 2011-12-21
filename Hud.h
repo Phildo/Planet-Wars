@@ -16,10 +16,13 @@ public:
     static GLuint metaDl;
     static GLuint miniDl;
     static GLuint mapvDl;
+    static GLuint typeMappingDl;
     
     Node ** pOneNodes;
+    Ship * pOneShip;
     float pOneRot;
     Node ** pTwoNodes;
+    Ship * pTwoShip;
     float pTwoRot;
     
     void compileDL();       //Stores geometry in a displayList   

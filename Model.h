@@ -27,6 +27,7 @@
 #define MINIPAUSE 3
 #define METAPAUSE 4
 #define MINIGAME 5
+#define VICTORY 6
 
 #define P_ONE_TURN 0
 #define P_TWO_TURN 1
@@ -205,6 +206,8 @@ public:
     int rowMin;
     int colMax;
     int colMin;
+    
+    bool victor;
     
     //////////
     //Model Getters/Setters
