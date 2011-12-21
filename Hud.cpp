@@ -95,6 +95,24 @@ void Hud::compileDL()
     glNewList(Hud::typeMappingDlA, GL_COMPILE);
     
     glPushMatrix();
+    glColor3f(1.0, 1.0, 1.0);
+    glScalef(0.001, 0.001, 0.001);
+    glTranslatef(-460, 300, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, '<');
+    glTranslatef(70, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, '-');
+    glTranslatef(70, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'w');
+    glTranslatef(150, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
+    glTranslatef(70, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, '-');
+    glTranslatef(70, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, '>');
+    glPopMatrix();
+    
+    
+    glPushMatrix();
     glTranslated(-0.5, 0.0, 0.0);
     glColor3f(WATER_R, WATER_G, WATER_B);
     glBegin(GL_QUADS);
@@ -158,6 +176,23 @@ void Hud::compileDL()
     
     Hud::typeMappingDlB = glGenLists(1);
     glNewList(Hud::typeMappingDlB, GL_COMPILE);
+    
+    glPushMatrix();
+    glColor3f(1.0, 1.0, 1.0);
+    glScalef(0.001, 0.001, 0.001);
+    glTranslatef(-460, 300, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, '<');
+    glTranslatef(70, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, '-');
+    glTranslatef(70, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'i');
+    glTranslatef(150, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'o');
+    glTranslatef(70, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, '-');
+    glTranslatef(70, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, '>');
+    glPopMatrix();
     
     glPushMatrix();
     glTranslated(-0.5, 0.0, 0.0);
@@ -455,8 +490,8 @@ void Hud::drawMapv()
     gluSphere(gluNewQuadric(), 0.15, 5, 5);
     glPopMatrix();
     
-	if (Model::getSelf()->zoom < 0) 
-		TextPrint::hudText(0, 17, -2, 0.77f, 0.29f, 0.13f,GLUT_BITMAP_TIMES_ROMAN_24, "WARNING: ZOOMED PAST RECOMENDED AREA");
+	//if (Model::getSelf()->zoom < 0) 
+	//	TextPrint::hudText(0, 17, -2, 0.77f, 0.29f, 0.13f,GLUT_BITMAP_TIMES_ROMAN_24, "WARNING: ZOOMED PAST RECOMENDED AREA");
 
 
 }

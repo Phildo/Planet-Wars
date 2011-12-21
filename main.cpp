@@ -547,7 +547,7 @@ void initGL(int argc, char * argv[])
 	glutIdleFunc(IdleFunc);
     glutPassiveMotionFunc(PassiveMotionFunc);
     glutMouseFunc(MouseFunc);
-	glutMouseWheelFunc(MouseWheelFunc);
+	//glutMouseWheelFunc(MouseWheelFunc);
     glutKeyboardFunc(KeyboardFunc);
     glutSpecialFunc(SpecialFunc);
 }
