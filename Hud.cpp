@@ -475,9 +475,9 @@ void Hud::drawMapv()
         glPopMatrix();
         glPushMatrix();
         if(Model::getSelf()->playerturn == P_ONE_TURN)
-            pOneRot+=1.0f;
+            pOneRot+=0.1f;
         else
-            pOneRot+=.1f;
+            pOneRot+=.01f;
         if(pOneRot == 360.0f)
             pOneRot = 0.0;
         glRotatef(pOneRot, 0.0, 1.0, 0.0);
@@ -595,9 +595,9 @@ void Hud::drawMapv()
         glPopMatrix();
         glPushMatrix();
         if(Model::getSelf()->playerturn == P_TWO_TURN)
-            pTwoRot+=1.0f;
-        else
             pTwoRot+=0.1f;
+        else
+            pTwoRot+=0.01f;
         if(pTwoRot == 360.0f)
             pTwoRot = 0.0;
         glRotatef(pTwoRot, 0.0, 1.0, 0.0);       

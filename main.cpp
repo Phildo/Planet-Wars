@@ -344,7 +344,7 @@ void DisplayFunc()
             break;
 	}
     
-    model->tickCount+=10;
+    model->tickCount++;
 	glutSwapBuffers();
 }
 
