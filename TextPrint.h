@@ -12,7 +12,7 @@ public:
 	TextPrint(void);
 	~TextPrint(void);
 	static void bitText(int x, int y, int z, float r, float g, float b, void * font, char *string);
-	static void hudText(int x, int y, int z, float r, float g, float b, void * font, char *string);
+	static void hudText(int x, int y,  int zoom, float r, float g, float b, void * font, char *string);
 	static void strokePrint(int x, int y, int z, float r, float g, float b, char *string);
 private:
 };

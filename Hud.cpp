@@ -251,4 +251,8 @@ void Hud::drawMapv()
     gluSphere(gluNewQuadric(), 0.15, 5, 5);
     glPopMatrix();
     
+	if (Model::getSelf()->zoom < 0) 
+		TextPrint::hudText(0, 17, -2, 0.77f, 0.29f, 0.13f,GLUT_BITMAP_TIMES_ROMAN_24, "WARNING: ZOOMED PAST RECOMENDED AREA");
+
+
 }

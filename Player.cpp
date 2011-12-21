@@ -39,7 +39,7 @@ bool Player::hasNode(Node *node)
 
 void Player::surrenderNode(Node *node)
 {
-    bool found;
+    bool found = false;
     
     for(int i = 0; i < this->nodesOwned; i++)
     {

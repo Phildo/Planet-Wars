@@ -47,27 +47,32 @@ GLUT_BITMAP_HELVETICA_18
 void TextPrint::bitText(int x, int y, int z, 
 	float r, float g, float b, void * font, char *string)
 {
+    glDisable(GL_LIGHTING);
 	glColor3f( r, g, b );
-	glRasterPos3f(x, y, z);
+	glRasterPos3f(x/10, y/10, z/10);
 	int len, i;
 	len = (int)strlen(string);
 	for (i = 0; i < len; i++) {
 		glutBitmapCharacter(font, string[i]);
 	}
+    glEnable(GL_LIGHTING);
 }
 
 // Standalone function that will automatically place words in a HUD.
-void TextPrint::hudText(int x, int y, int z, 
+void TextPrint::hudText(int x, int y, int zoom,
 	float r, float g, float b, void * font, char *string)
 {
 	glColor3f( r, g, b );
-	glRasterPos3f(x, y, z);
+
 	int len, i;
-	len = (int)strlen(string);
+	
+    glDisable(GL_LIGHTING);
+	glRasterPos3f(x/10, y/10, zoom);
+	len = (int) strlen(string);
 	for (i = 0; i < len; i++) {
 		glutBitmapCharacter(font, string[i]);
 	}
-
+    glEnable(GL_LIGHTING);
 }
 
 /*	Stroke fonts:
@@ -80,11 +85,13 @@ void TextPrint::strokePrint(int x, int y, int z,
 {
 	char *p;
     
+    glDisable(GL_LIGHTING);
     glPushMatrix();
 	glColor3f(r,g,b);
-    glTranslatef(x, y, z);
+    glTranslatef(x/10, y/10, z/10);
     for (p = string; *p; p++)
         glutStrokeCharacter(GLUT_STROKE_ROMAN, *p);
     glPopMatrix();
+	glEnable(GL_LIGHTING);
 
 }

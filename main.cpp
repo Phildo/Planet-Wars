@@ -264,6 +264,14 @@ void MouseFunc(int button, int state, int x, int y)
     }
 }
 
+void MouseWheelFunc(int button, int dir, int x, int y)
+{
+	if (model->zoom > -5)
+		if (dir > 0) model->zoom--;
+	if (model->zoom < (6*sqrt(std::max ((float)(model->rowMax - model->rowMin), (float)(model->colMax-model->colMin))*4.0) ))
+		if (dir < 0) model->zoom++;
+}
+
 void DisplayFunc()
 {
 	//Clear screen
@@ -516,6 +524,7 @@ void initGL(int argc, char * argv[])
 	glutIdleFunc(IdleFunc);
     glutPassiveMotionFunc(PassiveMotionFunc);
     glutMouseFunc(MouseFunc);
+	glutMouseWheelFunc(MouseWheelFunc);
     glutKeyboardFunc(KeyboardFunc);
     glutSpecialFunc(SpecialFunc);
 }

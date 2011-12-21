@@ -153,6 +153,7 @@ class MiniGame;
 #include "Map.h"
 #include "Node.h"
 #include "Selector.h"
+#include "TextPrint.h"
 #include "MiniGame.h"
 
 //Singleton class
