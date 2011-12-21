@@ -338,6 +338,53 @@ void Hud::drawMini()
 void Hud::drawMapv()
 {
     if(!Hud::compiled) return;
+    
+    glPushMatrix();
+    glTranslatef(0.0, 0.0, -2);
+    glColor3f(1.0, 1.0, 1.0);
+    glScalef(0.001, 0.001, 0.001);
+    glTranslatef(-1000, -1000, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 's');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'p');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'a');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'c');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
+    glTranslatef(80, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 't');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'o');
+    glTranslatef(80, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'b');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'u');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'y');
+    glTranslatef(80, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 's');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'h');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'i');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'p');
+    glTranslatef(80, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, '(');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, '1');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, '0');
+    glTranslatef(60, 40, 0.0);
+    gluSphere(gluNewQuadric(), 40, 5, 5);
+    glTranslatef(40, -40, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, ')');
+    glPopMatrix();
+    
+    
+    
     setColor(0.5f, 0.5f, 0.5f, 1.0f, 0.1f, 0.5f, 0.7f);
     setGLColor();
     glCallList(mapvDl);
@@ -428,7 +475,13 @@ void Hud::drawMapv()
     glScalef(0.001, 0.001, 0.001);
     glTranslated(-270.0, 0.0, 0.0);
     //glRotated(-90, 1.0, 0.0, 0.0);
+    glPushMatrix();
+    if(pTwoShip->owner->numShips > 10)
+        glTranslatef(-150, 0.0, 0.0);
+    if(pTwoShip->owner->numShips > 100)
+        glTranslatef(-150, 0.0, 0.0);
     strokeNumber(pTwoShip->owner->numShips);
+    glPopMatrix();
     glPopMatrix();
     glPushMatrix();
     glScalef(0.2, 0.2, 0.2);
@@ -452,15 +505,55 @@ void Hud::drawMapv()
         glTranslated(-270.0, 0.0, 0.0);
         //glRotated(-90, 1.0, 0.0, 0.0);
         if(i == 0)
+        {
+            glPushMatrix();
+            if(pTwoShip->owner->waterNodesOwned > 10)
+                glTranslatef(-150, 0.0, 0.0);
+            if(pTwoShip->owner->waterNodesOwned > 100)
+                glTranslatef(-150, 0.0, 0.0);
             strokeNumber(pTwoShip->owner->waterNodesOwned);
+            glPopMatrix();
+        }
         else if(i == 1)
+        {
+            glPushMatrix();
+            if(pTwoShip->owner->earthNodesOwned > 10)
+                glTranslatef(-150, 0.0, 0.0);
+            if(pTwoShip->owner->earthNodesOwned > 100)
+                glTranslatef(-150, 0.0, 0.0);
             strokeNumber(pTwoShip->owner->earthNodesOwned);
+            glPopMatrix();
+        }
         else if(i == 2)
+        {
+            glPushMatrix();
+            if(pTwoShip->owner->windNodesOwned > 10)
+                glTranslatef(-150, 0.0, 0.0);
+            if(pTwoShip->owner->windNodesOwned> 100)
+                glTranslatef(-150, 0.0, 0.0);
             strokeNumber(pTwoShip->owner->windNodesOwned);
+            glPopMatrix();
+        }
         else if(i == 3)
+        {
+            glPushMatrix();
+            if(pTwoShip->owner->fireNodesOwned > 10)
+                glTranslatef(-150, 0.0, 0.0);
+            if(pTwoShip->owner->fireNodesOwned > 100)
+                glTranslatef(-150, 0.0, 0.0);
             strokeNumber(pTwoShip->owner->fireNodesOwned);
+            glPopMatrix();
+        }
         else if(i == 4)
+        {
+            glPushMatrix();
+            if(pTwoShip->owner->darkNodesOwned > 10)
+                glTranslatef(-150, 0.0, 0.0);
+            if(pTwoShip->owner->darkNodesOwned > 100)
+                glTranslatef(-150, 0.0, 0.0);
             strokeNumber(pTwoShip->owner->darkNodesOwned);
+            glPopMatrix();
+        }
         
         glPopMatrix();
         glPushMatrix();
@@ -483,7 +576,13 @@ void Hud::drawMapv()
     glScalef(0.001, 0.001, 0.001);
     glTranslated(-270.0, 0.0, 0.0);
     //glRotated(-90, 1.0, 0.0, 0.0);
+    glPushMatrix();
+    if(pTwoShip->owner->darkResources > 10)
+        glTranslatef(-150, 0.0, 0.0);
+    if(pTwoShip->owner->darkResources > 100)
+        glTranslatef(-150, 0.0, 0.0);
     strokeNumber(pTwoShip->owner->darkResources);
+    glPopMatrix();
     glPopMatrix();
     glRotatef(pTwoRot, 0.0, 1.0, 0.0);
     
