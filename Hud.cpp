@@ -383,6 +383,43 @@ void Hud::drawMapv()
     glutStrokeCharacter(GLUT_STROKE_ROMAN, ')');
     glPopMatrix();
     
+    glPushMatrix();
+    glTranslatef(0.0, 0.0, -2);
+    if(Model::getSelf()->playerturn == P_ONE_TURN)
+        glColor3f(PLAYER_1_R, PLAYER_1_G, PLAYER_1_B);
+    else
+        glColor3f(PLAYER_2_R, PLAYER_2_G, PLAYER_2_B);
+    glScalef(0.001, 0.001, 0.001);
+    glTranslatef(-700, 800, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, '\'');
+    glTranslatef(30, 0, 0.0);
+    if(Model::getSelf()->playerturn == P_ONE_TURN)
+        glutStrokeCharacter(GLUT_STROKE_ROMAN, 'q');
+    else
+        glutStrokeCharacter(GLUT_STROKE_ROMAN, 'p');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, '\'');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 't');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'o');
+    glTranslatef(80, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'n');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'd');
+    glTranslatef(80, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 't');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'u');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'r');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'n');
+    glPopMatrix();
+
+    
     
     
     setColor(0.5f, 0.5f, 0.5f, 1.0f, 0.1f, 0.5f, 0.7f);
