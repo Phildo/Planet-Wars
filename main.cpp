@@ -252,12 +252,13 @@ void minigame() {
 
 void victory()
 {
+    glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0);
     if(model->victor)
-        glColor3f(1.0, 0.0, 0.0);
+        glColor3f(PLAYER_1_R, PLAYER_1_G, PLAYER_1_G);
     else 
-        glColor3f(0.0, 0.0, 1.0);
+        glColor3f(PLAYER_2_R, PLAYER_2_G, PLAYER_2_B);
     
     glDisable(GL_LIGHTING);
     glBegin(GL_QUADS);
@@ -266,6 +267,17 @@ void victory()
     glVertex3f(30.0, 0.0, 30.0);
     glVertex3f(30.0, 0.0, -30.0);
     glEnd();
+    
+    glColor3f(1.0, 1.0, 1.0);
+    glTranslatef(-5.0, 10.0, 0.0);
+    glRotated(-90, 1.0, 0.0, 1.0);
+    glScalef(0.05, 0.05, 0.05);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'W');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'I');
+    glTranslatef(30, 0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'N');
+    glTranslatef(30, 0, 0.0);
 }
 
 
@@ -308,7 +320,6 @@ void DisplayFunc()
 	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100000000.0);
 	glViewport(0 , 0 , model->width, model->height);
     
-   
 	switch(model->state){
         case TITLE:
             pregame();

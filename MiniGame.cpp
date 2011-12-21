@@ -15,6 +15,8 @@ MiniGame::MiniGame(Node * planet, Ship * attackerShip, Ship * defenderShip)
     selectedDLane = NUM_LANES-1;
     lanes[selectedALane]->setSelected(true, true);
     lanes[selectedDLane]->setSelected(true, false);
+    Lane::setWinMini = false;
+    Lane::winMini = false;
 }
 
 void MiniGame::changeLane(int direction, bool attacker)

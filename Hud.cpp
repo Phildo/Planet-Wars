@@ -597,7 +597,7 @@ void Hud::drawMapv()
         if(Model::getSelf()->playerturn == P_TWO_TURN)
             pTwoRot+=1.0f;
         else
-            pTwoRot+=.1f;
+            pTwoRot+=0.1f;
         if(pTwoRot == 360.0f)
             pTwoRot = 0.0;
         glRotatef(pTwoRot, 0.0, 1.0, 0.0);       
