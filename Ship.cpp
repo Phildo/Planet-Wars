@@ -184,7 +184,14 @@ void Ship::drawAtPosition()
     if(Model::getSelf()->map->getNodeAt(Model::getSelf()->selector->row, 
                                         Model::getSelf()->selector->column) == loc &&
        destination != Model::getSelf()->nullNode)
+    {
+        if(owner == Model::getSelf()->playerArray[0])
+            setColor(PLAYER_1_R, PLAYER_1_G, PLAYER_1_B, 1.0, 0.1, 0.5, 0.7);
+        else
+            setColor(PLAYER_2_R, PLAYER_2_G, PLAYER_2_B, 1.0, 0.1, 0.5, 0.7);
+        setGLColor();
         Model::getSelf()->selector->drawArrowFromNodeToNode(loc, destination);
+    }
 }
 
 void Ship::tick()
