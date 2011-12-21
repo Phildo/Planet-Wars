@@ -74,14 +74,14 @@ void MiniGame::update() {
        lanes[2]->attackerIndex == 0 &&
        lanes[3]->attackerIndex == 0 &&
        lanes[4]->attackerIndex == 0)
-        attacker->health -= 1000;
+        attacker->health -= 10000;
     if(defender->numWaterUnits + defender->numEarthUnits + defender->numWindUnits + defender->numFireUnits == 0 &&
        lanes[0]->defenderIndex == 0 &&
        lanes[1]->defenderIndex == 0 &&
        lanes[2]->defenderIndex == 0 &&
        lanes[3]->defenderIndex == 0 &&
        lanes[4]->defenderIndex == 0)
-        defender->health -= 1000;
+        defender->health -= 10000;
     
     if(attacker->health <= 0) 
     {
