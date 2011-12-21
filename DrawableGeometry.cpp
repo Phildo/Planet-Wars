@@ -16,11 +16,6 @@ DrawableGeometry::DrawableGeometry()
     if(!compiled) compileDL();
 }
 
-DrawableGeometry::~DrawableGeometry()
-{
-    
-}
-
 void DrawableGeometry::compileDL()
 {
     //Sample compilation of a simple sphere 

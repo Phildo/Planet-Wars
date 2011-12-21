@@ -25,7 +25,6 @@ class DrawableGeometry
 {
 public:
     DrawableGeometry();         //Runs compile() if not already compiled
-    virtual ~DrawableGeometry();
     
     float layer;
     

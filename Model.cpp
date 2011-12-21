@@ -123,6 +123,21 @@ void Model::enterMiniGame(Node * planet, Ship * attacker, Ship * defender)
     state = MINIGAME;
 }
 
+void Model::winMiniGame(bool attacker)
+{
+    
+    if(attacker)
+    {
+        mgame->defender->owner->deleteShip(mgame->defender);
+    }
+    else
+    {
+        mgame->attacker->owner->deleteShip(mgame->attacker);
+    }
+    delete mgame;
+    state = GAMEPLAY;
+}
+
 void Model::setCameraParams()
 {
     Model::getSelf()->zoom = 4*sqrt(std::max ((float)(rowMax - rowMin), (float)(colMax-colMin))*4.0);

@@ -13,6 +13,10 @@ bool Lane::compiled = false;
 GLuint Lane::selectedList;
 GLuint Lane::unselectedList;
 
+bool Lane::winMini = false;
+bool Lane::setWinMini = false;
+bool Lane::attackerWin = false;
+
 Lane::Lane()
 {
     if(!Lane::compiled) Lane::compileDL();
@@ -233,7 +237,12 @@ void Lane::actUnit(Unit * unit, bool attacker)
         else
         {
             //Attack Ship
-            int x = 4;
+            Model::getSelf()->mgame->defender->health -= unit->damage;
+            if(Model::getSelf()->mgame->defender->health <= 0)
+            {
+                Lane::winMini = true;
+                Lane::attackerWin = true;
+            }
         }
     }
     else
@@ -253,7 +262,12 @@ void Lane::actUnit(Unit * unit, bool attacker)
         else
         {
             //Attack Ship
-            int y = 4;
+            Model::getSelf()->mgame->attacker->health -= unit->damage;
+            if(Model::getSelf()->mgame->attacker->health <= 0)
+            {
+                Lane::winMini = true;
+                Lane::attackerWin = false;
+            }
         }
     }
 }
@@ -289,6 +303,15 @@ Unit* Lane::findFurthestUnit(bool attacker)
 
 void Lane::tick()
 {
+    if(Lane::winMini)
+    {
+        if(Lane::setWinMini) return;
+        Lane::setWinMini = true;
+        Model::getSelf()->winMiniGame(attackerWin);
+        return;
+    }
+    
+
     //Update Units' Positions
     for(int i = 0; i < defenderIndex; i++)
     {

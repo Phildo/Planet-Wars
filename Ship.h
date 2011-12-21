@@ -32,6 +32,8 @@ public:
     int numWindUnits;
     int numFireUnits;
     
+    int health;
+    
     static bool compiled;       //True iff displayList names a valid glDisplayList
     static GLuint displayList;  //Name of displaylist for object
     

@@ -10,7 +10,8 @@
 #include "Model.h"
 
 bool Unit::compiled = false;
-GLuint Unit::displayList;
+GLuint Unit::typeList;
+GLuint Unit::teamList;
 GLuint Unit::healthBar;
 
 Unit::Unit(void) {
@@ -128,12 +129,45 @@ bool Unit::attack(Unit *enemy)
 void Unit::compileDL()
 {
     if(Unit::compiled) return;
-    Unit::displayList = glGenLists(1);
-    glNewList(Unit::displayList, GL_COMPILE);
     
-	gluSphere(gluNewQuadric(), 100, 36, 18);
+    Unit::teamList = glGenLists(1);
+    glNewList(Unit::teamList, GL_COMPILE);
+	glPushMatrix();
+	glBegin(GL_TRIANGLES);	
+	
+	glVertex3f( 0.0f, 100.0f, 0.0f);		// up-frontplane
+	glVertex3f(-100.0f,-100.0f, 100.0f);		// left-frontplane
+	glVertex3f( 100.0f,-100.0f, 100.0f);		// right-frontplane
+    
+	glVertex3f( 0.0f, 100.0f, 0.0f);		// up-backplane
+	glVertex3f( 100.0f,-100.0f, -100.0f);		// left-backplane
+	glVertex3f(-100.0f,-100.0f, -100.0f);		// right-backplane
+	
+	glEnd();
+	glPopMatrix();
+    glEndList();
+    
+    
+    
+	Unit::typeList = glGenLists(1);
+    glNewList(Unit::typeList, GL_COMPILE);
+	glPushMatrix();
+        
+	glBegin(GL_TRIANGLES);	
+    
+	glVertex3f( 0.0f, 100.0f, 0.0f);		// up-rightplane
+	glVertex3f( 100.0f,-100.0f, 100.0f);		// left-rightplane
+	glVertex3f( 100.0f,-100.0f, -100.0f);		// right-rightplane
+    
+	glVertex3f( 0.0f, 100.0f, 0.0f);		// up-leftplane
+	glVertex3f(-100.0f,-100.0f,-100.0f);		// left-leftplane
+	glVertex3f(-100.0f,-100.0f, 100.0f);		// right-leftplane
+	glEnd();
+    
+	glPopMatrix();
     
     glEndList();
+
     
     
     Unit::healthBar = glGenLists(1);
@@ -154,9 +188,24 @@ void Unit::compileDL()
 void Unit::draw()
 {
     if(!Unit::compiled) return;
+    glPushMatrix();
+    glRotatef((Model::getSelf()->tickCount/10)%360, 0.0, 1.0, 0.0);
     setTypeColor(type);
     setGLColor();
-    glCallList(Unit::displayList);
+    glCallList(Unit::typeList);
+    
+    if(this->owner == Model::getSelf()->playerArray[0])
+		setColor(PLAYER_1_R, PLAYER_1_G, PLAYER_1_B, 1.0, 0.1, 0.5, 0.7);
+		//setColor(1.0, 0.0, 0.0, 1.0, 0.1, 0.5, 0.7);
+	else
+		setColor(PLAYER_2_R, PLAYER_2_G, PLAYER_2_B, 1.0, 0.1, 0.5, 0.7);
+		//setColor(0.0, 0.0, 1.0, 1.0, 0.1, 0.5, 0.7);
+    
+	setGLColor();
+	glCallList(Unit::teamList);
+    
+    glPopMatrix();
+    
     
     glPushMatrix();
     glScalef((float)health/(float)maxHealth, 1.0, 1.0);

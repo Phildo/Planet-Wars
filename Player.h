@@ -38,6 +38,7 @@ public:
     bool hasShip(Ship * s);
     bool addShip(Node * n);
     void purchaseShip();
+    void deleteShip(Ship * s);
     void refreshShips();
     
     Player();

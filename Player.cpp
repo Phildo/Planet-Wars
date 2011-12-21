@@ -134,6 +134,24 @@ bool Player::addShip(Node * n)
     return true;
 }
 
+void Player::deleteShip(Ship * s)
+{
+    bool found = false;
+    for(int i = 0; i < numShips; i++)
+    {
+        if(shipArray[i] == s)
+        {
+            s->loc->ship = Model::getSelf()->nullShip;
+            Model::getSelf()->selectedShip = Model::getSelf()->nullShip;
+            delete shipArray[i];
+            found = true;
+        }
+        if(found)
+            shipArray[i] = shipArray[i+1];
+    }
+    numShips--;
+}
+
 void Player::purchaseShip()
 {
     if(darkResources < SHIP_COST)

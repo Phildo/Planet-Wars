@@ -121,6 +121,8 @@
 #define SHIP_TYPE_CARRIER  2
 #define SHIP_TYPE_BATTLE   3
 
+#define SHIP_HEALTH 10000000
+
 //DEFAULTS
 #define DEFAULT_NUM_PLAYERS 2
 #define DEFAULT_NUM_NODES 50
@@ -218,6 +220,7 @@ public:
     MiniGame * setMiniGame(Node * planet, Ship * attacker, Ship * defender);
     
     void enterMiniGame(Node * planet, Ship * attacker, Ship * defender);
+    void winMiniGame(bool attacker);
     
     Model();
     ~Model();

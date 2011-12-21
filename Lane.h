@@ -44,6 +44,10 @@ public:
     GLuint displayList;
     void compileDL();
     void draw();
+    
+    static bool winMini;
+    static bool setWinMini;
+    static bool attackerWin;
 };
 
 #endif

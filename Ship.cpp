@@ -22,6 +22,7 @@ Ship::Ship(Player * o)
     numWindUnits = 0; 
     numFireUnits = 0;
     done = false;
+    health = SHIP_HEALTH;
     if(!Ship::compiled) compileDL();
 }
 
@@ -166,6 +167,25 @@ void Ship::drawCargo()
         glVertex3f(.5*SHIP_SIZE, layer+0.11, .5*SHIP_SIZE);
         glEnd();
     }
+    
+    
+    //Draw Health
+    setColor(0.0, 1.0, 0.0, 1.0, 0.1, 0.5, 0.7);
+    setGLColor();
+    glBegin(GL_TRIANGLES);
+    glVertex3d(.5*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
+    glVertex3d((float)health/(float)SHIP_HEALTH * (SHIP_SIZE+0.2), layer+0.1,  (1.0-(float)health/(float)SHIP_HEALTH) * (-.25*SHIP_SIZE));
+    glVertex3d(.5*SHIP_SIZE, layer+0.1, 0);
+    
+    glVertex3d((float)health/(float)SHIP_HEALTH * (SHIP_SIZE+0.2), layer+0.1, (1.0-(float)health/(float)SHIP_HEALTH) * (-.5*SHIP_SIZE));
+    glVertex3d(.5*SHIP_SIZE, layer+0.1, 0);
+    glVertex3d((float)health/(float)SHIP_HEALTH * (SHIP_SIZE+0.2), layer+0.1, (1.0-(float)health/(float)SHIP_HEALTH) * (.5*SHIP_SIZE));
+    
+    glVertex3d(.5*SHIP_SIZE, layer+0.1, 0);
+    glVertex3d((float)health/(float)SHIP_HEALTH * (SHIP_SIZE+0.2), layer+0.1, (1.0-(float)health/(float)SHIP_HEALTH) * (.25*SHIP_SIZE));
+    glVertex3d(.5*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
+    glEnd();
+
     
     glPopMatrix();
 }

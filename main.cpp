@@ -229,6 +229,7 @@ void PassiveMotionFunc(int x, int y)
 
 void MouseFunc(int button, int state, int x, int y)
 {
+    if(model->state != GAMEPLAY) return;
     if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
     {
         map->selectSelected();
@@ -344,28 +345,52 @@ void KeyboardFunc(unsigned char key, int x, int y)
 			model->mgame->changeLane(RIGHT, true);
 			break;
 		case 'a':
-			model->mgame->deployUnit(model->mgame->attacker, TYPE_WATER);
+            if(playerArray[0] == model->mgame->attacker->owner)
+                model->mgame->deployUnit(model->mgame->attacker, TYPE_WATER);
+            else
+                model->mgame->deployUnit(model->mgame->defender, TYPE_WATER);
 			break;
 		case 's':
-			model->mgame->deployUnit(model->mgame->attacker, TYPE_EARTH);
-			break;
+            if(playerArray[0] == model->mgame->attacker->owner)
+                model->mgame->deployUnit(model->mgame->attacker, TYPE_EARTH);
+            else
+                model->mgame->deployUnit(model->mgame->defender, TYPE_EARTH);			
+                break;
 		case 'd':
-			model->mgame->deployUnit(model->mgame->attacker, TYPE_WIND);
-			break;
+            if(playerArray[0] == model->mgame->attacker->owner)
+                model->mgame->deployUnit(model->mgame->attacker, TYPE_WIND);
+            else
+                model->mgame->deployUnit(model->mgame->defender, TYPE_WIND);			
+            break;
 		case 'f':
-			model->mgame->deployUnit(model->mgame->attacker, TYPE_FIRE);
-			break;
+            if(playerArray[0] == model->mgame->attacker->owner)
+                model->mgame->deployUnit(model->mgame->attacker, TYPE_FIRE);
+            else
+                model->mgame->deployUnit(model->mgame->defender, TYPE_FIRE);			
+            break;
         case 'j':
-            model->mgame->deployUnit(model->mgame->defender, TYPE_WATER);
+            if(playerArray[1] == model->mgame->attacker->owner)
+                model->mgame->deployUnit(model->mgame->attacker, TYPE_WATER);
+            else
+                model->mgame->deployUnit(model->mgame->defender, TYPE_WATER);			
             break;
         case 'k':
-            model->mgame->deployUnit(model->mgame->defender, TYPE_EARTH);
+            if(playerArray[1] == model->mgame->attacker->owner)
+                model->mgame->deployUnit(model->mgame->attacker, TYPE_EARTH);
+            else
+                model->mgame->deployUnit(model->mgame->defender, TYPE_EARTH);			
             break;
         case 'l':
-            model->mgame->deployUnit(model->mgame->defender, TYPE_WIND);
+            if(playerArray[1] == model->mgame->attacker->owner)
+                model->mgame->deployUnit(model->mgame->attacker, TYPE_WIND);
+            else
+                model->mgame->deployUnit(model->mgame->defender, TYPE_WIND);			
             break;
         case ';':
-            model->mgame->deployUnit(model->mgame->defender, TYPE_FIRE);
+            if(playerArray[1] == model->mgame->attacker->owner)
+                model->mgame->deployUnit(model->mgame->attacker, TYPE_FIRE);
+            else
+                model->mgame->deployUnit(model->mgame->defender, TYPE_FIRE);			
             break;
 		}    
 
