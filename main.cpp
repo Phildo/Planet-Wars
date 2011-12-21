@@ -85,6 +85,30 @@ void pregame(){
 	glPushMatrix();
 	glScalef(10.0, 0, 7.0);
 	menu->draw();
+    glColor3f(1.0,  1.0, 1.0);
+    glTranslated(0.0, 1.0, 0.0);
+    glScaled(0.01, 0.01, 0.01);
+    glRotated(-90, 1.0, 0.0, 0.0);
+    glTranslated(-850, 0.0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'p');
+    glTranslated(100, 0.0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'r');
+    glTranslated(100, 0.0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
+    glTranslated(100, 0.0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 's');
+    glTranslated(100, 0.0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 's');
+    glTranslated(200, 0.0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 's');
+    glTranslated(100, 0.0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'p');
+    glTranslated(100, 0.0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'a');
+    glTranslated(100, 0.0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'c');
+    glTranslated(100, 0.0, 0.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
 	glPopMatrix();
 }
 
@@ -324,6 +348,9 @@ void KeyboardFunc(unsigned char key, int x, int y)
 	//(ie each state has its own set of keystrokes)
 	switch(model->state){
 	case TITLE:
+        case ' ':
+            model->state = GAMEPLAY;
+        break;
 		switch (key)
 		{
 		case 13:
@@ -366,14 +393,11 @@ void KeyboardFunc(unsigned char key, int x, int y)
             if(model->playerturn == P_TWO_TURN)
                 model->finishTurn = true;
             break;
-        case 's':
+        case ' ':
             if(model->playerturn == P_ONE_TURN)
                 playerArray[0]->purchaseShip();
             else
                 playerArray[1]->purchaseShip();
-            break;
-        case ' ':
-            //model->finishTurn = true;
             break;
         }
         break;
@@ -457,9 +481,7 @@ void KeyboardFunc(unsigned char key, int x, int y)
 		//Menu::setMenu(META);
 		break;
 		// For state testing:
-	case '1':
-		model->state = GAMEPLAY;
-		break;
+	
 	/*
      case '0':
 		model->state = TITLE;
@@ -494,7 +516,7 @@ void initGL(int argc, char * argv[])
 	glutInitWindowPosition(0 , 0);
 	glutInitWindowSize(model->width,model->height);
 	glutCreateWindow("PlanetsConquerer!");
-	//glutFullScreen();
+	glutFullScreen();
 	/*
 	 * The following section is curser specification. You guys can choose what is appropriate,
 	 * but for now I'm getting rid of it.

@@ -38,7 +38,7 @@ Model::Model()
     this->colMin = 0;
     
     //HELPER STUFF
-    srand(SEED);
+    srand((int)time(NULL));
 }
 
 Model * Model::getSelf()

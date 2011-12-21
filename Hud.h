@@ -1,6 +1,8 @@
 #ifndef HUD_H
 #define HUD_H
 
+#include <stdlib.h>
+#include <stdio.h>
 #include "Model.h"
 #include "DrawableGeometry.h"
 #include "Node.h"
@@ -16,7 +18,8 @@ public:
     static GLuint metaDl;
     static GLuint miniDl;
     static GLuint mapvDl;
-    static GLuint typeMappingDl;
+    static GLuint typeMappingDlA;
+    static GLuint typeMappingDlB;
     
     Node ** pOneNodes;
     Ship * pOneShip;

@@ -28,11 +28,38 @@ Hud::~Hud(void)
 {
 }
 
+char* itoa(int val, int base){
+	
+	static char buf[32] = {0};
+	
+	int i = 30;
+	
+	for(; val && i ; --i, val /= base)
+        
+		buf[i] = "0123456789abcdef"[val % base];
+	
+	return &buf[i+1];
+	
+}
+
+void strokeNumber(int n)
+{
+    if(n == 0)
+        glutStrokeCharacter(GLUT_STROKE_ROMAN, '0');
+    char * c = itoa(n, 10);
+    for(int i = 0; c[i] != NULL; i++)
+    {
+        glutStrokeCharacter(GLUT_STROKE_ROMAN, c[i]);
+        glTranslatef(100, 0.0, 0.0);
+    }
+}
+
 bool Hud::compiled = false;       //True iff displayList names a valid glDisplayList
 GLuint Hud::metaDl;
 GLuint Hud::miniDl;
 GLuint Hud::mapvDl;
-GLuint Hud::typeMappingDl;
+GLuint Hud::typeMappingDlA;
+GLuint Hud::typeMappingDlB;
 
 void Hud::compileDL()
 {
@@ -64,8 +91,8 @@ void Hud::compileDL()
     glEndList();   
     
     
-    Hud::typeMappingDl = glGenLists(1);
-    glNewList(Hud::typeMappingDl, GL_COMPILE);
+    Hud::typeMappingDlA = glGenLists(1);
+    glNewList(Hud::typeMappingDlA, GL_COMPILE);
     
     glPushMatrix();
     glTranslated(-0.5, 0.0, 0.0);
@@ -76,6 +103,12 @@ void Hud::compileDL()
     glVertex3d(0.25, 0.0, 0.0);
     glVertex3d(0.0, 0.0, 0.0);
     glEnd();
+    glPushMatrix();
+    glTranslatef(0.1, -0.1, 0.0);
+    glScalef(0.001, 0.001, 0.001);
+    glColor3f(1.0, 1.0, 1.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'a');
+    glPopMatrix();
     glTranslated(0.25, 0.0, 0.0);
     glColor3f(EARTH_R, EARTH_G, EARTH_B);
     glBegin(GL_QUADS);
@@ -84,6 +117,12 @@ void Hud::compileDL()
     glVertex3d(0.25, 0.0, 0.0);
     glVertex3d(0.0, 0.0, 0.0);
     glEnd();
+    glPushMatrix();
+    glTranslatef(0.1, -0.1, 0.0);
+    glScalef(0.001, 0.001, 0.001);
+    glColor3f(1.0, 1.0, 1.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 's');
+    glPopMatrix();
     glTranslated(0.25, 0.0, 0.0);
     glColor3f(WIND_R, WIND_G, WIND_B);
     glBegin(GL_QUADS);
@@ -92,6 +131,12 @@ void Hud::compileDL()
     glVertex3d(0.25, 0.0, 0.0);
     glVertex3d(0.0, 0.0, 0.0);
     glEnd();
+    glPushMatrix();
+    glTranslatef(0.1, -0.1, 0.0);
+    glScalef(0.001, 0.001, 0.001);
+    glColor3f(1.0, 1.0, 1.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'd');
+    glPopMatrix();
     glTranslated(0.25, 0.0, 0.0);
     glColor3f(FIRE_R, FIRE_G, FIRE_B);
     glBegin(GL_QUADS);
@@ -100,10 +145,80 @@ void Hud::compileDL()
     glVertex3d(0.25, 0.0, 0.0);
     glVertex3d(0.0, 0.0, 0.0);
     glEnd();
+    glPushMatrix();
+    glTranslatef(0.1, -0.1, 0.0);
+    glScalef(0.001, 0.001, 0.001);
+    glColor3f(1.0, 1.0, 1.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'f');
+    glPopMatrix();
     glPopMatrix();
     
     glEndList();
     
+    
+    Hud::typeMappingDlB = glGenLists(1);
+    glNewList(Hud::typeMappingDlB, GL_COMPILE);
+    
+    glPushMatrix();
+    glTranslated(-0.5, 0.0, 0.0);
+    glColor3f(WATER_R, WATER_G, WATER_B);
+    glBegin(GL_QUADS);
+    glVertex3d(0.0, 0.25, 0.0);
+    glVertex3d(0.25, 0.25, 0.0);
+    glVertex3d(0.25, 0.0, 0.0);
+    glVertex3d(0.0, 0.0, 0.0);
+    glEnd();
+    glPushMatrix();
+    glTranslatef(0.1, -0.1, 0.0);
+    glScalef(0.001, 0.001, 0.001);
+    glColor3f(1.0, 1.0, 1.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'j');
+    glPopMatrix();
+    glTranslated(0.25, 0.0, 0.0);
+    glColor3f(EARTH_R, EARTH_G, EARTH_B);
+    glBegin(GL_QUADS);
+    glVertex3d(0.0, 0.25, 0.0);
+    glVertex3d(0.25, 0.25, 0.0);
+    glVertex3d(0.25, 0.0, 0.0);
+    glVertex3d(0.0, 0.0, 0.0);
+    glEnd();
+    glPushMatrix();
+    glTranslatef(0.1, -0.1, 0.0);
+    glScalef(0.001, 0.001, 0.001);
+    glColor3f(1.0, 1.0, 1.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'k');
+    glPopMatrix();
+    glTranslated(0.25, 0.0, 0.0);
+    glColor3f(WIND_R, WIND_G, WIND_B);
+    glBegin(GL_QUADS);
+    glVertex3d(0.0, 0.25, 0.0);
+    glVertex3d(0.25, 0.25, 0.0);
+    glVertex3d(0.25, 0.0, 0.0);
+    glVertex3d(0.0, 0.0, 0.0);
+    glEnd();
+    glPushMatrix();
+    glTranslatef(0.1, -0.1, 0.0);
+    glScalef(0.001, 0.001, 0.001);
+    glColor3f(1.0, 1.0, 1.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
+    glPopMatrix();
+    glTranslated(0.25, 0.0, 0.0);
+    glColor3f(FIRE_R, FIRE_G, FIRE_B);
+    glBegin(GL_QUADS);
+    glVertex3d(0.0, 0.25, 0.0);
+    glVertex3d(0.25, 0.25, 0.0);
+    glVertex3d(0.25, 0.0, 0.0);
+    glVertex3d(0.0, 0.0, 0.0);
+    glEnd();
+    glPushMatrix();
+    glTranslatef(0.1, -0.1, 0.0);
+    glScalef(0.001, 0.001, 0.001);
+    glColor3f(1.0, 1.0, 1.0);
+    glutStrokeCharacter(GLUT_STROKE_ROMAN, ';');
+    glPopMatrix();
+    glPopMatrix();
+    
+    glEndList();
     
     
     Hud::mapvDl = glGenLists(1);
@@ -162,12 +277,25 @@ void Hud::drawMini()
     glPushMatrix();
     glTranslated(-5.0, 0.0, -10.0);
     glScalef(2.0, 2.0, 2.0);
-    glCallList(typeMappingDl);
+    glCallList(typeMappingDlA);
+    glTranslatef(0.0, 1.0, 0.0);
+    glRotated(90, 1.0, 0.0, 0.0);
+    if(Model::getSelf()->mgame->attacker->owner == Model::getSelf()->playerArray[0])
+        Model::getSelf()->mgame->attacker->draw();
+    else
+        Model::getSelf()->mgame->defender->draw();
     glPopMatrix();
     glPushMatrix();
     glTranslated(5.0, 0.0, -10.0);
     glScalef(2.0, 2.0, 2.0);
-    glCallList(typeMappingDl);
+    glCallList(typeMappingDlB);
+    glTranslatef(0.0, 1.0, 0.0);
+    glRotated(90, 1.0, 0.0, 0.0);
+    if(Model::getSelf()->mgame->attacker->owner == Model::getSelf()->playerArray[1])
+        Model::getSelf()->mgame->attacker->draw();
+    else
+        Model::getSelf()->mgame->defender->draw();
+    glPopMatrix();
     glPopMatrix();
 
 }
@@ -185,6 +313,14 @@ void Hud::drawMapv()
     glTranslatef(0.0, dif, 0.0);
     
     glPushMatrix();
+    //glTranslated(0.1, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 1.0);
+    glScalef(0.001, 0.001, 0.001);
+    glTranslated(200.0, 0.0, 0.0);
+    //glRotated(-90, 1.0, 0.0, 0.0);
+    strokeNumber(pOneShip->owner->numShips);
+    glPopMatrix();
+    glPushMatrix();
     glScalef(0.2, 0.2, 0.2);
     glRotatef(pOneRot, 0.0, 1.0, 0.0);
     glTranslated(0.0, 0.0, -0.4);
@@ -194,11 +330,30 @@ void Hud::drawMapv()
     pOneShip->numWindUnits = ((float)pOneShip->owner->windNodesOwned/(float)(pOneShip->owner->nodesOwned-pOneShip->owner->darkNodesOwned))*MAX_UNITS;
     pOneShip->numFireUnits = ((float)pOneShip->owner->fireNodesOwned/(float)(pOneShip->owner->nodesOwned-pOneShip->owner->darkNodesOwned))*MAX_UNITS;
     pOneShip->draw();
+    
     glPopMatrix();
     
     for(int i = 0; i < NUM_TYPES; i++)
     {
         glTranslatef(0.0, dif, 0.0);
+        glPushMatrix();
+        //glTranslated(0.1, 0.0, 0.0);
+        glColor3f(1.0, 1.0, 1.0);
+        glScalef(0.001, 0.001, 0.001);
+        glTranslated(200.0, 0.0, 0.0);
+        //glRotated(-90, 1.0, 0.0, 0.0);
+        if(i == 0)
+            strokeNumber(pOneShip->owner->waterNodesOwned);
+        else if(i == 1)
+            strokeNumber(pOneShip->owner->earthNodesOwned);
+        else if(i == 2)
+            strokeNumber(pOneShip->owner->windNodesOwned);
+        else if(i == 3)
+            strokeNumber(pOneShip->owner->fireNodesOwned);
+        else if(i == 4)
+            strokeNumber(pOneShip->owner->darkNodesOwned);
+
+        glPopMatrix();
         glPushMatrix();
         if(Model::getSelf()->playerturn == P_ONE_TURN)
             pOneRot+=.1f;
@@ -213,6 +368,14 @@ void Hud::drawMapv()
         glPopMatrix();
     }
     glTranslatef(0.0, dif, 0.0);
+    glPushMatrix();
+    //glTranslated(0.1, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 1.0);
+    glScalef(0.001, 0.001, 0.001);
+    glTranslated(200.0, 0.0, 0.0);
+    //glRotated(-90, 1.0, 0.0, 0.0);
+    strokeNumber(pOneShip->owner->darkResources);
+    glPopMatrix();
     glRotatef(pOneRot, 0.0, 1.0, 0.0);
 
     gluSphere(gluNewQuadric(), 0.15, 5, 5);
@@ -224,7 +387,14 @@ void Hud::drawMapv()
     glTranslated(1.5, 0.2, 0.0);
     glTranslatef(0.0, 1.0, -2.0);
     glTranslatef(0.0, dif, 0.0);
-    
+    glPushMatrix();
+    //glTranslated(0.1, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 1.0);
+    glScalef(0.001, 0.001, 0.001);
+    glTranslated(-270.0, 0.0, 0.0);
+    //glRotated(-90, 1.0, 0.0, 0.0);
+    strokeNumber(pTwoShip->owner->numShips);
+    glPopMatrix();
     glPushMatrix();
     glScalef(0.2, 0.2, 0.2);
     glRotatef(pTwoRot, 0.0, 1.0, 0.0);
@@ -241,6 +411,24 @@ void Hud::drawMapv()
     {
         glTranslatef(0.0, dif, 0.0);
         glPushMatrix();
+        //glTranslated(0.1, 0.0, 0.0);
+        glColor3f(1.0, 1.0, 1.0);
+        glScalef(0.001, 0.001, 0.001);
+        glTranslated(-270.0, 0.0, 0.0);
+        //glRotated(-90, 1.0, 0.0, 0.0);
+        if(i == 0)
+            strokeNumber(pTwoShip->owner->waterNodesOwned);
+        else if(i == 1)
+            strokeNumber(pTwoShip->owner->earthNodesOwned);
+        else if(i == 2)
+            strokeNumber(pTwoShip->owner->windNodesOwned);
+        else if(i == 3)
+            strokeNumber(pTwoShip->owner->fireNodesOwned);
+        else if(i == 4)
+            strokeNumber(pTwoShip->owner->darkNodesOwned);
+        
+        glPopMatrix();
+        glPushMatrix();
         if(Model::getSelf()->playerturn == P_TWO_TURN)
             pTwoRot+=.1f;
         else
@@ -254,6 +442,14 @@ void Hud::drawMapv()
         glPopMatrix();
     }
     glTranslatef(0.0, dif, 0.0);
+    glPushMatrix();
+    //glTranslated(0.1, 0.0, 0.0);
+    glColor3f(1.0, 1.0, 1.0);
+    glScalef(0.001, 0.001, 0.001);
+    glTranslated(-270.0, 0.0, 0.0);
+    //glRotated(-90, 1.0, 0.0, 0.0);
+    strokeNumber(pTwoShip->owner->darkResources);
+    glPopMatrix();
     glRotatef(pTwoRot, 0.0, 1.0, 0.0);
     
     gluSphere(gluNewQuadric(), 0.15, 5, 5);

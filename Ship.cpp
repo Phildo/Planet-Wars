@@ -174,15 +174,15 @@ void Ship::drawCargo()
     setGLColor();
     glBegin(GL_TRIANGLES);
     glVertex3d(.5*SHIP_SIZE, layer+0.1, -.5*SHIP_SIZE);
-    glVertex3d((float)health/(float)SHIP_HEALTH * (SHIP_SIZE+0.2), layer+0.1,  (1.0-(float)health/(float)SHIP_HEALTH) * (-.25*SHIP_SIZE));
+    glVertex3d((SHIP_SIZE+0.2)/2 + ((float)health/(float)SHIP_HEALTH * (SHIP_SIZE+0.2)/2), layer+0.1, (1.0-(float)health/(float)SHIP_HEALTH) * (-.5*SHIP_SIZE));
     glVertex3d(.5*SHIP_SIZE, layer+0.1, 0);
     
-    glVertex3d((float)health/(float)SHIP_HEALTH * (SHIP_SIZE+0.2), layer+0.1, (1.0-(float)health/(float)SHIP_HEALTH) * (-.5*SHIP_SIZE));
+    glVertex3d((SHIP_SIZE+0.2)/2 + ((float)health/(float)SHIP_HEALTH * (SHIP_SIZE+0.2)/2), layer+0.1, (1.0-(float)health/(float)SHIP_HEALTH) * (-.5*SHIP_SIZE));
     glVertex3d(.5*SHIP_SIZE, layer+0.1, 0);
-    glVertex3d((float)health/(float)SHIP_HEALTH * (SHIP_SIZE+0.2), layer+0.1, (1.0-(float)health/(float)SHIP_HEALTH) * (.5*SHIP_SIZE));
+    glVertex3d((SHIP_SIZE+0.2)/2 + ((float)health/(float)SHIP_HEALTH * (SHIP_SIZE+0.2)/2), layer+0.1, (1.0-(float)health/(float)SHIP_HEALTH) * (.5*SHIP_SIZE));
     
     glVertex3d(.5*SHIP_SIZE, layer+0.1, 0);
-    glVertex3d((float)health/(float)SHIP_HEALTH * (SHIP_SIZE+0.2), layer+0.1, (1.0-(float)health/(float)SHIP_HEALTH) * (.25*SHIP_SIZE));
+    glVertex3d((SHIP_SIZE+0.2)/2 + ((float)health/(float)SHIP_HEALTH * (SHIP_SIZE+0.2)/2), layer+0.1, (1.0-(float)health/(float)SHIP_HEALTH) * (.5*SHIP_SIZE));
     glVertex3d(.5*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
     glEnd();
 
