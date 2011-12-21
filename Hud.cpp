@@ -475,9 +475,9 @@ void Hud::drawMapv()
         glPopMatrix();
         glPushMatrix();
         if(Model::getSelf()->playerturn == P_ONE_TURN)
-            pOneRot+=.1f;
+            pOneRot+=1.0f;
         else
-            pOneRot+=.01f;
+            pOneRot+=.1f;
         if(pOneRot == 360.0f)
             pOneRot = 0.0;
         glRotatef(pOneRot, 0.0, 1.0, 0.0);
@@ -514,9 +514,9 @@ void Hud::drawMapv()
     //glRotated(-90, 1.0, 0.0, 0.0);
     glPushMatrix();
     if(pTwoShip->owner->numShips > 10)
-        glTranslatef(-150, 0.0, 0.0);
+        glTranslatef(-180, 0.0, 0.0);
     if(pTwoShip->owner->numShips > 100)
-        glTranslatef(-150, 0.0, 0.0);
+        glTranslatef(-180, 0.0, 0.0);
     strokeNumber(pTwoShip->owner->numShips);
     glPopMatrix();
     glPopMatrix();
@@ -545,9 +545,9 @@ void Hud::drawMapv()
         {
             glPushMatrix();
             if(pTwoShip->owner->waterNodesOwned > 10)
-                glTranslatef(-150, 0.0, 0.0);
+                glTranslatef(-180, 0.0, 0.0);
             if(pTwoShip->owner->waterNodesOwned > 100)
-                glTranslatef(-150, 0.0, 0.0);
+                glTranslatef(-180, 0.0, 0.0);
             strokeNumber(pTwoShip->owner->waterNodesOwned);
             glPopMatrix();
         }
@@ -555,9 +555,9 @@ void Hud::drawMapv()
         {
             glPushMatrix();
             if(pTwoShip->owner->earthNodesOwned > 10)
-                glTranslatef(-150, 0.0, 0.0);
+                glTranslatef(-180, 0.0, 0.0);
             if(pTwoShip->owner->earthNodesOwned > 100)
-                glTranslatef(-150, 0.0, 0.0);
+                glTranslatef(-180, 0.0, 0.0);
             strokeNumber(pTwoShip->owner->earthNodesOwned);
             glPopMatrix();
         }
@@ -565,9 +565,9 @@ void Hud::drawMapv()
         {
             glPushMatrix();
             if(pTwoShip->owner->windNodesOwned > 10)
-                glTranslatef(-150, 0.0, 0.0);
+                glTranslatef(-180, 0.0, 0.0);
             if(pTwoShip->owner->windNodesOwned> 100)
-                glTranslatef(-150, 0.0, 0.0);
+                glTranslatef(-180, 0.0, 0.0);
             strokeNumber(pTwoShip->owner->windNodesOwned);
             glPopMatrix();
         }
@@ -575,9 +575,9 @@ void Hud::drawMapv()
         {
             glPushMatrix();
             if(pTwoShip->owner->fireNodesOwned > 10)
-                glTranslatef(-150, 0.0, 0.0);
+                glTranslatef(-180, 0.0, 0.0);
             if(pTwoShip->owner->fireNodesOwned > 100)
-                glTranslatef(-150, 0.0, 0.0);
+                glTranslatef(-180, 0.0, 0.0);
             strokeNumber(pTwoShip->owner->fireNodesOwned);
             glPopMatrix();
         }
@@ -585,9 +585,9 @@ void Hud::drawMapv()
         {
             glPushMatrix();
             if(pTwoShip->owner->darkNodesOwned > 10)
-                glTranslatef(-150, 0.0, 0.0);
+                glTranslatef(-180, 0.0, 0.0);
             if(pTwoShip->owner->darkNodesOwned > 100)
-                glTranslatef(-150, 0.0, 0.0);
+                glTranslatef(-180, 0.0, 0.0);
             strokeNumber(pTwoShip->owner->darkNodesOwned);
             glPopMatrix();
         }
@@ -595,9 +595,9 @@ void Hud::drawMapv()
         glPopMatrix();
         glPushMatrix();
         if(Model::getSelf()->playerturn == P_TWO_TURN)
-            pTwoRot+=.1f;
+            pTwoRot+=1.0f;
         else
-            pTwoRot+=.01f;
+            pTwoRot+=.1f;
         if(pTwoRot == 360.0f)
             pTwoRot = 0.0;
         glRotatef(pTwoRot, 0.0, 1.0, 0.0);       
@@ -615,9 +615,9 @@ void Hud::drawMapv()
     //glRotated(-90, 1.0, 0.0, 0.0);
     glPushMatrix();
     if(pTwoShip->owner->darkResources > 10)
-        glTranslatef(-150, 0.0, 0.0);
+        glTranslatef(-180, 0.0, 0.0);
     if(pTwoShip->owner->darkResources > 100)
-        glTranslatef(-150, 0.0, 0.0);
+        glTranslatef(-180, 0.0, 0.0);
     strokeNumber(pTwoShip->owner->darkResources);
     glPopMatrix();
     glPopMatrix();
