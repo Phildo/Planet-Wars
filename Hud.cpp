@@ -159,8 +159,16 @@ void Hud::drawMeta()
 void Hud::drawMini()
 {
     if(!Hud::compiled) return;
-
-    
+    glPushMatrix();
+    glTranslated(-5.0, 0.0, -10.0);
+    glScalef(2.0, 2.0, 2.0);
+    glCallList(typeMappingDl);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslated(5.0, 0.0, -10.0);
+    glScalef(2.0, 2.0, 2.0);
+    glCallList(typeMappingDl);
+    glPopMatrix();
 
 }
 

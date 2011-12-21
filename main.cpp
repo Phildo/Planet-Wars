@@ -219,6 +219,7 @@ void gameplay(){
 void minigame() { 
     glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+    hud->drawMini();
 	gluLookAt(0.0, 5000.0, 10000.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     
     model->mgame->update();
