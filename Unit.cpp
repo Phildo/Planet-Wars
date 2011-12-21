@@ -11,13 +11,16 @@
 
 bool Unit::compiled = false;
 GLuint Unit::displayList;
+GLuint Unit::healthBar;
 
 Unit::Unit(void) {
     initThings();
 }
 
-Unit::Unit(int type) {
+Unit::Unit(int type, Player * o, bool a) {
     setType(type);
+    owner = o;
+    attacker = a;
     initThings();
 }
 
@@ -70,6 +73,26 @@ void Unit::setType(int type) {
             this->setColor(FIRE_R, FIRE_G, FIRE_B, 1.0, 0.1, 0.5, 0.7);
             break;
     }
+    maxHealth = health;
+}
+
+void Unit::setTypeColor(int type)
+{
+    switch(type) {
+        case TYPE_WATER:
+            this->setColor(WATER_R, WATER_G, WATER_B, 1.0, 0.1, 0.5, 0.7);
+            break;
+        case TYPE_EARTH:
+            this->setColor(EARTH_R, EARTH_G, EARTH_B, 1.0, 0.1, 0.5, 0.7);
+            break;
+        case TYPE_WIND:
+            this->setColor(WIND_R, WIND_G, WIND_B, 1.0, 0.1, 0.5, 0.7);
+            break;
+        case TYPE_FIRE:
+            this->setColor(FIRE_R, FIRE_G, FIRE_B, 1.0, 0.1, 0.5, 0.7);
+            break;
+    }
+
 }
 
 void Unit::resetCooldown()
@@ -108,8 +131,22 @@ void Unit::compileDL()
     Unit::displayList = glGenLists(1);
     glNewList(Unit::displayList, GL_COMPILE);
     
-	gluSphere(gluNewQuadric(), 1, 36, 18);
+	gluSphere(gluNewQuadric(), 100, 36, 18);
     
+    glEndList();
+    
+    
+    Unit::healthBar = glGenLists(1);
+    glNewList(Unit::healthBar, GL_COMPILE);
+    
+    setColor(0.0, 1.0, 0.0, 1.0, 0.1, 0.5, 0.7);
+    setGLColor();
+	glBegin(GL_QUADS);
+    glVertex3f(-100.0f, 100.0f, 0.0f);
+    glVertex3f(-100.0f, 150.0f, 0.0f);
+    glVertex3f(100.0f, 150.0f, 0.0f);
+    glVertex3f(100.0f, 100.0f, 0.0f);
+    glEnd();
     glEndList();
     Unit::compiled = true;
 }
@@ -117,14 +154,21 @@ void Unit::compileDL()
 void Unit::draw()
 {
     if(!Unit::compiled) return;
+    setTypeColor(type);
     setGLColor();
     glCallList(Unit::displayList);
+    
+    glPushMatrix();
+    glScalef((float)health/(float)maxHealth, 1.0, 1.0);
+    glCallList(Unit::healthBar);
+    glPopMatrix();
 }
 
 void Unit::drawAtPosition()
 {
     glPushMatrix();
     glTranslated(0, 0, pos);
+    draw();
     glPopMatrix();
 }
 

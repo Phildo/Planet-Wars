@@ -10,12 +10,20 @@
 
 //DRAWABLE GEOMETRY STUFF
 bool Lane::compiled = false;
-GLuint Lane::displayList;
+GLuint Lane::selectedList;
+GLuint Lane::unselectedList;
 
 Lane::Lane()
 {
     if(!Lane::compiled) Lane::compileDL();
-    setColor(0.9, 0.5, 0.3, 0.0, 0.5, 1.0, 1.0);
+    
+    attackerUnits = new Unit*[MAX_UNITS * NUM_TYPES];
+    attackerIndex = 0;
+    defenderUnits = new Unit*[MAX_UNITS * NUM_TYPES];
+    defenderIndex = 0;
+
+    aSelected = false;
+    dSelected = false;
     
     furthestAttacker = 0;
     furthestDefender = 0;
@@ -29,54 +37,150 @@ Lane::~Lane()
 void Lane::compileDL()
 {
     if(Lane::compiled) return;
-    Lane::displayList = glGenLists(1);
-    glNewList(Lane::displayList, GL_COMPILE);
-    
+    Lane::unselectedList = glGenLists(1);
+    glNewList(Lane::unselectedList, GL_COMPILE);
     glBegin(GL_QUADS);	
-    
-    glVertex3f(-1*LANE_WIDTH/2.0, -1, -1*LANE_LENGTH/2.0);
-	glVertex3f(LANE_WIDTH/2.0, -1, -1*LANE_LENGTH/2.0);
-	glVertex3f(LANE_WIDTH/2.0, -1, LANE_LENGTH/2.0);
-	glVertex3f(-1*LANE_WIDTH/2.0, -1, LANE_LENGTH/2.0);
+    glColor3f(0.9f, 0.5f, 0.3f);
+    glVertex3f(-1*LANE_WIDTH/2.0, -100, 0);
+	glVertex3f(LANE_WIDTH/2.0, -100, 0);
+	glVertex3f(LANE_WIDTH/2.0, -100, LANE_LENGTH/2.0);
+	glVertex3f(-1*LANE_WIDTH/2.0, -100, LANE_LENGTH/2.0);
     
 	glEnd();
     
     glEndList();
+    
+    
+    Lane::selectedList = glGenLists(1);
+    glNewList(Lane::selectedList, GL_COMPILE);
+    glBegin(GL_TRIANGLES);	
+    
+    glColor3f(0.5f, 0.5f, 1.0f);
+    glVertex3f(-1*LANE_WIDTH/2.0, -100, 0);
+	glVertex3f(LANE_WIDTH/2.0, -100, 0);
+    glColor3f(0.9f, 0.5f, 0.3f);
+	glVertex3f(LANE_WIDTH/2.0, -100, LANE_LENGTH/2.0);
+    
+    
+	glVertex3f(-1*LANE_WIDTH/2.0, -100, LANE_LENGTH/2.0);
+    glVertex3f(LANE_WIDTH/2.0, -100, LANE_LENGTH/2.0);
+    glColor3f(0.5f, 0.5f, 1.0f);
+    glVertex3f(-LANE_WIDTH/2.0, -100, 0);
+    
+	glEnd();
+    
+    glEndList();
+    
     Lane::compiled = true;
 }
 
 void Lane::draw()
 {
     if(!Lane::compiled) return;
-    setGLColor();
-    glCallList(Lane::displayList);
+    glDisable(GL_LIGHTING);
+    glShadeModel(GL_SMOOTH);
     
-    for(int i = 0; i < attackerUnits.size(); i++)
+    glPushMatrix();
+    glTranslatef(0.0f, 0.0f, LANE_LENGTH/2.0);
+    glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+    if(aSelected)
+        glCallList(Lane::selectedList);
+    else
+        glCallList(Lane::unselectedList);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(0.0f, 0.0f, -LANE_LENGTH/2.0);
+    if(dSelected)
+        glCallList(Lane::selectedList);
+    else
+        glCallList(Lane::unselectedList);
+    glPopMatrix();
+
+    
+    
+    glPushMatrix();
+    glTranslatef(0.0f, 0.0f, LANE_LENGTH/2.0);
+    glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+    for(int i = 0; i < attackerIndex; i++)
         attackerUnits[i]->drawAtPosition();
-    for(int i = 0; i < defenderUnits.size(); i++)
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(0.0f, 0.0f, -LANE_LENGTH/2.0);
+    for(int i = 0; i < defenderIndex; i++)
         defenderUnits[i]->drawAtPosition();
+    glPopMatrix();
+
+    
+    
+    glEnable(GL_LIGHTING);
+    glShadeModel(GL_FLAT);
 }
 
 //LOGIC STUFF
-void Lane::setSelected(bool selected)
+
+void Lane::removeUnitFromArray(Unit * u, bool attacker)
 {
-    if(selected)
-        setColor(0.1, 0.2, 0.8, 0.0, 0.5, 1.0, 1.0);
+    bool found = false;
+    if(attacker)
+    {
+        for(int i = 0; i < attackerIndex; i++)
+        {
+            if(found) attackerUnits[i-1] = attackerUnits[i];
+            if(attackerUnits[i] == u)
+            {
+                delete u;
+                found = true;
+            }
+        }
+        attackerIndex--;
+        
+        if(attackerIndex == 0)
+            furthestAttacker = 0;
+        else
+            furthestAttacker = findFurthestUnit(true)->pos; 
+    }
+    
     else
-        setColor(0.9, 0.5, 0.3, 0.0, 0.5, 1.0, 1.0);
+    {
+        for(int i = 0; i < defenderIndex; i++)
+        {
+            if(found) defenderUnits[i-1] = defenderUnits[i];
+            if(defenderUnits[i] == u)
+            {
+                delete u;
+                found = true;
+            }
+        }
+        defenderIndex--;
+        
+        if(defenderIndex == 0)
+            furthestDefender = 0;
+        else
+            furthestDefender = findFurthestUnit(false)->pos; 
+    }
+}
+
+void Lane::setSelected(bool selected, bool attacker)
+{
+    if(attacker)
+        aSelected = selected;
+    else
+        dSelected = selected;
 }
 
 void Lane::deployUnit(Unit * unit, bool attacker)
 {
     if(attacker)
     {
-        attackerUnits.resize(attackerUnits.size()+1);
-        attackerUnits[attackerUnits.size()-1] = unit;
+        attackerUnits[attackerIndex] = unit;
+        attackerIndex++;
     }
     else
     {
-        defenderUnits.resize(defenderUnits.size()+1);
-        defenderUnits[defenderUnits.size()-1] = unit;
+        defenderUnits[defenderIndex] = unit;
+        defenderIndex++;
     }
 }
 
@@ -84,8 +188,11 @@ void Lane::advanceUnit(Unit * unit, bool attacker)
 {
     if(attacker)
     {
-        if(unit->pos+unit->speed > LANE_LENGTH-furthestDefender)
-            unit->pos = furthestAttacker;
+        if(unit->pos+unit->speed > LANE_LENGTH-furthestDefender-unit->range)
+        {
+            if(LANE_LENGTH-furthestDefender-unit->range > unit->pos) 
+                unit->pos = LANE_LENGTH-furthestDefender-unit->range;
+        }
         else
             unit->pos = unit->pos+unit->speed;
         
@@ -93,8 +200,11 @@ void Lane::advanceUnit(Unit * unit, bool attacker)
     }
     else
     {
-        if(unit->pos+unit->speed > LANE_LENGTH-furthestAttacker)
-            unit->pos = furthestAttacker;
+        if(unit->pos+unit->speed > LANE_LENGTH-furthestAttacker-unit->range)
+        {
+            if(LANE_LENGTH-furthestAttacker-unit->range > unit->pos) 
+                unit->pos = LANE_LENGTH-furthestAttacker-unit->range;
+        }
         else
             unit->pos = unit->pos+unit->speed;
         
@@ -105,50 +215,45 @@ void Lane::advanceUnit(Unit * unit, bool attacker)
 void Lane::actUnit(Unit * unit, bool attacker)
 {
     bool kill;
+    Unit * furthest;
     if(attacker)
     {
-        if(defenderUnits.size() != 0)
+        if(defenderIndex != 0)
         {
             if(unit->pos+unit->range >= LANE_LENGTH-furthestDefender)
             {
-                kill = unit->attack(findFurthestUnit(false));
+                furthest = findFurthestUnit(false);
+                kill = unit->attack(furthest);
                 if(kill)
                 {
-                    delete defenderUnits[defenderUnits.size()];
-                    defenderUnits.resize(defenderUnits.size()-1);
-                    if(defenderUnits.size() == 0)
-                        furthestDefender = 0;
-                    else
-                        furthestDefender = findFurthestUnit(false)->pos;
+                    removeUnitFromArray(furthest, false);
                 }
             }
         }
         else
         {
             //Attack Ship
+            int x = 4;
         }
     }
     else
     {
-        if(unit->pos+unit->range >= LANE_LENGTH-furthestAttacker)
+        if(attackerIndex != 0)
         {
-            if(attackerUnits.size() != 0)
+            if(unit->pos+unit->range >= LANE_LENGTH-furthestAttacker)
             {
-                kill = unit->attack(findFurthestUnit(true));
+                furthest = findFurthestUnit(true);
+                kill = unit->attack(furthest);
                 if(kill)
                 {
-                    delete attackerUnits[attackerUnits.size()];
-                    attackerUnits.resize(attackerUnits.size()-1);
-                    if(attackerUnits.size() == 0)
-                        furthestAttacker = 0;
-                    else
-                        furthestAttacker = findFurthestUnit(true)->pos;
+                    removeUnitFromArray(furthest, true);
                 }
             }
-            else
-            {
-                //Attack Ship
-            }
+        }
+        else
+        {
+            //Attack Ship
+            int y = 4;
         }
     }
 }
@@ -159,7 +264,7 @@ Unit* Lane::findFurthestUnit(bool attacker)
     Unit * u;
     if(attacker)
     {
-        for(int i = 0; i < attackerUnits.size(); i++)
+        for(int i = 0; i < attackerIndex; i++)
         {
             if(attackerUnits[i]->pos > furthestPos)
             {
@@ -170,7 +275,7 @@ Unit* Lane::findFurthestUnit(bool attacker)
     }
     else
     {
-        for(int i = 0; i < defenderUnits.size(); i++)
+        for(int i = 0; i < defenderIndex; i++)
         {
             if(defenderUnits[i]->pos > furthestPos)
             {
@@ -179,28 +284,27 @@ Unit* Lane::findFurthestUnit(bool attacker)
             }
         }
     }
-    
     return u;
 }
 
 void Lane::tick()
 {
     //Update Units' Positions
-    for(int i = 0; i < defenderUnits.size(); i++)
+    for(int i = 0; i < defenderIndex; i++)
     {
         advanceUnit(defenderUnits[i], false);
     }
-    for(int i = 0; i < attackerUnits.size(); i++)
+    for(int i = 0; i < attackerIndex; i++)
     {
         advanceUnit(attackerUnits[i], true);
     }
     
     //Attack Units
-    for(int i = 0; i < defenderUnits.size(); i++)
+    for(int i = 0; i < defenderIndex; i++)
     {
         actUnit(defenderUnits[i], false);
     }
-    for(int i = 0; i < attackerUnits.size(); i++)
+    for(int i = 0; i < attackerIndex; i++)
     {
         actUnit(attackerUnits[i], true);
     }

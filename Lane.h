@@ -9,7 +9,6 @@
 #ifndef LANE_H
 #define LANE_H
 
-#include <vector>
 #include "Model.h"
 #include "DrawableGeometry.h"
 
@@ -21,12 +20,18 @@ public:
     Lane();
     ~Lane();
 
-    vector <Unit *> attackerUnits;
-    vector <Unit *> defenderUnits;
+    Unit ** attackerUnits;
+    int attackerIndex;
+    Unit ** defenderUnits;
+    int defenderIndex;
     int furthestAttacker;
     int furthestDefender;
     
-    void setSelected(bool selected);
+    bool aSelected;
+    bool dSelected;
+    
+    void removeUnitFromArray(Unit * u, bool attacker);
+    void setSelected(bool selected, bool attacker);
     void deployUnit(Unit * unit, bool attacker);
     void advanceUnit(Unit * unit, bool attacker);
     void actUnit(Unit * unit, bool attacker);
@@ -34,7 +39,9 @@ public:
     void tick();
     
     static bool compiled;       //True iff displayList names a valid glDisplayList
-    static GLuint displayList;  //Name of displaylist for object
+    static GLuint unselectedList;  //Name of displaylist for object
+    static GLuint selectedList;
+    GLuint displayList;
     void compileDL();
     void draw();
 };

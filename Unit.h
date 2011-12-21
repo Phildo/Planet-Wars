@@ -10,14 +10,18 @@
 
 #include "Model.h"
 #include "DrawableGeometry.h"
+#include "Player.h"
 
 class Unit : public DrawableGeometry
 {
 public:
 
     Unit(void); 
-	Unit(int type);
+	Unit(int type, Player * o, bool attacker);
     void initThings();
+    
+    bool attacker;
+    Player * owner;
     
     int pos;
     
@@ -25,6 +29,7 @@ public:
     int level;
     
     int health;
+    int maxHealth;
     int damage;
     int speed;
 	int range;
@@ -33,10 +38,12 @@ public:
     void reset();
     void resetCooldown();
     void setType(int type);
+    void setTypeColor(int type);
     bool attack(Unit * enemy);
 
     static bool compiled;       //True iff displayList names a valid glDisplayList
     static GLuint displayList;  //Name of displaylist for object
+    static GLuint healthBar;
     void compileDL();
     void draw();
     void drawAtPosition();

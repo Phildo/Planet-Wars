@@ -11,30 +11,56 @@ MiniGame::MiniGame(Node * planet, Ship * attackerShip, Ship * defenderShip)
     {
         lanes[i] = new Lane();
     }
-    selectedLane = 0;
-    lanes[selectedLane]->setSelected(true);
+    selectedALane = 0;
+    selectedDLane = NUM_LANES-1;
+    lanes[selectedALane]->setSelected(true, true);
+    lanes[selectedDLane]->setSelected(true, false);
 }
 
-void MiniGame::changeLane(int direction)
+void MiniGame::changeLane(int direction, bool attacker)
 {
-    if(direction == LEFT && selectedLane != 0)
-        selectLane(selectedLane-1);
-    else if(direction == RIGHT && selectedLane != 4)
-        selectLane(selectedLane+1);
+    if(attacker)
+    {
+        if(direction == LEFT && selectedALane != 0)
+            selectLane(selectedALane-1, true);
+        else if(direction == RIGHT && selectedALane != 4)
+            selectLane(selectedALane+1, true);
+    }
+    else
+    {
+        if(direction == LEFT && selectedDLane != 0)
+            selectLane(selectedDLane-1, false);
+        else if(direction == RIGHT && selectedDLane != 4)
+            selectLane(selectedDLane+1, false);
+    }
+    
 }
 
-void MiniGame::selectLane(int lane)
+void MiniGame::selectLane(int lane, bool attacker)
 {
-    lanes[selectedLane]->setSelected(false);
-    selectedLane = lane;
-    lanes[selectedLane]->setSelected(true);
+    if(attacker)
+    {
+        lanes[selectedALane]->setSelected(false, true);
+        selectedALane = lane;
+        lanes[selectedALane]->setSelected(true, true); 
+    }
+    else
+    {
+        lanes[selectedDLane]->setSelected(false, false);
+        selectedDLane = lane;
+        lanes[selectedDLane]->setSelected(true, false); 
+    }
+    
 }
 
 void MiniGame::deployUnit(Ship * s, int type) {
     Unit * u = s->deployUnit(type);
     if(u != Model::getSelf()->nullUnit)
     {
-        lanes[selectedLane]->deployUnit(u, (s == attacker));
+        if(attacker == s)
+            lanes[selectedALane]->deployUnit(u, true);
+        else
+            lanes[selectedDLane]->deployUnit(u, false);
     }
 }
 
@@ -55,21 +81,6 @@ void MiniGame::drawGame() {
         lanes[i]->draw();
         glPopMatrix();
     }
-
-	glBegin(GL_QUADS);
-    glVertex3f(-10, -1, 10);
-	glVertex3f(10, -1, 10);
-	glVertex3f(10, -1, 10);
-	glVertex3f(-10, -1, 10);
-	glEnd();
-
-	glBegin(GL_QUADS);
-    glVertex3f(-10, -1, 60);
-	glVertex3f(10, -1, 60);
-	glVertex3f(10, -1, 70);
-	glVertex3f(-10, -1, 70);
-	glEnd();
-
 }
 
 

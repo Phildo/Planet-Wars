@@ -118,10 +118,10 @@ void Ship::drawCargo()
     if(h > 0)
     {
         glBegin(GL_QUADS);
-        glVertex3f(-.5*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
-        glVertex3f(-.5*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
-        glVertex3f(-.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
-        glVertex3f(-.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
+        glVertex3f(-.5*SHIP_SIZE, layer+0.11, .5*SHIP_SIZE);
+        glVertex3f(-.5*SHIP_SIZE, layer+0.11, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(-.25*SHIP_SIZE, layer+0.11, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(-.25*SHIP_SIZE, layer+0.11, .5*SHIP_SIZE);
         glEnd();
     }
     
@@ -132,10 +132,10 @@ void Ship::drawCargo()
     if(h > 0)
     {
         glBegin(GL_QUADS);
-        glVertex3f(-.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
-        glVertex3f(-.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
-        glVertex3f(0, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
-        glVertex3f(0, layer+0.1, .5*SHIP_SIZE);
+        glVertex3f(-.25*SHIP_SIZE, layer+0.11, .5*SHIP_SIZE);
+        glVertex3f(-.25*SHIP_SIZE, layer+0.11, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(0, layer+0.11, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(0, layer+0.11, .5*SHIP_SIZE);
         glEnd();
     }
     
@@ -146,10 +146,10 @@ void Ship::drawCargo()
     if(h > 0)
     {
         glBegin(GL_QUADS);
-        glVertex3f(0, layer+0.1, .5*SHIP_SIZE);
-        glVertex3f(0, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
-        glVertex3f(.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
-        glVertex3f(.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
+        glVertex3f(0, layer+0.11, .5*SHIP_SIZE);
+        glVertex3f(0, layer+0.11, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(.25*SHIP_SIZE, layer+0.11, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(.25*SHIP_SIZE, layer+0.11, .5*SHIP_SIZE);
         glEnd();
     }
     
@@ -160,10 +160,10 @@ void Ship::drawCargo()
     if(h > 0)
     {
         glBegin(GL_QUADS);
-        glVertex3f(.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
-        glVertex3f(.25*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
-        glVertex3f(.5*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE-(h*SHIP_SIZE));
-        glVertex3f(.5*SHIP_SIZE, layer+0.1, .5*SHIP_SIZE);
+        glVertex3f(.25*SHIP_SIZE, layer+0.11, .5*SHIP_SIZE);
+        glVertex3f(.25*SHIP_SIZE, layer+0.11, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(.5*SHIP_SIZE, layer+0.11, .5*SHIP_SIZE-(h*SHIP_SIZE));
+        glVertex3f(.5*SHIP_SIZE, layer+0.11, .5*SHIP_SIZE);
         glEnd();
     }
     
@@ -227,7 +227,7 @@ void Ship::djikstrasToDestination()
 bool Ship::moveToNode(Node *newLoc)
 {
     if(Model::getSelf()->selectedShip == this) Model::getSelf()->selectedShip = Model::getSelf()->nullShip;
-    if(done || newLoc == Model::getSelf()->nullNode) return false;
+    if(done || newLoc == Model::getSelf()->nullNode || newLoc->ship != Model::getSelf()->nullShip) return false;
     if(loc->isNeighborOf(newLoc))
     {
         loc->ship = Model::getSelf()->nullShip;
@@ -275,22 +275,22 @@ Unit * Ship::deployUnit(int type)
         case TYPE_WATER:
             if(numWaterUnits <= 0) break;
             numWaterUnits--;
-            return new Unit(TYPE_WATER);
+            return new Unit(TYPE_WATER, owner, (Model::getSelf()->mgame->attacker == this));
             break;
         case TYPE_EARTH:
-            if(numEarthUnits >= MAX_UNITS) break;
+            if(numEarthUnits <= 0) break;
             numEarthUnits--;
-            return new Unit(TYPE_EARTH);
+            return new Unit(TYPE_EARTH, owner, (Model::getSelf()->mgame->attacker == this));
             break;
         case TYPE_WIND:
-            if(numWindUnits >= MAX_UNITS) break;
+            if(numWindUnits <= 0) break;
             numWindUnits--;
-            return new Unit(TYPE_WIND);
+            return new Unit(TYPE_WIND, owner, (Model::getSelf()->mgame->attacker == this));
             break;
         case TYPE_FIRE:
-            if(numFireUnits >= MAX_UNITS) break;
+            if(numFireUnits <= 0) break;
             numFireUnits--;
-            return new Unit(TYPE_FIRE);
+            return new Unit(TYPE_FIRE, owner, (Model::getSelf()->mgame->attacker == this));
             break;
         default:
             break;

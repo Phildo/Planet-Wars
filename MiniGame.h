@@ -19,10 +19,11 @@ public:
     Ship * defender;
 
     Lane ** lanes;
-    int selectedLane;
+    int selectedALane;
+    int selectedDLane;
     
-    void changeLane(int direction);
-    void selectLane(int lane);
+    void changeLane(int direction, bool attacker);
+    void selectLane(int lane, bool attacker);
     void deployUnit(Ship * s, int type);
 	void update();
     void drawGame();

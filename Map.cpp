@@ -128,7 +128,8 @@ void Map::selectSelected()
                          (Model::getSelf()->playerturn == P_TWO_TURN && 
                           n->ship->owner != Model::getSelf()->playerArray[1])))
                 {
-                    if(n->isNeighborOf(Model::getSelf()->selectedNode)) Model::getSelf()->enterMiniGame(n, Model::getSelf()->selectedShip, n->ship);
+                    if(!Model::getSelf()->selectedShip->done && n->isNeighborOf(Model::getSelf()->selectedNode)) 
+                        Model::getSelf()->enterMiniGame(n, Model::getSelf()->selectedShip, n->ship);
                 }
             }
             else
@@ -150,7 +151,8 @@ void Map::selectSelected()
                          (Model::getSelf()->playerturn == P_TWO_TURN && 
                           n->ship->owner != Model::getSelf()->playerArray[1])))
                 {
-                    if(n->isNeighborOf(Model::getSelf()->selectedNode)) Model::getSelf()->enterMiniGame(n, Model::getSelf()->selectedShip, n->ship);
+                    if(!Model::getSelf()->selectedShip->done && n->isNeighborOf(Model::getSelf()->selectedNode)) 
+                        Model::getSelf()->enterMiniGame(n, Model::getSelf()->selectedShip, n->ship);
                 }
             }
         }

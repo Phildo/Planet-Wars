@@ -50,8 +50,8 @@
 #define COL_SPACING 1.6
 
 //MINIGAME GEO
-#define LANE_WIDTH 10
-#define LANE_LENGTH 100
+#define LANE_WIDTH 1000
+#define LANE_LENGTH 10000
 
 //SIHP GEO
 #define SHIP_SIZE 1
@@ -90,27 +90,27 @@
 #define PLAYER_2_B 0.6f
 
 //TYPE ATTRIBUTE VARIABLES
-#define WATER_HEALTH 1000;
+#define WATER_HEALTH 10000;
 #define WATER_DAMAGE 100;
-#define WATER_RANGE 2;
+#define WATER_RANGE 200;
 #define WATER_SPEED 3;
 #define WATER_COOL 5;
 
-#define EARTH_HEALTH 5000;
+#define EARTH_HEALTH 50000;
 #define EARTH_DAMAGE 10;
-#define EARTH_RANGE 1;
+#define EARTH_RANGE 100;
 #define EARTH_SPEED 1;
 #define EARTH_COOL 5;
 
-#define WIND_HEALTH 200;
+#define WIND_HEALTH 2000;
 #define WIND_DAMAGE 50;
-#define WIND_RANGE 10;
+#define WIND_RANGE 1000;
 #define WIND_SPEED 5;
 #define WIND_COOL 2;
 
-#define FIRE_HEALTH 1000;
+#define FIRE_HEALTH 10000;
 #define FIRE_DAMAGE 150;
-#define FIRE_RANGE 5;
+#define FIRE_RANGE 500;
 #define FIRE_SPEED 3;
 #define FIRE_COOL 6;
 

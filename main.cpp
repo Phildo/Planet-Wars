@@ -209,7 +209,7 @@ void gameplay(){
 void minigame() { 
     glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(0.0, 20.0, 100.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt(0.0, 5000.0, 10000.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     
     model->mgame->update();
 	model->mgame->drawGame();
@@ -243,7 +243,7 @@ void DisplayFunc()
     //Main Viewport
     glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100.0);
+	gluPerspective(60.0 , ((float) model->width) / ((float) model->height), 1.0f , 100000000.0);
 	glViewport(0 , 0 , model->width, model->height);
     
    
@@ -338,23 +338,35 @@ void KeyboardFunc(unsigned char key, int x, int y)
 			model->state = MINIPAUSE;
 			break;
 		case '[': //left arrow
-			model->mgame->changeLane(LEFT);
+			model->mgame->changeLane(LEFT, true);
 			break;
 		case ']': //right arrow
-			model->mgame->changeLane(RIGHT);
+			model->mgame->changeLane(RIGHT, true);
 			break;
-		case 'z':
-			model->mgame->deployUnit(model->selectedShip, TYPE_WATER);
+		case 'a':
+			model->mgame->deployUnit(model->mgame->attacker, TYPE_WATER);
 			break;
-		case 'x':
-			model->mgame->deployUnit(model->selectedShip, TYPE_EARTH);
+		case 's':
+			model->mgame->deployUnit(model->mgame->attacker, TYPE_EARTH);
 			break;
-		case 'c':
-			model->mgame->deployUnit(model->selectedShip, TYPE_WIND);
+		case 'd':
+			model->mgame->deployUnit(model->mgame->attacker, TYPE_WIND);
 			break;
-		case 'v':
-			model->mgame->deployUnit(model->selectedShip, TYPE_FIRE);
+		case 'f':
+			model->mgame->deployUnit(model->mgame->attacker, TYPE_FIRE);
 			break;
+        case 'j':
+            model->mgame->deployUnit(model->mgame->defender, TYPE_WATER);
+            break;
+        case 'k':
+            model->mgame->deployUnit(model->mgame->defender, TYPE_EARTH);
+            break;
+        case 'l':
+            model->mgame->deployUnit(model->mgame->defender, TYPE_WIND);
+            break;
+        case ';':
+            model->mgame->deployUnit(model->mgame->defender, TYPE_FIRE);
+            break;
 		}    
 
 		break;
@@ -404,7 +416,7 @@ void initGL(int argc, char * argv[])
 	glutInitWindowPosition(0 , 0);
 	glutInitWindowSize(model->width,model->height);
 	glutCreateWindow("PlanetsConquerer!");
-	glutFullScreen();
+	//glutFullScreen();
 	/*
 	 * The following section is curser specification. You guys can choose what is appropriate,
 	 * but for now I'm getting rid of it.
